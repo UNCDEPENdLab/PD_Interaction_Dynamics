@@ -1,0 +1,532 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+03/27/2018   8:53 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "apim_syntax.dat";
+
+  VARIABLE:
+  NAMES = scpr scpt ccpr ccpt CTS_Perp_0 CTS_Perp_1;
+   MISSING=.;
+
+  ANALYSIS:
+  TYPE = GENERAL; ESTIMATOR = MLR;
+  MODEL:
+  scpr ON CTS_Perp_0;
+  scpt ON CTS_Perp_1;
+  ccpr ON CTS_Perp_0;
+  ccpt ON CTS_Perp_1;
+  scpt ON CTS_Perp_0;
+  scpr ON CTS_Perp_1;
+  ccpt ON CTS_Perp_0;
+  ccpr ON CTS_Perp_1;
+  scpr WITH ccpr;
+  scpr WITH scpt;
+  scpr WITH ccpt;
+  scpt WITH ccpr;
+  ccpr WITH ccpt;
+  scpt WITH ccpt;
+  scpr WITH scpr;
+  scpt WITH scpt;
+  ccpr WITH ccpr;
+  ccpt WITH ccpt;
+  CTS_Perp_0 WITH CTS_Perp_0;
+  CTS_Perp_0 WITH CTS_Perp_1;
+  CTS_Perp_1 WITH CTS_Perp_1;
+  [scpr];
+  [scpt];
+  [ccpr];
+  [ccpt];
+  [CTS_Perp_0];
+  [CTS_Perp_1];
+
+  OUTPUT:
+  sampstat standardized tech1;
+  SAVEDATA:
+  file=cooksdtest.dat; save = COOKS INFLUENCE LOGLIKELIHOOD;
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          96
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPR        SCPT        CCPR        CCPT
+
+Observed independent variables
+   CTS_PERP    CTS_PERP
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+
+Input data file(s)
+  apim_syntax.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR           1.000
+ SCPT           1.000         1.000
+ CCPR           1.000         1.000         1.000
+ CCPT           1.000         1.000         1.000         1.000
+ CTS_PERP       1.000         1.000         1.000         1.000         1.000
+ CTS_PERP       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              CTS_PERP
+              ________
+ CTS_PERP       1.000
+
+
+SAMPLE STATISTICS
+
+
+     ESTIMATED SAMPLE STATISTICS
+
+
+           Means
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+                2.821         3.089        -0.070        -0.013        42.896
+
+
+           Means
+              CTS_PERP
+              ________
+               64.677
+
+
+           Covariances
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR           1.486
+ SCPT          -0.164         1.300
+ CCPR          -0.899        -0.309        14.719
+ CCPT           0.125        -0.003        -9.085        10.130
+ CTS_PERP      20.292        -1.734        -5.730         8.964      5536.052
+ CTS_PERP       3.917         0.344        20.044         1.717      3041.133
+
+
+           Covariances
+              CTS_PERP
+              ________
+ CTS_PERP   21268.323
+
+
+           Correlations
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR           1.000
+ SCPT          -0.118         1.000
+ CCPR          -0.192        -0.071         1.000
+ CCPT           0.032        -0.001        -0.744         1.000
+ CTS_PERP       0.224        -0.020        -0.020         0.038         1.000
+ CTS_PERP       0.022         0.002         0.036         0.004         0.280
+
+
+           Correlations
+              CTS_PERP
+              ________
+ CTS_PERP       1.000
+
+
+     MAXIMUM LOG-LIKELIHOOD VALUE FOR THE UNRESTRICTED (H1) MODEL IS -1930.716
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPR                  2.821       0.586       0.909    1.04%       1.609      2.358      2.742
+              96.000       1.486      -0.099       6.612    1.04%       2.968      3.876
+     SCPT                  3.089       0.509       0.745    1.04%       1.998      2.672      3.001
+              96.000       1.300      -0.224       5.881    1.04%       3.242      3.992
+     CCPR                 -0.070      -0.147     -11.649    1.04%      -2.885     -0.901     -0.452
+              96.000      14.719       0.336       7.937    1.04%       0.559      3.054
+     CCPT                 -0.013      -0.296      -8.168    1.04%      -2.641     -0.756      0.320
+              96.000      10.130       0.187       8.042    1.04%       1.038      2.454
+     CTS_PERP_0           42.896       3.973       0.000    8.33%       4.000     14.000     20.000
+              96.000    5536.052      17.913     465.000    1.04%      27.000     62.000
+     CTS_PERP_1           64.677       7.039       0.000    5.21%       6.000     16.000     27.500
+              96.000   21268.323      57.400    1336.000    1.04%      39.000     83.000
+
+
+     NO CONVERGENCE.  NUMBER OF ITERATIONS EXCEEDED.
+
+
+
+MODEL RESULTS
+
+                    Estimate
+
+ SCPR     ON
+    CTS_PERP_0         0.004
+    CTS_PERP_1         0.000
+
+ SCPT     ON
+    CTS_PERP_1         0.000
+    CTS_PERP_0         0.000
+
+ CCPR     ON
+    CTS_PERP_0        -0.002
+    CTS_PERP_1         0.001
+
+ CCPT     ON
+    CTS_PERP_1         0.000
+    CTS_PERP_0         0.002
+
+ SCPR     WITH
+    CCPR              -0.968
+    SCPT              -0.169
+    CCPT               0.159
+
+ SCPT     WITH
+    CCPR              -0.232
+    CCPT              -0.041
+
+ CCPR     WITH
+    CCPT              -9.256
+
+ CTS_PERP WITH
+    CTS_PERP_1         7.494
+
+ Means
+    CTS_PERP_0        42.790
+    CTS_PERP_1        64.933
+
+ Intercepts
+    SCPR               2.662
+    SCPT               3.101
+    CCPR              -0.059
+    CCPT              -0.084
+
+ Variances
+    CTS_PERP_0      2781.023
+    CTS_PERP_1     10637.612
+
+ Residual Variances
+    SCPR               1.449
+    SCPT               1.307
+    CCPR              14.799
+    CCPT              10.281
+
+
+MODEL COMMAND WITH FINAL ESTIMATES USED AS STARTING VALUES
+
+     scpr ON cts_perp_0*0.00427;
+     scpr ON cts_perp_1*-0.00041;
+     scpt ON cts_perp_1*0.00007;
+     scpt ON cts_perp_0*-0.00047;
+     ccpr ON cts_perp_0*-0.00216;
+     ccpr ON cts_perp_1*0.00135;
+     ccpt ON cts_perp_1*-0.00029;
+     ccpt ON cts_perp_0*0.00205;
+
+     scpr WITH ccpr*-0.96758;
+     scpr WITH scpt*-0.16936;
+     scpr WITH ccpt*0.15927;
+     scpt WITH ccpr*-0.23175;
+     scpt WITH ccpt*-0.04132;
+     ccpr WITH ccpt*-9.25576;
+     cts_perp_0 WITH cts_perp_1*7.49404;
+
+     [ scpr*2.66150 ];
+     [ scpt*3.10091 ];
+     [ ccpr*-0.05850 ];
+     [ ccpt*-0.08412 ];
+     [ cts_perp_0*42.79004 ];
+     [ cts_perp_1*64.93327 ];
+
+     scpr*1.44888;
+     scpt*1.30679;
+     ccpr*14.79885;
+     ccpt*10.28089;
+     cts_perp_0*2781.02271;
+     cts_perp_1*10637.61230;
+
+
+
+TECHNICAL 1 OUTPUT
+
+
+     PARAMETER SPECIFICATION
+
+
+           NU
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+                  0             0             0             0             0
+
+
+           NU
+              CTS_PERP
+              ________
+                  0
+
+
+           LAMBDA
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR               0             0             0             0             0
+ SCPT               0             0             0             0             0
+ CCPR               0             0             0             0             0
+ CCPT               0             0             0             0             0
+ CTS_PERP           0             0             0             0             0
+ CTS_PERP           0             0             0             0             0
+
+
+           LAMBDA
+              CTS_PERP
+              ________
+ SCPR               0
+ SCPT               0
+ CCPR               0
+ CCPT               0
+ CTS_PERP           0
+ CTS_PERP           0
+
+
+           THETA
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR               0
+ SCPT               0             0
+ CCPR               0             0             0
+ CCPT               0             0             0             0
+ CTS_PERP           0             0             0             0             0
+ CTS_PERP           0             0             0             0             0
+
+
+           THETA
+              CTS_PERP
+              ________
+ CTS_PERP           0
+
+
+           ALPHA
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+                  1             2             3             4             5
+
+
+           ALPHA
+              CTS_PERP
+              ________
+                  6
+
+
+           BETA
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR               0             0             0             0             7
+ SCPT               0             0             0             0             9
+ CCPR               0             0             0             0            11
+ CCPT               0             0             0             0            13
+ CTS_PERP           0             0             0             0             0
+ CTS_PERP           0             0             0             0             0
+
+
+           BETA
+              CTS_PERP
+              ________
+ SCPR               8
+ SCPT              10
+ CCPR              12
+ CCPT              14
+ CTS_PERP           0
+ CTS_PERP           0
+
+
+           PSI
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR              15
+ SCPT              16            17
+ CCPR              18            19            20
+ CCPT              21            22            23            24
+ CTS_PERP           0             0             0             0            25
+ CTS_PERP           0             0             0             0            26
+
+
+           PSI
+              CTS_PERP
+              ________
+ CTS_PERP          27
+
+
+     STARTING VALUES
+
+
+           NU
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           NU
+              CTS_PERP
+              ________
+                0.000
+
+
+           LAMBDA
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR           1.000         0.000         0.000         0.000         0.000
+ SCPT           0.000         1.000         0.000         0.000         0.000
+ CCPR           0.000         0.000         1.000         0.000         0.000
+ CCPT           0.000         0.000         0.000         1.000         0.000
+ CTS_PERP       0.000         0.000         0.000         0.000         1.000
+ CTS_PERP       0.000         0.000         0.000         0.000         0.000
+
+
+           LAMBDA
+              CTS_PERP
+              ________
+ SCPR           0.000
+ SCPT           0.000
+ CCPR           0.000
+ CCPT           0.000
+ CTS_PERP       0.000
+ CTS_PERP       1.000
+
+
+           THETA
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR           0.000
+ SCPT           0.000         0.000
+ CCPR           0.000         0.000         0.000
+ CCPT           0.000         0.000         0.000         0.000
+ CTS_PERP       0.000         0.000         0.000         0.000         0.000
+ CTS_PERP       0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              CTS_PERP
+              ________
+ CTS_PERP       0.000
+
+
+           ALPHA
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           ALPHA
+              CTS_PERP
+              ________
+                0.000
+
+
+           BETA
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR           0.000         0.000         0.000         0.000         0.000
+ SCPT           0.000         0.000         0.000         0.000         0.000
+ CCPR           0.000         0.000         0.000         0.000         0.000
+ CCPT           0.000         0.000         0.000         0.000         0.000
+ CTS_PERP       0.000         0.000         0.000         0.000         0.000
+ CTS_PERP       0.000         0.000         0.000         0.000         0.000
+
+
+           BETA
+              CTS_PERP
+              ________
+ SCPR           0.000
+ SCPT           0.000
+ CCPR           0.000
+ CCPT           0.000
+ CTS_PERP       0.000
+ CTS_PERP       0.000
+
+
+           PSI
+              SCPR          SCPT          CCPR          CCPT          CTS_PERP
+              ________      ________      ________      ________      ________
+ SCPR           0.743
+ SCPT           0.000         0.650
+ CCPR           0.000         0.000         7.360
+ CCPT           0.000         0.000         0.000         5.065
+ CTS_PERP       0.000         0.000         0.000         0.000      2768.026
+ CTS_PERP       0.000         0.000         0.000         0.000         0.000
+
+
+           PSI
+              CTS_PERP
+              ________
+ CTS_PERP   10634.161
+
+
+SAVEDATA INFORMATION
+
+     Outliers were not computed.
+     No data were saved.
+
+
+     Beginning Time:  20:53:38
+        Ending Time:  20:53:39
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

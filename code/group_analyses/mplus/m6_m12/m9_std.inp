@@ -1,0 +1,86 @@
+TITLE:
+Testing
+DATA:
+FILE = "../df67_das_dem.dat";
+
+VARIABLE:
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id
+rel dasfu1 dasfu0 dasbl1 dasbl0;
+ MISSING=.;
+USEVARIABLES = ECRavo_0 ECRavo_1 scpt ccpt scpr ccpr prnapt
+prnapr pnapt pnapr cmpt cmpr id;
+IDVARIABLE IS id;
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+!ESTIMATOR = MLR;
+MODEL:
+ECRavo_1 ON pnapt* (q);
+ECRavo_1 ON pnapr;
+!ECRavo_0 ON pnapt;
+ECRavo_0 ON pnapr;
+[ECRavo_1];
+[ECRavo_0];
+ECRavo_1 WITH ECRavo_1;
+ECRavo_0 WITH ECRavo_0;
+ECRavo_1 WITH ECRavo_0;
+prnapt ON cmpt@0;
+prnapr ON cmpr@0;
+scpr ON cmpr@0;
+ccpr ON cmpr@0;
+scpt ON cmpt@0;
+ccpt ON cmpt* (x);
+prnapt WITH prnapr;
+pnapt WITH pnapr;
+pnapt ON prnapt;
+pnapt ON scpt@0;
+pnapt ON ccpt* (c);
+pnapr ON prnapr;
+pnapr ON scpr@0;
+pnapr ON ccpr* (d);
+scpt ON prnapt@0;
+scpr ON prnapr@0;
+ccpt ON prnapt* (b1);
+ccpr ON prnapr* (b1);
+scpt WITH ccpt;
+scpt WITH scpr;
+scpt WITH ccpr;
+scpr WITH ccpt;
+ccpt WITH ccpr;
+scpr WITH ccpr;
+scpt WITH scpt;
+scpr WITH scpr;
+ccpt WITH ccpt;
+ccpr WITH ccpr;
+prnapt WITH prnapt;
+prnapr WITH prnapr;
+pnapt WITH pnapt;
+pnapr WITH pnapr;
+cmpt WITH cmpt;
+cmpr WITH cmpr;
+cmpr WITH cmpt@0;
+[scpt];
+[scpr];
+[ccpt];
+[ccpr];
+[prnapt];
+[prnapr];
+[pnapt];
+[pnapr];
+[cmpt];
+[cmpr];
+PRNAPR   WITH PRNAPT;
+MODEL CONSTRAINT:
+NEW ( b1c xc qxc);!b1d hb1c whb1c uhc );
+b1c = b1*c;
+qxc = q*x*c;
+!hb1c = h*b1*c;
+!whb1c = w*h*b1*c;
+!uhc = u*h*c;
+xc = x*c;
+
+
+
+OUTPUT:
+STANDARDIZED; ! MODINDICES(ALL 5);

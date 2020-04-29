@@ -1,0 +1,69 @@
+TITLE:
+Testing
+DATA:
+FILE = "../df67.dat";
+
+VARIABLE:
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id;
+ MISSING=.;
+USEVARIABLES = ECRanx_0 ECRanx_1 ccpt ccpr prnapt
+prnapr pnapt pnapr elpt elpr id;
+IDVARIABLE IS id;
+ANALYSIS:
+!ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+ESTIMATOR = MLR;
+MODEL:
+ECRanx_1 ON pnapt* (w);
+ECRanx_0 ON pnapr;
+prnapt ON elpt* (z);
+prnapr ON elpr;
+ccpr ON elpr;
+ccpt ON elpt;
+prnapt WITH prnapr;
+pnapt WITH pnapr;
+pnapt ON prnapt;
+pnapt ON ccpt* (c);
+pnapr ON prnapr;
+pnapr ON ccpr@0;
+ccpt ON prnapt* (b1);
+ccpr ON prnapr* (b1);
+ccpt WITH ccpr;
+prnapt WITH prnapt;
+prnapr WITH prnapr;
+pnapt WITH pnapt;
+pnapr WITH pnapr;
+elpt WITH elpt;
+elpr WITH elpr;
+[ccpt];
+[ccpr@0];
+[prnapt];
+[prnapr];
+[pnapt];
+[pnapr];
+[elpt];
+[elpr];
+[ECRanx_0];
+[ECRanx_1];
+ECRanx_0 WITH ECRanx_1;
+ECRanx_0 WITH ECRanx_0;
+ECRanx_1 WITH ECRanx_1;
+ECRanx_0 ON ELPR;
+!PNAPR ON ELPR;
+ECRANX_1 ON ELPT;
+!PRNAPR   WITH PRNAPT;
+!ECRANX_0 ON PRNAPT;
+!MODEL CONSTRAINT:
+!NEW ( b1c wb1c zb1c zb1cw);!b1d hb1c whb1c uhc );
+!b1c = b1*c;
+!zb1c = z*b1*c;
+!zb1cw = z*b1*c*w;
+!wb1c = w*b1*c;
+
+
+OUTPUT:
+STANDARDIZED;  MODINDICES(ALL 5);
+
+!savedata: file=na_inf.txt; save is
+!cooks;

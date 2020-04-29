@@ -1,0 +1,42 @@
+TITLE:
+Testing
+DATA:
+FILE = "stypl_apfixed_m.dat";
+ 
+VARIABLE:
+NAMES = scpt ccpt scpr ccpr stypl_1 stypl_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+scpt ON stypl_1* (a); 
+scpt ON stypl_0* (c); 
+ccpt ON stypl_1* (b); 
+ccpt ON stypl_0* (d); 
+scpr ON stypl_1* (c); 
+scpr ON stypl_0* (a); 
+ccpr ON stypl_1* (d); 
+ccpr ON stypl_0* (b); 
+scpt WITH ccpt; 
+scpt WITH scpr; 
+scpt WITH ccpr; 
+ccpt WITH scpr; 
+ccpt WITH ccpr; 
+scpr WITH ccpr; 
+stypl_1 WITH stypl_0; 
+scpt WITH scpt; 
+ccpt WITH ccpt; 
+scpr WITH scpr; 
+ccpr WITH ccpr; 
+stypl_1 WITH stypl_1; 
+stypl_0 WITH stypl_0; 
+[scpt]; 
+[ccpt]; 
+[scpr]; 
+[ccpr]; 
+[stypl_1]; 
+[stypl_0]; 
+
+OUTPUT:
+STANDARDIZED

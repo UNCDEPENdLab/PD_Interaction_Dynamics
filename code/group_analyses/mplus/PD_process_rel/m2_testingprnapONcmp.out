@@ -1,0 +1,375 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+12/16/2018  10:30 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "../df67.dat";
+
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+  elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id;
+   MISSING=.;
+  USEVARIABLES = cmpt cmpr ECRanx_0 ECRanx_1 scpt ccpt scpr ccpr prnapt
+  prnapr pnapt pnapr id;
+  IDVARIABLE IS id;
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  !ESTIMATOR = MLR;
+  MODEL:
+  prnapt ON cmpt;
+  prnapr ON cmpr;
+  pnapt ON cmpt@0;
+  pnapr ON cmpr@0;
+  ccpt ON cmpt* (x);
+  scpt ON cmpt@0;
+  ccpr ON cmpr@0;
+  scpr ON cmpr@0;
+  cmpt WITH cmpt;
+  cmpr WITH cmpr;
+  cmpt WITH cmpr;
+  [cmpt];
+  [cmpr];
+
+  ECRanx_1 ON pnapt* (w);
+  ECRanx_0 ON pnapr;
+  pnapt WITH pnapr;
+  pnapt ON prnapt;
+  pnapt ON scpt@0;
+  pnapt ON ccpt* (c);
+  pnapr ON prnapr;
+  pnapr ON scpr@0;
+  pnapr ON ccpr* (d);
+  scpt ON prnapt* (a1);
+  scpr ON prnapr* (a1);
+  ccpt ON prnapt* (b1);
+  ccpr ON prnapr* (b1);
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  scpr WITH ccpt;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  scpt WITH scpt;
+  scpr WITH scpr;
+  ccpt WITH ccpt;
+  ccpr WITH ccpr;
+  prnapt WITH prnapt;
+  prnapr WITH prnapr;
+  pnapt WITH pnapt;
+  pnapr WITH pnapr;
+  [scpt];
+  [scpr];
+  [ccpt];
+  [ccpr];
+  [prnapt];
+  [prnapr];
+  [pnapt];
+  [pnapr];
+  [ECRanx_0];
+  [ECRanx_1];
+  ECRanx_0 WITH ECRanx_0;
+  ECRanx_1 WITH ECRanx_1;
+  ECRanx_0 WITH ECRanx_0;
+  PRNAPR   WITH PRNAPT;
+  prnapr WITH prnapt;
+  MODEL CONSTRAINT:
+  NEW ( b1c wb1c xwb1c);!b1d hb1c whb1c uhc );
+  b1c = b1*c;
+  wb1c = w*b1*c;
+  xwb1c = x*w*b1*c;
+  !hb1c = h*b1*c;
+  !whb1c = w*h*b1*c;
+  !uhc = u*h*c;
+
+
+  !OUTPUT:
+  !STANDARDIZED;  MODINDICES(ALL 5);
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                   10
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   ECRANX_0    ECRANX_1    SCPT        CCPT        SCPR        CCPR
+   PRNAPT      PRNAPR      PNAPT       PNAPR
+
+Observed independent variables
+   CMPT        CMPR
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  ../df67.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             3
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              ECRANX_0      ECRANX_1      SCPT          CCPT          SCPR
+              ________      ________      ________      ________      ________
+ ECRANX_0       0.990
+ ECRANX_1       0.990         1.000
+ SCPT           0.990         1.000         1.000
+ CCPT           0.990         1.000         1.000         1.000
+ SCPR           0.990         1.000         1.000         1.000         1.000
+ CCPR           0.990         1.000         1.000         1.000         1.000
+ PRNAPT         0.990         1.000         1.000         1.000         1.000
+ PRNAPR         0.990         1.000         1.000         1.000         1.000
+ PNAPT          0.980         0.990         0.990         0.990         0.990
+ PNAPR          0.990         1.000         1.000         1.000         1.000
+ CMPT           0.990         1.000         1.000         1.000         1.000
+ CMPR           0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              CCPR          PRNAPT        PRNAPR        PNAPT         PNAPR
+              ________      ________      ________      ________      ________
+ CCPR           1.000
+ PRNAPT         1.000         1.000
+ PRNAPR         1.000         1.000         1.000
+ PNAPT          0.990         0.990         0.990         0.990
+ PNAPR          1.000         1.000         1.000         0.990         1.000
+ CMPT           1.000         1.000         1.000         0.990         1.000
+ CMPR           0.990         0.990         0.990         0.980         0.990
+
+
+           Covariance Coverage
+              CMPT          CMPR
+              ________      ________
+ CMPT           1.000
+ CMPR           0.990         0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     ECRANX_0              2.942       0.444       1.000    2.04%       1.833      2.444      2.750
+              98.000       1.490      -0.683       6.000    1.02%       3.000      4.056
+     ECRANX_1              3.568       0.234       1.222    2.02%       2.500      3.056      3.389
+              99.000       1.376      -0.811       6.000    1.01%       3.833      4.722
+     SCPT                 30.559       0.551       7.450    1.01%      19.197     26.648     29.841
+              99.000     129.762      -0.204      58.807    1.01%      31.821     39.920
+     CCPT                 -0.890      -0.259     -81.685    1.01%     -26.415     -7.559      2.881
+              99.000    1013.048       0.128      80.417    1.01%       8.529     24.280
+     SCPR                 28.538       0.567       9.085    1.01%      16.451     24.118     27.494
+              99.000     153.716      -0.221      66.121    1.01%      29.684     39.272
+     CCPR                 -0.283      -0.178    -116.491    1.01%     -27.251     -8.605     -2.107
+              99.000    1435.257       0.411      79.366    1.01%       5.588     28.790
+     PRNAPT               16.030       1.450      10.000   13.13%      11.000     13.000     14.000
+              99.000      31.928       2.460      39.000    1.01%      16.000     20.000
+     PRNAPR               13.621       1.725      10.000   24.24%      10.000     11.000     12.000
+              99.000      17.354       3.160      31.000    1.01%      13.000     16.000
+     PNAPT                17.803       1.082      10.000   16.33%      11.000     13.000     16.000
+              98.000      55.916       1.241      47.000    1.02%      19.000     24.000
+     PNAPR                14.380       1.080      10.000   36.36%      10.000     11.000     12.000
+              99.000      27.507      -0.070      30.000    1.01%      13.000     20.000
+     CMPT                  1.140       0.179      -6.169    1.01%      -1.444      0.366      0.866
+              99.000       9.104      -0.160       8.225    1.01%       1.884      3.207
+     CMPR                  1.003       0.174      -7.742    1.02%      -1.030      0.250      0.713
+              98.000       7.311       0.888       8.285    1.02%       1.397      2.957
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              45
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -41.689            26.404
+
+          Posterior Predictive P-Value              0.673
+
+Information Criteria
+
+          Deviance (DIC)                         7405.224
+          Estimated Number of Parameters (pD)      42.724
+          Bayesian (BIC)                         7525.158
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ PRNAPT     ON
+    CMPT               0.100       0.183      0.289      -0.259       0.460
+
+ PRNAPR     ON
+    CMPR              -0.072       0.153      0.319      -0.374       0.231
+
+ PNAPT      ON
+    CMPT               0.000       0.000      1.000       0.000       0.000
+    PRNAPT             0.801       0.102      0.000       0.599       1.001      *
+    SCPT               0.000       0.000      1.000       0.000       0.000
+    CCPT              -0.041       0.019      0.016      -0.079      -0.004      *
+
+ PNAPR      ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    PRNAPR             0.701       0.107      0.000       0.492       0.910      *
+    SCPR               0.000       0.000      1.000       0.000       0.000
+    CCPR               0.011       0.012      0.183      -0.013       0.034
+
+ CCPT       ON
+    CMPT              -2.182       0.658      0.000      -3.485      -0.893      *
+    PRNAPT            -1.070       0.275      0.000      -1.616      -0.532      *
+
+ SCPT       ON
+    CMPT               0.000       0.000      1.000       0.000       0.000
+    PRNAPT             0.207       0.171      0.114      -0.130       0.542
+
+ CCPR       ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    PRNAPR            -1.070       0.275      0.000      -1.616      -0.532      *
+
+ SCPR       ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    PRNAPR             0.207       0.171      0.114      -0.130       0.542
+
+ ECRANX_1   ON
+    PNAPT              0.067       0.015      0.000       0.039       0.096      *
+
+ ECRANX_0   ON
+    PNAPR              0.076       0.023      0.000       0.032       0.121      *
+
+ CMPT     WITH
+    CMPR              -0.147       0.926      0.434      -1.994       1.666
+
+ PNAPT    WITH
+    PNAPR              7.132       2.950      0.004       1.958      13.586      *
+
+ SCPT     WITH
+    CCPT              12.517      41.777      0.379     -69.507      95.649
+    SCPR             -26.054      17.406      0.057     -62.736       6.166
+    CCPR             -29.244      51.728      0.278    -134.008      71.165
+
+ SCPR     WITH
+    CCPT              18.855      44.967      0.331     -68.152     109.698
+    CCPR             -79.610      55.985      0.064    -199.376      23.065
+
+ CCPT     WITH
+    CCPR            -972.675     171.940      0.000   -1367.885    -698.155      *
+
+ PRNAPT   WITH
+    PRNAPR             8.423       2.857      0.000       3.449      14.696      *
+
+ ECRANX_1 WITH
+    ECRANX_0           0.092       0.143      0.249      -0.183       0.383
+
+ Means
+    CMPT               1.138       0.314      0.000       0.522       1.752      *
+    CMPR               1.004       0.284      0.000       0.443       1.568      *
+
+ Intercepts
+    ECRANX_0           1.849       0.351      0.000       1.145       2.535      *
+    ECRANX_1           2.373       0.283      0.000       1.818       2.923      *
+    SCPT              27.241       3.010      0.000      21.320      33.123      *
+    CCPT              18.734       5.503      0.000       7.974      29.557      *
+    SCPR              25.713       2.667      0.000      20.574      30.983      *
+    CCPR              14.264       5.469      0.005       3.546      25.041      *
+    PRNAPT            15.914       0.628      0.000      14.679      17.150      *
+    PRNAPR            13.691       0.461      0.000      12.787      14.595      *
+    PNAPT              4.843       1.740      0.003       1.440       8.254      *
+    PNAPR              4.820       1.526      0.001       1.873       7.841      *
+
+ Variances
+    CMPT               9.649       1.470      0.000       7.288      13.090      *
+    CMPR               7.764       1.177      0.000       5.894      10.516      *
+
+ Residual Variances
+    ECRANX_0           1.427       0.217      0.000       1.082       1.926      *
+    ECRANX_1           1.195       0.182      0.000       0.908       1.616      *
+    SCPT             146.006      22.809      0.000     110.153     199.828      *
+    CCPT            1012.021     156.339      0.000     763.433    1371.890      *
+    SCPR             168.134      25.902      0.000     126.827     227.138      *
+    CCPR            1543.883     237.327      0.000    1168.065    2089.922      *
+    PRNAPT            34.169       5.229      0.000      25.966      46.312      *
+    PRNAPR            18.616       2.858      0.000      14.123      25.290      *
+    PNAPT             33.647       5.211      0.000      25.533      45.901      *
+    PNAPR             20.083       3.046      0.000      15.214      27.090      *
+
+New/Additional Parameters
+    B1C                0.042       0.024      0.016       0.004       0.097      *
+    WB1C               0.003       0.002      0.016       0.000       0.007      *
+    XWB1C             -0.006       0.004      0.017      -0.017       0.000      *
+
+
+     Beginning Time:  10:30:17
+        Ending Time:  10:30:24
+       Elapsed Time:  00:00:07
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

@@ -1,0 +1,319 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  11:58 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "histr_aonly_m.dat";
+
+  VARIABLE:
+  NAMES = dasbl1 dasbl0 histr_1 histr_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  dasbl1 ON histr_1;
+  dasbl1 ON histr_0@0;
+  dasbl0 ON histr_1@0;
+  dasbl0 ON histr_0;
+  dasbl1 WITH dasbl0;
+  histr_1 WITH histr_0;
+  dasbl1 WITH dasbl1;
+  dasbl0 WITH dasbl0;
+  histr_1 WITH histr_1;
+  histr_0 WITH histr_0;
+  [dasbl1];
+  [dasbl0];
+  [histr_1];
+  [histr_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    2
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   DASBL1      DASBL0
+
+Observed independent variables
+   HISTR_1     HISTR_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  histr_aonly_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             3
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              DASBL1        DASBL0        HISTR_1       HISTR_0
+              ________      ________      ________      ________
+ DASBL1         1.000
+ DASBL0         0.970         0.970
+ HISTR_1        0.990         0.960         0.990
+ HISTR_0        0.990         0.960         0.990         0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     DASBL1                3.101       0.918       2.000    3.03%       3.000      3.000      3.000
+              99.000       0.151       2.687       4.000   13.13%       3.000      3.000
+     DASBL0               11.510      -0.365       2.000    1.04%       9.000     11.000     12.000
+              96.000      12.229       0.022      19.000    1.04%      13.000     14.000
+     HISTR_1               1.673       1.393       0.000   35.71%       0.000      1.000      1.000
+              98.000       3.648       1.471       8.000    1.02%       2.000      3.000
+     HISTR_0               0.714       1.995       0.000   70.41%       0.000      0.000      0.000
+              98.000       1.918       2.725       5.000    4.08%       0.000      1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              12
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -16.220            12.994
+
+          Posterior Predictive P-Value              0.571
+
+Information Criteria
+
+          Deviance (DIC)                         1348.114
+          Estimated Number of Parameters (pD)      11.540
+          Bayesian (BIC)                         1379.806
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ DASBL1     ON
+    HISTR_1           -0.010       0.019      0.305      -0.048       0.029
+    HISTR_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL0     ON
+    HISTR_1            0.000       0.000      1.000       0.000       0.000
+    HISTR_0           -0.761       0.255      0.002      -1.254      -0.252      *
+
+ DASBL1   WITH
+    DASBL0             0.551       0.164      0.000       0.275       0.916      *
+
+ HISTR_1  WITH
+    HISTR_0            0.606       0.306      0.016       0.054       1.270      *
+
+ Means
+    HISTR_1            1.674       0.202      0.000       1.276       2.068      *
+    HISTR_0            0.712       0.144      0.000       0.429       0.998      *
+
+ Intercepts
+    DASBL1             3.118       0.052      0.000       3.015       3.221      *
+    DASBL0            12.020       0.389      0.000      11.249      12.780      *
+
+ Variances
+    HISTR_1            3.873       0.589      0.000       2.935       5.227      *
+    HISTR_0            2.034       0.308      0.000       1.546       2.747      *
+
+ Residual Variances
+    DASBL1             0.161       0.024      0.000       0.122       0.218      *
+    DASBL0            12.074       1.877      0.000       9.090      16.470      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    HISTR_1           -0.049       0.094      0.305      -0.233       0.137
+    HISTR_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL0     ON
+    HISTR_1            0.000       0.000      1.000       0.000       0.000
+    HISTR_0           -0.298       0.095      0.002      -0.471      -0.100      *
+
+ DASBL1   WITH
+    DASBL0             0.399       0.089      0.000       0.211       0.559      *
+
+ HISTR_1  WITH
+    HISTR_0            0.219       0.098      0.016       0.020       0.403      *
+
+ Means
+    HISTR_1            0.852       0.119      0.000       0.617       1.087      *
+    HISTR_0            0.500       0.107      0.000       0.290       0.713      *
+
+ Intercepts
+    DASBL1             7.714       0.578      0.000       6.614       8.886      *
+    DASBL0             3.284       0.251      0.000       2.803       3.790      *
+
+ Variances
+    HISTR_1            1.000       0.000      0.000       1.000       1.000
+    HISTR_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    DASBL1             0.995       0.015      0.000       0.944       1.000      *
+    DASBL0             0.911       0.056      0.000       0.778       0.990      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    HISTR_1           -0.049       0.094      0.305      -0.233       0.137
+    HISTR_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL0     ON
+    HISTR_1            0.000       0.000      1.000       0.000       0.000
+    HISTR_0           -0.298       0.095      0.002      -0.471      -0.100      *
+
+ DASBL1   WITH
+    DASBL0             0.399       0.089      0.000       0.211       0.559      *
+
+ HISTR_1  WITH
+    HISTR_0            0.219       0.098      0.016       0.020       0.403      *
+
+ Means
+    HISTR_1            0.852       0.119      0.000       0.617       1.087      *
+    HISTR_0            0.500       0.107      0.000       0.290       0.713      *
+
+ Intercepts
+    DASBL1             7.714       0.578      0.000       6.614       8.886      *
+    DASBL0             3.284       0.251      0.000       2.803       3.790      *
+
+ Variances
+    HISTR_1            1.000       0.000      0.000       1.000       1.000
+    HISTR_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    DASBL1             0.995       0.015      0.000       0.944       1.000      *
+    DASBL0             0.911       0.056      0.000       0.778       0.990      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    HISTR_1           -0.010       0.019      0.305      -0.048       0.029
+    HISTR_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL0     ON
+    HISTR_1            0.000       0.000      1.000       0.000       0.000
+    HISTR_0           -0.761       0.255      0.002      -1.254      -0.252      *
+
+ DASBL1   WITH
+    DASBL0             0.399       0.089      0.000       0.211       0.559      *
+
+ HISTR_1  WITH
+    HISTR_0            0.219       0.098      0.016       0.020       0.403      *
+
+ Means
+    HISTR_1            1.674       0.202      0.000       1.276       2.068      *
+    HISTR_0            0.712       0.144      0.000       0.429       0.998      *
+
+ Intercepts
+    DASBL1             3.118       0.052      0.000       3.015       3.221      *
+    DASBL0            12.020       0.389      0.000      11.249      12.780      *
+
+ Variances
+    HISTR_1            3.873       0.589      0.000       2.935       5.227      *
+    HISTR_0            2.034       0.308      0.000       1.546       2.747      *
+
+ Residual Variances
+    DASBL1             0.161       0.024      0.000       0.122       0.218      *
+    DASBL0            12.074       1.877      0.000       9.090      16.470      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    DASBL1             0.005       0.015      0.000       0.000       0.056
+    DASBL0             0.089       0.056      0.000       0.010       0.222
+
+
+     Beginning Time:  11:58:40
+        Ending Time:  11:58:45
+       Elapsed Time:  00:00:05
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

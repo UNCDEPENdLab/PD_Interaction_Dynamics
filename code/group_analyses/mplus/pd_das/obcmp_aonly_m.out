@@ -1,0 +1,319 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  12:01 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "obcmp_aonly_m.dat";
+
+  VARIABLE:
+  NAMES = dasbl1 dasbl0 obcmp_1 obcmp_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  dasbl1 ON obcmp_1;
+  dasbl1 ON obcmp_0@0;
+  dasbl0 ON obcmp_1@0;
+  dasbl0 ON obcmp_0;
+  dasbl1 WITH dasbl0;
+  obcmp_1 WITH obcmp_0;
+  dasbl1 WITH dasbl1;
+  dasbl0 WITH dasbl0;
+  obcmp_1 WITH obcmp_1;
+  obcmp_0 WITH obcmp_0;
+  [dasbl1];
+  [dasbl0];
+  [obcmp_1];
+  [obcmp_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    2
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   DASBL1      DASBL0
+
+Observed independent variables
+   OBCMP_1     OBCMP_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  obcmp_aonly_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             3
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              DASBL1        DASBL0        OBCMP_1       OBCMP_0
+              ________      ________      ________      ________
+ DASBL1         1.000
+ DASBL0         0.970         0.970
+ OBCMP_1        0.990         0.960         0.990
+ OBCMP_0        0.990         0.960         0.990         0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     DASBL1                3.101       0.918       2.000    3.03%       3.000      3.000      3.000
+              99.000       0.151       2.687       4.000   13.13%       3.000      3.000
+     DASBL0               11.510      -0.365       2.000    1.04%       9.000     11.000     12.000
+              96.000      12.229       0.022      19.000    1.04%      13.000     14.000
+     OBCMP_1               3.459       0.826       0.000   13.27%       1.000      3.000      3.000
+              98.000       6.187       1.031      12.000    1.02%       4.000      5.000
+     OBCMP_0               2.163       1.508       0.000   24.49%       0.000      1.000      2.000
+              98.000       4.892       2.484      10.000    2.04%       2.000      3.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              12
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -16.195            12.855
+
+          Posterior Predictive P-Value              0.574
+
+Information Criteria
+
+          Deviance (DIC)                         1502.106
+          Estimated Number of Parameters (pD)      11.531
+          Bayesian (BIC)                         1533.814
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ DASBL1     ON
+    OBCMP_1            0.013       0.015      0.194      -0.016       0.042
+    OBCMP_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL0     ON
+    OBCMP_1            0.000       0.000      1.000       0.000       0.000
+    OBCMP_0           -0.225       0.152      0.069      -0.522       0.074
+
+ DASBL1   WITH
+    DASBL0             0.581       0.170      0.000       0.295       0.963      *
+
+ OBCMP_1  WITH
+    OBCMP_0            0.335       0.622      0.288      -0.869       1.612
+
+ Means
+    OBCMP_1            3.459       0.263      0.000       2.940       3.972      *
+    OBCMP_0            2.160       0.231      0.000       1.708       2.618      *
+
+ Intercepts
+    DASBL1             3.057       0.066      0.000       2.927       3.186      *
+    DASBL0            12.036       0.496      0.000      11.059      13.014      *
+
+ Variances
+    OBCMP_1            6.572       0.997      0.000       4.976       8.874      *
+    OBCMP_0            5.191       0.787      0.000       3.942       7.007      *
+
+ Residual Variances
+    DASBL1             0.161       0.024      0.000       0.122       0.218      *
+    DASBL0            12.984       2.019      0.000       9.774      17.685      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    OBCMP_1            0.082       0.093      0.194      -0.103       0.263
+    OBCMP_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL0     ON
+    OBCMP_1            0.000       0.000      1.000       0.000       0.000
+    OBCMP_0           -0.141       0.093      0.069      -0.319       0.046
+
+ DASBL1   WITH
+    DASBL0             0.406       0.089      0.000       0.220       0.565      *
+
+ OBCMP_1  WITH
+    OBCMP_0            0.058       0.102      0.288      -0.145       0.256
+
+ Means
+    OBCMP_1            1.350       0.142      0.000       1.074       1.630      *
+    OBCMP_0            0.949       0.122      0.000       0.711       1.192      *
+
+ Intercepts
+    DASBL1             7.557       0.592      0.000       6.432       8.753      *
+    DASBL0             3.292       0.265      0.000       2.770       3.818      *
+
+ Variances
+    OBCMP_1            1.000       0.000      0.000       1.000       1.000
+    OBCMP_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    DASBL1             0.992       0.019      0.000       0.931       1.000      *
+    DASBL0             0.980       0.028      0.000       0.898       1.000      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    OBCMP_1            0.082       0.093      0.194      -0.103       0.263
+    OBCMP_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL0     ON
+    OBCMP_1            0.000       0.000      1.000       0.000       0.000
+    OBCMP_0           -0.141       0.093      0.069      -0.319       0.046
+
+ DASBL1   WITH
+    DASBL0             0.406       0.089      0.000       0.220       0.565      *
+
+ OBCMP_1  WITH
+    OBCMP_0            0.058       0.102      0.288      -0.145       0.256
+
+ Means
+    OBCMP_1            1.350       0.142      0.000       1.074       1.630      *
+    OBCMP_0            0.949       0.122      0.000       0.711       1.192      *
+
+ Intercepts
+    DASBL1             7.557       0.592      0.000       6.432       8.753      *
+    DASBL0             3.292       0.265      0.000       2.770       3.818      *
+
+ Variances
+    OBCMP_1            1.000       0.000      0.000       1.000       1.000
+    OBCMP_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    DASBL1             0.992       0.019      0.000       0.931       1.000      *
+    DASBL0             0.980       0.028      0.000       0.898       1.000      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    OBCMP_1            0.013       0.015      0.194      -0.016       0.042
+    OBCMP_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL0     ON
+    OBCMP_1            0.000       0.000      1.000       0.000       0.000
+    OBCMP_0           -0.225       0.152      0.069      -0.522       0.074
+
+ DASBL1   WITH
+    DASBL0             0.406       0.089      0.000       0.220       0.565      *
+
+ OBCMP_1  WITH
+    OBCMP_0            0.058       0.102      0.288      -0.145       0.256
+
+ Means
+    OBCMP_1            3.459       0.263      0.000       2.940       3.972      *
+    OBCMP_0            2.160       0.231      0.000       1.708       2.618      *
+
+ Intercepts
+    DASBL1             3.057       0.066      0.000       2.927       3.186      *
+    DASBL0            12.036       0.496      0.000      11.059      13.014      *
+
+ Variances
+    OBCMP_1            6.572       0.997      0.000       4.976       8.874      *
+    OBCMP_0            5.191       0.787      0.000       3.942       7.007      *
+
+ Residual Variances
+    DASBL1             0.161       0.024      0.000       0.122       0.218      *
+    DASBL0            12.984       2.019      0.000       9.774      17.685      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    DASBL1             0.008       0.019      0.000       0.000       0.069
+    DASBL0             0.020       0.028      0.000       0.000       0.102
+
+
+     Beginning Time:  12:01:45
+        Ending Time:  12:01:49
+       Elapsed Time:  00:00:04
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

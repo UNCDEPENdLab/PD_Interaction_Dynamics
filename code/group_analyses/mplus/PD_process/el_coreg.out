@@ -1,0 +1,417 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+10/04/2019  11:56 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "../df67.dat";
+
+  VARIABLE:
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+  elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id;
+   MISSING=.;
+  USEVARIABLES = scpt ccpt scpr ccpr
+  elpt elpr id;
+  IDVARIABLE IS id;
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  !ESTIMATOR = MLR;
+  MODEL:
+  scpr ON elpr@0;
+  ccpr ON elpr;
+  scpt ON elpt@0;
+  ccpt ON elpt;
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  scpr WITH ccpt;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  scpt WITH scpt;
+  scpr WITH scpr;
+  ccpt WITH ccpt;
+  ccpr WITH ccpr;
+  elpt WITH elpt;
+  elpr WITH elpr;
+  [scpt];
+  [scpr];
+  [ccpt];
+  [ccpr];
+  [elpt];
+  [elpr];
+
+  OUTPUT:
+  STANDARDIZED;!  MODINDICES(ALL 5);
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR
+
+Observed independent variables
+   ELPT        ELPR
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  ../df67.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          ELPT
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ ELPT           1.000         1.000         1.000         1.000         1.000
+ ELPR           0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              ELPR
+              ________
+ ELPR           0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.559       0.551       7.450    1.01%      19.197     26.648     29.841
+              99.000     129.762      -0.204      58.807    1.01%      31.821     39.920
+     CCPT                 -0.890      -0.259     -81.685    1.01%     -26.415     -7.559      2.881
+              99.000    1013.048       0.128      80.417    1.01%       8.529     24.280
+     SCPR                 28.538       0.567       9.085    1.01%      16.451     24.118     27.494
+              99.000     153.716      -0.221      66.121    1.01%      29.684     39.272
+     CCPR                 -0.283      -0.178    -116.491    1.01%     -27.251     -8.605     -2.107
+              99.000    1435.257       0.411      79.366    1.01%       5.588     28.790
+     ELPT                  9.658       0.082       1.375    1.01%       5.750      8.375      9.500
+              99.000      15.289      -0.698      18.000    1.01%      10.625     12.875
+     ELPR                  6.835       0.329       0.750    3.06%       3.250      5.250      6.812
+              98.000      15.020      -0.679      15.625    1.02%       7.750     10.375
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              21
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -17.923            22.898
+
+          Posterior Predictive P-Value              0.405
+
+Information Criteria
+
+          Deviance (DIC)                         4537.464
+          Estimated Number of Parameters (pD)      19.671
+          Bayesian (BIC)                         4593.842
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ SCPR       ON
+    ELPR               0.000       0.000      1.000       0.000       0.000
+
+ CCPR       ON
+    ELPR               1.546       0.662      0.010       0.254       2.836      *
+
+ SCPT       ON
+    ELPT               0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    ELPT              -1.443       0.553      0.005      -2.529      -0.361      *
+
+ SCPT     WITH
+    CCPT              20.386      43.883      0.312     -64.261     109.240
+    SCPR             -22.822      17.154      0.082     -58.371       9.638
+    CCPR             -46.572      53.153      0.180    -155.505      56.226
+
+ SCPR     WITH
+    CCPT              -7.663      47.269      0.432    -100.818      85.272
+    CCPR             -87.403      57.759      0.053    -209.235      19.730
+
+ CCPT     WITH
+    CCPR           -1021.899     184.769      0.000   -1453.072    -728.688      *
+
+ ELPR     WITH
+    ELPT               4.312       1.775      0.004       1.172       8.118      *
+
+ Means
+    ELPT               9.658       0.412      0.000       8.850      10.466      *
+    ELPR               6.850       0.408      0.000       6.038       7.647      *
+
+ Intercepts
+    SCPT              30.569       1.214      0.000      28.155      32.957      *
+    CCPT              13.031       6.309      0.021       0.587      25.395      *
+    SCPR              28.538       1.331      0.000      25.933      31.148      *
+    CCPR             -10.828       6.113      0.037     -22.889       1.007
+
+ Variances
+    ELPT              16.221       2.467      0.000      12.340      21.904      *
+    ELPR              15.918       2.430      0.000      12.081      21.547      *
+
+ Residual Variances
+    SCPT             143.913      22.429      0.000     108.610     195.999      *
+    CCPT            1104.024     171.514      0.000     836.443    1508.135      *
+    SCPR             170.450      26.121      0.000     129.094     230.869      *
+    CCPR            1622.398     252.748      0.000    1225.600    2214.243      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPR       ON
+    ELPR               0.000       0.000      1.000       0.000       0.000
+
+ CCPR       ON
+    ELPR               0.150       0.064      0.010       0.025       0.276      *
+
+ SCPT       ON
+    ELPT               0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    ELPT              -0.171       0.066      0.005      -0.301      -0.043      *
+
+ SCPT     WITH
+    CCPT               0.052       0.106      0.312      -0.156       0.255
+    SCPR              -0.148       0.102      0.082      -0.341       0.061
+    CCPR              -0.097       0.105      0.180      -0.296       0.114
+
+ SCPR     WITH
+    CCPT              -0.018       0.105      0.432      -0.221       0.189
+    CCPR              -0.169       0.102      0.053      -0.361       0.038
+
+ CCPT     WITH
+    CCPR              -0.766       0.045      0.000      -0.840      -0.665      *
+
+ ELPR     WITH
+    ELPT               0.271       0.096      0.004       0.075       0.447      *
+
+ Means
+    ELPT               2.398       0.203      0.000       2.002       2.802      *
+    ELPR               1.717       0.161      0.000       1.403       2.038      *
+
+ Intercepts
+    SCPT               2.550       0.218      0.000       2.128       2.981      *
+    CCPT               0.385       0.183      0.021       0.017       0.737      *
+    SCPR               2.186       0.190      0.000       1.823       2.568      *
+    CCPR              -0.265       0.147      0.037      -0.546       0.025
+
+ Variances
+    ELPT               1.000       0.000      0.000       1.000       1.000
+    ELPR               1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               1.000       0.000      0.000       1.000       1.000
+    CCPT               0.971       0.023      0.000       0.909       0.998      *
+    SCPR               1.000       0.000      0.000       1.000       1.000
+    CCPR               0.977       0.020      0.000       0.924       0.999      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPR       ON
+    ELPR               0.000       0.000      1.000       0.000       0.000
+
+ CCPR       ON
+    ELPR               0.150       0.064      0.010       0.025       0.276      *
+
+ SCPT       ON
+    ELPT               0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    ELPT              -0.171       0.066      0.005      -0.301      -0.043      *
+
+ SCPT     WITH
+    CCPT               0.052       0.106      0.312      -0.156       0.255
+    SCPR              -0.148       0.102      0.082      -0.341       0.061
+    CCPR              -0.097       0.105      0.180      -0.296       0.114
+
+ SCPR     WITH
+    CCPT              -0.018       0.105      0.432      -0.221       0.189
+    CCPR              -0.169       0.102      0.053      -0.361       0.038
+
+ CCPT     WITH
+    CCPR              -0.766       0.045      0.000      -0.840      -0.665      *
+
+ ELPR     WITH
+    ELPT               0.271       0.096      0.004       0.075       0.447      *
+
+ Means
+    ELPT               2.398       0.203      0.000       2.002       2.802      *
+    ELPR               1.717       0.161      0.000       1.403       2.038      *
+
+ Intercepts
+    SCPT               2.550       0.218      0.000       2.128       2.981      *
+    CCPT               0.385       0.183      0.021       0.017       0.737      *
+    SCPR               2.186       0.190      0.000       1.823       2.568      *
+    CCPR              -0.265       0.147      0.037      -0.546       0.025
+
+ Variances
+    ELPT               1.000       0.000      0.000       1.000       1.000
+    ELPR               1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               1.000       0.000      0.000       1.000       1.000
+    CCPT               0.971       0.023      0.000       0.909       0.998      *
+    SCPR               1.000       0.000      0.000       1.000       1.000
+    CCPR               0.977       0.020      0.000       0.924       0.999      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPR       ON
+    ELPR               0.000       0.000      1.000       0.000       0.000
+
+ CCPR       ON
+    ELPR               1.546       0.662      0.010       0.254       2.836      *
+
+ SCPT       ON
+    ELPT               0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    ELPT              -1.443       0.553      0.005      -2.529      -0.361      *
+
+ SCPT     WITH
+    CCPT               0.052       0.106      0.312      -0.156       0.255
+    SCPR              -0.148       0.102      0.082      -0.341       0.061
+    CCPR              -0.097       0.105      0.180      -0.296       0.114
+
+ SCPR     WITH
+    CCPT              -0.018       0.105      0.432      -0.221       0.189
+    CCPR              -0.169       0.102      0.053      -0.361       0.038
+
+ CCPT     WITH
+    CCPR              -0.766       0.045      0.000      -0.840      -0.665      *
+
+ ELPR     WITH
+    ELPT               0.271       0.096      0.004       0.075       0.447      *
+
+ Means
+    ELPT               9.658       0.412      0.000       8.850      10.466      *
+    ELPR               6.850       0.408      0.000       6.038       7.647      *
+
+ Intercepts
+    SCPT              30.569       1.214      0.000      28.155      32.957      *
+    CCPT              13.031       6.309      0.021       0.587      25.395      *
+    SCPR              28.538       1.331      0.000      25.933      31.148      *
+    CCPR             -10.828       6.113      0.037     -22.889       1.007
+
+ Variances
+    ELPT              16.221       2.467      0.000      12.340      21.904      *
+    ELPR              15.918       2.430      0.000      12.081      21.547      *
+
+ Residual Variances
+    SCPT             143.913      22.429      0.000     108.610     195.999      *
+    CCPT            1104.024     171.514      0.000     836.443    1508.135      *
+    SCPR             170.450      26.121      0.000     129.094     230.869      *
+    CCPR            1622.398     252.748      0.000    1225.600    2214.243      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    SCPT               0.000       0.000      1.000       0.000       0.000
+    CCPT               0.029       0.023      0.000       0.002       0.091
+    SCPR               0.000       0.000      1.000       0.000       0.000
+    CCPR               0.023       0.020      0.000       0.001       0.076
+
+
+     Beginning Time:  11:56:17
+        Ending Time:  11:56:22
+       Elapsed Time:  00:00:05
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

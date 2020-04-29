@@ -1,0 +1,29 @@
+TITLE:
+Testing
+DATA:
+FILE = "depen_ponly_m.dat";
+ 
+VARIABLE:
+NAMES = dasbl1 dasbl0 depen_1 depen_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+dasbl1 ON depen_1@0;
+dasbl1 ON depen_0; 
+dasbl0 ON depen_1; 
+dasbl0 ON depen_0@0;
+dasbl1 WITH dasbl0; 
+depen_1 WITH depen_0; 
+dasbl1 WITH dasbl1; 
+dasbl0 WITH dasbl0; 
+depen_1 WITH depen_1; 
+depen_0 WITH depen_0; 
+[dasbl1]; 
+[dasbl0]; 
+[depen_1]; 
+[depen_0]; 
+
+OUTPUT:
+STANDARDIZED

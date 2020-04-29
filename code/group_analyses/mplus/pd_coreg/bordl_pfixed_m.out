@@ -1,0 +1,430 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  10:49 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "bordl_pfixed_m.dat";
+
+  VARIABLE:
+  NAMES = scpt ccpt scpr ccpr bordl_1 bordl_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  scpt ON bordl_1;
+  scpt ON bordl_0* (c);
+  ccpt ON bordl_1;
+  ccpt ON bordl_0* (d);
+  scpr ON bordl_1* (c);
+  scpr ON bordl_0;
+  ccpr ON bordl_1* (d);
+  ccpr ON bordl_0;
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  ccpt WITH scpr;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  bordl_1 WITH bordl_0;
+  scpt WITH scpt;
+  ccpt WITH ccpt;
+  scpr WITH scpr;
+  ccpr WITH ccpr;
+  bordl_1 WITH bordl_1;
+  bordl_0 WITH bordl_0;
+  [scpt];
+  [ccpt];
+  [scpr];
+  [ccpr];
+  [bordl_1];
+  [bordl_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR
+
+Observed independent variables
+   BORDL_1     BORDL_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  bordl_pfixed_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          BORDL_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ BORDL_1        0.990         0.990         0.990         0.990         0.990
+ BORDL_0        0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              BORDL_0
+              ________
+ BORDL_0        0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.051       0.557       7.000    1.01%      19.000     26.000     29.000
+              99.000     130.270      -0.214      58.000    1.01%      31.000     39.000
+     CCPT                 -0.879      -0.261     -81.000    1.01%     -26.000     -7.000      2.000
+              99.000     990.713       0.169      80.000    1.01%       8.000     24.000
+     SCPR                 28.030       0.568       9.000    2.02%      16.000     24.000     27.000
+              99.000     154.575      -0.200      66.000    1.01%      29.000     39.000
+     CCPR                 -0.253      -0.176    -116.000    1.01%     -27.000     -8.000     -2.000
+              99.000    1405.603       0.459      79.000    1.01%       5.000     28.000
+     BORDL_1               4.776       0.849       0.000   19.39%       1.000      3.000      4.000
+              98.000      17.725      -0.018      17.000    1.02%       5.000      8.000
+     BORDL_0               1.990       1.128       0.000   41.84%       0.000      0.000      1.000
+              98.000       5.806       0.152       8.000    5.10%       2.000      4.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              25
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -17.941            23.724
+
+          Posterior Predictive P-Value              0.384
+
+Information Criteria
+
+          Deviance (DIC)                         4460.883
+          Estimated Number of Parameters (pD)      23.671
+          Bayesian (BIC)                         4527.642
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ SCPT       ON
+    BORDL_1           -0.627       0.292      0.016      -1.205      -0.056      *
+    BORDL_0            0.018       0.276      0.473      -0.520       0.561
+
+ CCPT       ON
+    BORDL_1           -0.608       0.800      0.222      -2.186       0.974
+    BORDL_0            0.415       0.859      0.312      -1.265       2.115
+
+ SCPR       ON
+    BORDL_1            0.018       0.276      0.473      -0.520       0.561
+    BORDL_0            1.225       0.558      0.013       0.140       2.327      *
+
+ CCPR       ON
+    BORDL_1            0.415       0.859      0.312      -1.265       2.115
+    BORDL_0           -1.756       1.438      0.109      -4.584       1.050
+
+ SCPT     WITH
+    CCPT               3.734      43.506      0.464     -82.532      90.076
+    SCPR             -29.184      17.238      0.034     -65.884       2.398
+    CCPR             -32.165      51.384      0.257    -138.286      66.030
+
+ CCPT     WITH
+    SCPR              -9.923      47.285      0.411    -105.112      82.580
+    CCPR            -958.226     179.777      0.000   -1386.220    -676.093      *
+
+ SCPR     WITH
+    CCPR             -72.361      56.298      0.089    -189.882      32.811
+
+ BORDL_1  WITH
+    BORDL_0            2.389       1.173      0.015       0.247       4.870      *
+
+ Means
+    BORDL_1            4.787       0.439      0.000       3.928       5.647      *
+    BORDL_0            1.987       0.250      0.000       1.493       2.482      *
+
+ Intercepts
+    SCPT              33.020       1.814      0.000      29.445      36.575      *
+    CCPT               1.176       4.433      0.393      -7.564       9.839
+    SCPR              25.534       1.975      0.000      21.597      29.373      *
+    CCPR               1.222       5.159      0.405      -9.004      11.317
+
+ Variances
+    BORDL_1           18.815       2.837      0.000      14.345      25.450      *
+    BORDL_0            6.162       0.934      0.000       4.683       8.354      *
+
+ Residual Variances
+    SCPT             140.068      21.953      0.000     105.792     190.897      *
+    CCPT            1105.890     172.756      0.000     836.656    1511.358      *
+    SCPR             167.071      26.395      0.000     125.157     228.477      *
+    CCPR            1541.964     242.394      0.000    1162.708    2108.804      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    BORDL_1           -0.224       0.100      0.016      -0.412      -0.020      *
+    BORDL_0            0.004       0.056      0.473      -0.106       0.115
+
+ CCPT       ON
+    BORDL_1           -0.079       0.102      0.222      -0.276       0.124
+    BORDL_0            0.031       0.063      0.312      -0.093       0.155
+
+ SCPR       ON
+    BORDL_1            0.006       0.089      0.473      -0.169       0.179
+    BORDL_0            0.228       0.100      0.013       0.027       0.416      *
+
+ CCPR       ON
+    BORDL_1            0.045       0.093      0.312      -0.137       0.225
+    BORDL_0           -0.110       0.089      0.109      -0.282       0.065
+
+ SCPT     WITH
+    CCPT               0.010       0.106      0.464      -0.200       0.216
+    SCPR              -0.193       0.103      0.034      -0.386       0.016
+    CCPR              -0.070       0.106      0.257      -0.275       0.137
+
+ CCPT     WITH
+    SCPR              -0.023       0.106      0.411      -0.230       0.183
+    CCPR              -0.738       0.049      0.000      -0.821      -0.627      *
+
+ SCPR     WITH
+    CCPR              -0.144       0.104      0.089      -0.340       0.063
+
+ BORDL_1  WITH
+    BORDL_0            0.224       0.098      0.015       0.024       0.406      *
+
+ Means
+    BORDL_1            1.104       0.128      0.000       0.857       1.361      *
+    BORDL_0            0.802       0.116      0.000       0.572       1.030      *
+
+ Intercepts
+    SCPT               2.703       0.223      0.000       2.262       3.132      *
+    CCPT               0.035       0.131      0.393      -0.224       0.287
+    SCPR               1.907       0.227      0.000       1.469       2.355      *
+    CCPR               0.031       0.129      0.405      -0.222       0.284
+
+ Variances
+    BORDL_1            1.000       0.000      0.000       1.000       1.000
+    BORDL_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.947       0.044      0.000       0.832       0.997      *
+    CCPT               0.989       0.021      0.000       0.922       1.000      *
+    SCPR               0.940       0.045      0.000       0.824       0.995      *
+    CCPR               0.981       0.025      0.000       0.905       0.999      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    BORDL_1           -0.224       0.100      0.016      -0.412      -0.020      *
+    BORDL_0            0.004       0.056      0.473      -0.106       0.115
+
+ CCPT       ON
+    BORDL_1           -0.079       0.102      0.222      -0.276       0.124
+    BORDL_0            0.031       0.063      0.312      -0.093       0.155
+
+ SCPR       ON
+    BORDL_1            0.006       0.089      0.473      -0.169       0.179
+    BORDL_0            0.228       0.100      0.013       0.027       0.416      *
+
+ CCPR       ON
+    BORDL_1            0.045       0.093      0.312      -0.137       0.225
+    BORDL_0           -0.110       0.089      0.109      -0.282       0.065
+
+ SCPT     WITH
+    CCPT               0.010       0.106      0.464      -0.200       0.216
+    SCPR              -0.193       0.103      0.034      -0.386       0.016
+    CCPR              -0.070       0.106      0.257      -0.275       0.137
+
+ CCPT     WITH
+    SCPR              -0.023       0.106      0.411      -0.230       0.183
+    CCPR              -0.738       0.049      0.000      -0.821      -0.627      *
+
+ SCPR     WITH
+    CCPR              -0.144       0.104      0.089      -0.340       0.063
+
+ BORDL_1  WITH
+    BORDL_0            0.224       0.098      0.015       0.024       0.406      *
+
+ Means
+    BORDL_1            1.104       0.128      0.000       0.857       1.361      *
+    BORDL_0            0.802       0.116      0.000       0.572       1.030      *
+
+ Intercepts
+    SCPT               2.703       0.223      0.000       2.262       3.132      *
+    CCPT               0.035       0.131      0.393      -0.224       0.287
+    SCPR               1.907       0.227      0.000       1.469       2.355      *
+    CCPR               0.031       0.129      0.405      -0.222       0.284
+
+ Variances
+    BORDL_1            1.000       0.000      0.000       1.000       1.000
+    BORDL_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.947       0.044      0.000       0.832       0.997      *
+    CCPT               0.989       0.021      0.000       0.922       1.000      *
+    SCPR               0.940       0.045      0.000       0.824       0.995      *
+    CCPR               0.981       0.025      0.000       0.905       0.999      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    BORDL_1           -0.627       0.292      0.016      -1.205      -0.056      *
+    BORDL_0            0.018       0.276      0.473      -0.520       0.561
+
+ CCPT       ON
+    BORDL_1           -0.608       0.800      0.222      -2.186       0.974
+    BORDL_0            0.415       0.859      0.312      -1.265       2.115
+
+ SCPR       ON
+    BORDL_1            0.018       0.276      0.473      -0.520       0.561
+    BORDL_0            1.225       0.558      0.013       0.140       2.327      *
+
+ CCPR       ON
+    BORDL_1            0.415       0.859      0.312      -1.265       2.115
+    BORDL_0           -1.756       1.438      0.109      -4.584       1.050
+
+ SCPT     WITH
+    CCPT               0.010       0.106      0.464      -0.200       0.216
+    SCPR              -0.193       0.103      0.034      -0.386       0.016
+    CCPR              -0.070       0.106      0.257      -0.275       0.137
+
+ CCPT     WITH
+    SCPR              -0.023       0.106      0.411      -0.230       0.183
+    CCPR              -0.738       0.049      0.000      -0.821      -0.627      *
+
+ SCPR     WITH
+    CCPR              -0.144       0.104      0.089      -0.340       0.063
+
+ BORDL_1  WITH
+    BORDL_0            0.224       0.098      0.015       0.024       0.406      *
+
+ Means
+    BORDL_1            4.787       0.439      0.000       3.928       5.647      *
+    BORDL_0            1.987       0.250      0.000       1.493       2.482      *
+
+ Intercepts
+    SCPT              33.020       1.814      0.000      29.445      36.575      *
+    CCPT               1.176       4.433      0.393      -7.564       9.839
+    SCPR              25.534       1.975      0.000      21.597      29.373      *
+    CCPR               1.222       5.159      0.405      -9.004      11.317
+
+ Variances
+    BORDL_1           18.815       2.837      0.000      14.345      25.450      *
+    BORDL_0            6.162       0.934      0.000       4.683       8.354      *
+
+ Residual Variances
+    SCPT             140.068      21.953      0.000     105.792     190.897      *
+    CCPT            1105.890     172.756      0.000     836.656    1511.358      *
+    SCPR             167.071      26.395      0.000     125.157     228.477      *
+    CCPR            1541.964     242.394      0.000    1162.708    2108.804      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    SCPT               0.053       0.044      0.000       0.003       0.168
+    CCPT               0.011       0.021      0.000       0.000       0.078
+    SCPR               0.060       0.045      0.000       0.005       0.176
+    CCPR               0.019       0.025      0.000       0.001       0.095
+
+
+     Beginning Time:  10:49:22
+        Ending Time:  10:49:28
+       Elapsed Time:  00:00:06
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

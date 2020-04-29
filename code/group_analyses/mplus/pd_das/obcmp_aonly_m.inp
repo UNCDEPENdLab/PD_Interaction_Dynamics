@@ -1,0 +1,29 @@
+TITLE:
+Testing
+DATA:
+FILE = "obcmp_aonly_m.dat";
+ 
+VARIABLE:
+NAMES = dasbl1 dasbl0 obcmp_1 obcmp_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+dasbl1 ON obcmp_1; 
+dasbl1 ON obcmp_0@0;
+dasbl0 ON obcmp_1@0;
+dasbl0 ON obcmp_0; 
+dasbl1 WITH dasbl0; 
+obcmp_1 WITH obcmp_0; 
+dasbl1 WITH dasbl1; 
+dasbl0 WITH dasbl0; 
+obcmp_1 WITH obcmp_1; 
+obcmp_0 WITH obcmp_0; 
+[dasbl1]; 
+[dasbl0]; 
+[obcmp_1]; 
+[obcmp_0]; 
+
+OUTPUT:
+STANDARDIZED

@@ -1,0 +1,430 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  10:50 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "narci_aonly_m.dat";
+
+  VARIABLE:
+  NAMES = scpt ccpt scpr ccpr narci_1 narci_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  scpt ON narci_1;
+  scpt ON narci_0@0;
+  ccpt ON narci_1;
+  ccpt ON narci_0@0;
+  scpr ON narci_1@0;
+  scpr ON narci_0;
+  ccpr ON narci_1@0;
+  ccpr ON narci_0;
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  ccpt WITH scpr;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  narci_1 WITH narci_0;
+  scpt WITH scpt;
+  ccpt WITH ccpt;
+  scpr WITH scpr;
+  ccpr WITH ccpr;
+  narci_1 WITH narci_1;
+  narci_0 WITH narci_0;
+  [scpt];
+  [ccpt];
+  [scpr];
+  [ccpr];
+  [narci_1];
+  [narci_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR
+
+Observed independent variables
+   NARCI_1     NARCI_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  narci_aonly_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          NARCI_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ NARCI_1        0.990         0.990         0.990         0.990         0.990
+ NARCI_0        0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              NARCI_0
+              ________
+ NARCI_0        0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.051       0.557       7.000    1.01%      19.000     26.000     29.000
+              99.000     130.270      -0.214      58.000    1.01%      31.000     39.000
+     CCPT                 -0.879      -0.261     -81.000    1.01%     -26.000     -7.000      2.000
+              99.000     990.713       0.169      80.000    1.01%       8.000     24.000
+     SCPR                 28.030       0.568       9.000    2.02%      16.000     24.000     27.000
+              99.000     154.575      -0.200      66.000    1.01%      29.000     39.000
+     CCPR                 -0.253      -0.176    -116.000    1.01%     -27.000     -8.000     -2.000
+              99.000    1405.603       0.459      79.000    1.01%       5.000     28.000
+     NARCI_1               1.663       2.270       0.000   37.76%       0.000      1.000      1.000
+              98.000       4.183       8.342      13.000    1.02%       2.000      3.000
+     NARCI_0               1.531       2.648       0.000   46.94%       0.000      0.000      1.000
+              98.000       6.025       8.251      14.000    1.02%       1.000      2.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              23
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -22.109            20.153
+
+          Posterior Predictive P-Value              0.541
+
+Information Criteria
+
+          Deviance (DIC)                         4328.794
+          Estimated Number of Parameters (pD)      21.512
+          Bayesian (BIC)                         4390.738
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ SCPT       ON
+    NARCI_1           -0.531       0.580      0.178      -1.669       0.618
+    NARCI_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    NARCI_1           -1.792       1.070      0.047      -3.884       0.293
+    NARCI_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPR       ON
+    NARCI_1            0.000       0.000      1.000       0.000       0.000
+    NARCI_0            0.513       0.533      0.167      -0.522       1.578
+
+ CCPR       ON
+    NARCI_1            0.000       0.000      1.000       0.000       0.000
+    NARCI_0            0.470       1.082      0.330      -1.647       2.596
+
+ SCPT     WITH
+    CCPT               3.756      43.607      0.465     -82.689      89.990
+    SCPR             -23.665      17.431      0.075     -60.526       8.723
+    CCPR             -38.518      52.521      0.219    -146.447      61.929
+
+ CCPT     WITH
+    SCPR              -1.311      47.755      0.489     -96.318      93.899
+    CCPR            -968.627     179.266      0.000   -1389.157    -683.680      *
+
+ SCPR     WITH
+    CCPR             -90.163      57.966      0.047    -213.408      16.536
+
+ NARCI_1  WITH
+    NARCI_0            0.550       0.574      0.157      -0.544       1.725
+
+ Means
+    NARCI_1            1.668       0.214      0.000       1.250       2.088      *
+    NARCI_0            1.526       0.258      0.000       1.019       2.036      *
+
+ Intercepts
+    SCPT              30.937       1.559      0.000      27.895      33.969      *
+    CCPT               2.125       3.784      0.283      -5.380       9.556
+    SCPR              27.251       1.550      0.000      24.230      30.299      *
+    CCPR              -0.976       4.336      0.411      -9.579       7.522
+
+ Variances
+    NARCI_1            4.436       0.677      0.000       3.376       6.017      *
+    NARCI_0            6.381       0.969      0.000       4.849       8.635      *
+
+ Residual Variances
+    SCPT             144.723      22.677      0.000     109.093     197.941      *
+    CCPT            1091.540     169.520      0.000     821.215    1483.355      *
+    SCPR             172.002      26.722      0.000     129.478     233.908      *
+    CCPR            1573.406     245.864      0.000    1185.146    2148.139      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    NARCI_1           -0.093       0.099      0.178      -0.284       0.106
+    NARCI_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    NARCI_1           -0.113       0.068      0.047      -0.247       0.018
+    NARCI_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPR       ON
+    NARCI_1            0.000       0.000      1.000       0.000       0.000
+    NARCI_0            0.098       0.100      0.167      -0.099       0.292
+
+ CCPR       ON
+    NARCI_1            0.000       0.000      1.000       0.000       0.000
+    NARCI_0            0.030       0.068      0.330      -0.106       0.163
+
+ SCPT     WITH
+    CCPT               0.010       0.105      0.465      -0.197       0.213
+    SCPR              -0.152       0.103      0.075      -0.347       0.055
+    CCPR              -0.082       0.105      0.219      -0.284       0.126
+
+ CCPT     WITH
+    SCPR              -0.003       0.106      0.489      -0.211       0.206
+    CCPR              -0.744       0.048      0.000      -0.824      -0.635      *
+
+ SCPR     WITH
+    CCPR              -0.175       0.103      0.047      -0.373       0.032
+
+ NARCI_1  WITH
+    NARCI_0            0.105       0.102      0.157      -0.101       0.300
+
+ Means
+    NARCI_1            0.794       0.116      0.000       0.568       1.021      *
+    NARCI_0            0.605       0.111      0.000       0.388       0.822      *
+
+ Intercepts
+    SCPT               2.549       0.223      0.000       2.108       2.987      *
+    CCPT               0.064       0.113      0.283      -0.160       0.281
+    SCPR               2.060       0.201      0.000       1.668       2.458      *
+    CCPR              -0.024       0.108      0.411      -0.236       0.188
+
+ Variances
+    NARCI_1            1.000       0.000      0.000       1.000       1.000
+    NARCI_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.990       0.022      0.000       0.919       1.000      *
+    CCPT               0.987       0.017      0.000       0.939       1.000      *
+    SCPR               0.989       0.024      0.000       0.915       1.000      *
+    CCPR               0.997       0.008      0.000       0.972       1.000      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    NARCI_1           -0.093       0.099      0.178      -0.284       0.106
+    NARCI_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    NARCI_1           -0.113       0.068      0.047      -0.247       0.018
+    NARCI_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPR       ON
+    NARCI_1            0.000       0.000      1.000       0.000       0.000
+    NARCI_0            0.098       0.100      0.167      -0.099       0.292
+
+ CCPR       ON
+    NARCI_1            0.000       0.000      1.000       0.000       0.000
+    NARCI_0            0.030       0.068      0.330      -0.106       0.163
+
+ SCPT     WITH
+    CCPT               0.010       0.105      0.465      -0.197       0.213
+    SCPR              -0.152       0.103      0.075      -0.347       0.055
+    CCPR              -0.082       0.105      0.219      -0.284       0.126
+
+ CCPT     WITH
+    SCPR              -0.003       0.106      0.489      -0.211       0.206
+    CCPR              -0.744       0.048      0.000      -0.824      -0.635      *
+
+ SCPR     WITH
+    CCPR              -0.175       0.103      0.047      -0.373       0.032
+
+ NARCI_1  WITH
+    NARCI_0            0.105       0.102      0.157      -0.101       0.300
+
+ Means
+    NARCI_1            0.794       0.116      0.000       0.568       1.021      *
+    NARCI_0            0.605       0.111      0.000       0.388       0.822      *
+
+ Intercepts
+    SCPT               2.549       0.223      0.000       2.108       2.987      *
+    CCPT               0.064       0.113      0.283      -0.160       0.281
+    SCPR               2.060       0.201      0.000       1.668       2.458      *
+    CCPR              -0.024       0.108      0.411      -0.236       0.188
+
+ Variances
+    NARCI_1            1.000       0.000      0.000       1.000       1.000
+    NARCI_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.990       0.022      0.000       0.919       1.000      *
+    CCPT               0.987       0.017      0.000       0.939       1.000      *
+    SCPR               0.989       0.024      0.000       0.915       1.000      *
+    CCPR               0.997       0.008      0.000       0.972       1.000      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    NARCI_1           -0.531       0.580      0.178      -1.669       0.618
+    NARCI_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    NARCI_1           -1.792       1.070      0.047      -3.884       0.293
+    NARCI_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPR       ON
+    NARCI_1            0.000       0.000      1.000       0.000       0.000
+    NARCI_0            0.513       0.533      0.167      -0.522       1.578
+
+ CCPR       ON
+    NARCI_1            0.000       0.000      1.000       0.000       0.000
+    NARCI_0            0.470       1.082      0.330      -1.647       2.596
+
+ SCPT     WITH
+    CCPT               0.010       0.105      0.465      -0.197       0.213
+    SCPR              -0.152       0.103      0.075      -0.347       0.055
+    CCPR              -0.082       0.105      0.219      -0.284       0.126
+
+ CCPT     WITH
+    SCPR              -0.003       0.106      0.489      -0.211       0.206
+    CCPR              -0.744       0.048      0.000      -0.824      -0.635      *
+
+ SCPR     WITH
+    CCPR              -0.175       0.103      0.047      -0.373       0.032
+
+ NARCI_1  WITH
+    NARCI_0            0.105       0.102      0.157      -0.101       0.300
+
+ Means
+    NARCI_1            1.668       0.214      0.000       1.250       2.088      *
+    NARCI_0            1.526       0.258      0.000       1.019       2.036      *
+
+ Intercepts
+    SCPT              30.937       1.559      0.000      27.895      33.969      *
+    CCPT               2.125       3.784      0.283      -5.380       9.556
+    SCPR              27.251       1.550      0.000      24.230      30.299      *
+    CCPR              -0.976       4.336      0.411      -9.579       7.522
+
+ Variances
+    NARCI_1            4.436       0.677      0.000       3.376       6.017      *
+    NARCI_0            6.381       0.969      0.000       4.849       8.635      *
+
+ Residual Variances
+    SCPT             144.723      22.677      0.000     109.093     197.941      *
+    CCPT            1091.540     169.520      0.000     821.215    1483.355      *
+    SCPR             172.002      26.722      0.000     129.478     233.908      *
+    CCPR            1573.406     245.864      0.000    1185.146    2148.139      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    SCPT               0.010       0.022      0.000       0.000       0.081
+    CCPT               0.013       0.017      0.000       0.000       0.061
+    SCPR               0.011       0.024      0.000       0.000       0.085
+    CCPR               0.003       0.008      0.000       0.000       0.028
+
+
+     Beginning Time:  10:50:07
+        Ending Time:  10:50:14
+       Elapsed Time:  00:00:07
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

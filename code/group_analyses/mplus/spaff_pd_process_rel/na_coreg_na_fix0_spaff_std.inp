@@ -1,0 +1,83 @@
+TITLE:
+Testing
+DATA:
+FILE = "../df67_spaff.dat";
+
+VARIABLE:
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+elpt
+     elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id
+     npt
+     npr;
+ MISSING=.;
+USEVARIABLES = scpt ccpt scpr ccpr prnapt
+prnapr pnapt pnapr id npt npr;
+IDVARIABLE IS id;
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+!ESTIMATOR = MLR;
+MODEL:
+pnapt ON npt* (j);
+pnapr ON npr;
+npt ON prnapt* (l);
+npr ON prnapr;
+
+pnapt ON npr* (jj);
+pnapr ON npt;
+npt ON prnapr* (ll);
+npr ON prnapt;
+
+
+[npt];
+[npr];
+npt WITH npr;
+npt WITH npt;
+npr WITH npr;
+
+pnapt WITH pnapr;
+pnapt ON prnapt;
+pnapt ON scpt@0;
+pnapt ON ccpt* (c);
+pnapr ON prnapr;
+pnapr ON scpr@0;
+pnapr ON ccpr* (d);
+scpt ON prnapt* (a1);
+scpr ON prnapr* (a1);
+ccpt ON prnapt* (b1);
+ccpr ON prnapr* (b1);
+scpt WITH ccpt;
+scpt WITH scpr;
+scpt WITH ccpr;
+scpr WITH ccpt;
+ccpt WITH ccpr;
+scpr WITH ccpr;
+scpt WITH scpt;
+scpr WITH scpr;
+ccpt WITH ccpt;
+ccpr WITH ccpr;
+prnapt WITH prnapt;
+prnapr WITH prnapr;
+pnapt WITH pnapt;
+pnapr WITH pnapr;
+[scpt];
+[scpr];
+[ccpt];
+[ccpr];
+[prnapt];
+[prnapr];
+[pnapt];
+[pnapr];
+PRNAPR   WITH PRNAPT;
+MODEL CONSTRAINT:
+NEW ( b1c jl jjll );!b1d hb1c whb1c uhc );
+b1c = b1*c;
+jl = j*l;
+jjll = jj*ll;
+!hb1c = h*b1*c;
+!whb1c = w*h*b1*c;
+!uhc = u*h*c;
+
+
+OUTPUT:
+STANDARDIZED; ! MODINDICES(ALL 5);

@@ -1,0 +1,105 @@
+TITLE:
+Aff -> Coreg -> Aff -> DASFU AND fix non-sig parameters to zero. Only using
+CC to reduce number of parameters;
+DATA:
+FILE = "../df67_das_dem.dat";
+
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id
+rel dasfu1 dasfu0 dasbl1 dasbl0;
+ MISSING=.;
+USEVARIABLES = elpt elpr ccpt ccpr pnapt pnapr prnapt prnapr dasfu0 dasfu1
+dasbl1 dasbl0 rel scpr scpt;
+CATEGORICAL IS rel;
+IDVARIABLE IS id;
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2; BITERATIONS = (49000); !ALGORITHM=MH;
+!ESTIMATOR = MLR;
+MODEL:
+coreg BY ccpt;
+coreg BY scpt;
+coreg BY scpr;
+coreg BY ccpr;
+
+prnapt ON elpt* (z);
+prnapr ON elpr;
+coreg ON elpr;
+coreg ON elpt@0;
+prnapt WITH prnapr;
+pnapt WITH pnapr;
+pnapt ON prnapt;
+pnapt ON coreg* (c);
+pnapr ON prnapr;
+pnapr ON coreg@0;
+coreg ON prnapt* (b1);
+coreg ON prnapr* (b1);
+
+!scpt WITH scpr;
+!scpt WITH ccpt;
+!scpt WITH ccpr;
+!scpr WITH ccpt;
+!scpr WITH ccpr;
+!ccpt WITH ccpr;
+
+
+prnapt WITH prnapt;
+prnapr WITH prnapr;
+pnapt WITH pnapt;
+pnapr WITH pnapr;
+elpt WITH elpt;
+elpr WITH elpr;
+[scpt];
+[scpr];
+[ccpt];
+[ccpr@0];
+[prnapt];
+[prnapr];
+[pnapt];
+[pnapr];
+[elpt];
+[elpr];
+
+!PNAPR ON ELPR;
+!PRNAPR   WITH PRNAPT;
+
+
+dasfu1 ON pnapt* (k);
+dasfu1 ON pnapr@0;
+dasfu1 ON dasbl1;
+dasfu1 ON dasbl0@0;
+dasfu0 ON pnapt;
+dasfu0 ON pnapr@0;
+dasfu0 ON dasbl1;
+dasfu0 ON dasbl0;
+rel ON pnapt@0;
+rel ON pnapr@0;
+rel ON dasbl1;
+rel ON dasbl0@0;
+
+DASFU1 WITH DASFU1;
+DASFU0 WITH DASFU0;
+[DASFU1];
+[DASFU0];
+DASBL1 WITH DASBL1;
+DASBL0 WITH DASBL0;
+[DASBL1];
+[DASBL0];
+DASFU1 WITH DASFU0;
+DASBL0 WITH DASBL1;
+!DASFU1 WITH REL@0;
+!DASFU0 WITH REL@0;
+DASFU0 ON PRNAPR;
+
+
+MODEL CONSTRAINT:
+NEW ( b1c  zb1c kzcb1);!b1d hb1c whb1c uhc );
+b1c = b1*c;
+zb1c = z*b1*c;
+kzcb1 = k*z*b1*c
+
+
+OUTPUT:
+STANDARDIZED;  !MODINDICES(ALL 3);
+!savedata: file=infludiagnostics.txt; save is
+!cooks;

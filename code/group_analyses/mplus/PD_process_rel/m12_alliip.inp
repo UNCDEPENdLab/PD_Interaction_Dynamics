@@ -1,0 +1,102 @@
+TITLE:
+Testing
+DATA:
+FILE = "../df67_das_allIIP.dat";
+
+VARIABLE:
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+elpt_c elpr_c cmpt_c cmpr_c agpt_c agpr_c agcmpt agcmpr prafpt prafpr pafpt
+pafpr ECRavo_0 ECRavo_1 whichdf_num id rel dasfu1 dasfu0 dasbl1 dasbl0;
+ MISSING=.;
+USEVARIABLES = ECRanx_0 ECRanx_1 ccpt ccpr prnapt
+prnapr pnapt pnapr elpt_c elpr_c id agpt_c agpr_c cmpt_c cmpr_c agcmpt agcmpr;
+IDVARIABLE IS id;
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+!ESTIMATOR = MLR;
+MODEL:
+prnapt ON cmpt_c@0;
+prnapr ON cmpr_c@0;
+ccpt ON cmpt_c* (x);
+ccpr ON cmpr_c@0;
+cmpt_c WITH cmpt_c;
+cmpr_c WITH cmpr_c;
+cmpt_c WITH cmpr_c;
+[cmpt_c];
+[cmpr_c];
+
+prnapt ON agpt_c;
+prnapr ON agpr_c;
+ccpt ON agpt_c;
+ccpr ON agpr_c;
+agpt_c WITH agpt_c;
+agpr_c WITH agpr_c;
+agpt_c WITH agpr_c;
+[agpt_c];
+[agpr_c];
+
+
+prnapt ON agcmpt;
+prnapr ON agcmpr;
+ccpt ON agcmpt;
+ccpr ON agcmpr;
+agcmpt WITH agcmpt;
+agcmpr WITH agcmpr;
+agcmpt WITH agcmpr;
+[agcmpt];
+[agcmpr];
+
+ECRanx_1 ON pnapt* (w);
+ECRanx_0 ON pnapr;
+prnapt ON elpt_c* (z);
+prnapr ON elpr_c;
+ccpr ON elpr_c;
+ccpt ON elpt_c@0;
+prnapt WITH prnapr;
+pnapt WITH pnapr;
+pnapt ON prnapt;
+pnapt ON ccpt* (c);
+pnapr ON prnapr;
+pnapr ON ccpr@0;
+ccpt ON prnapt* (b1);
+ccpr ON prnapr* (b1);
+ccpt WITH ccpr;
+prnapt WITH prnapt;
+prnapr WITH prnapr;
+pnapt WITH pnapt;
+pnapr WITH pnapr;
+elpt_c WITH elpt_c;
+elpr_c WITH elpr_c;
+[ccpt];
+[ccpr@0];
+[prnapt];
+[prnapr];
+[pnapt];
+[pnapr];
+[elpt_c];
+[elpr_c];
+[ECRanx_0];
+[ECRanx_1];
+ECRanx_0 WITH ECRanx_1@0;
+ECRanx_0 WITH ECRanx_0;
+ECRanx_1 WITH ECRanx_1;
+ECRanx_0 ON ELPR_C;
+!PNAPR ON ELPR_C;
+ECRANX_1 ON ELPT_C;
+!PRNAPR   WITH PRNAPT;
+!ECRANX_0 ON PRNAPT;
+MODEL CONSTRAINT:
+NEW ( b1c wb1c zb1c zb1cw wxc);!b1d hb1c whb1c uhc );
+b1c = b1*c;
+zb1c = z*b1*c;
+zb1cw = z*b1*c*w;
+wb1c = w*b1*c;
+wxc = x*w*c;
+
+
+!OUTPUT:
+!STANDARDIZED;  MODINDICES(ALL 5);
+
+!savedata: file=na_inf.txt; save is
+!cooks;

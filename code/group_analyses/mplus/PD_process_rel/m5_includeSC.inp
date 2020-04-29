@@ -1,0 +1,115 @@
+TITLE:
+Aff -> Coreg -> Aff -> DASFU AND fix non-sig parameters to zero. Only using
+CC to reduce number of parameters;
+DATA:
+FILE = "../df67_das.dat";
+
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id
+rel dasfu1 dasfu0 dasbl1 dasbl0;
+ MISSING=.;
+USEVARIABLES = cmpt cmpr ccpt ccpr prafpt prafpr pafpt pafpr dasfu0 dasfu1
+dasbl1 dasbl0 rel scpt scpr;
+CATEGORICAL IS rel;
+IDVARIABLE IS id;
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2; BITERATIONS = (49000); !ALGORITHM=MH;
+!ESTIMATOR = MLR;
+MODEL:
+
+prafpt ON cmpt@0;
+prafpr ON cmpr@0;
+ccpt ON cmpt* (x);
+ccpr ON cmpr@0;
+cmpt WITH cmpt;
+cmpr WITH cmpr;
+cmpt WITH cmpr;
+[cmpt];
+[cmpr];
+dasfu1 ON pafpt* (k);
+dasfu1 ON pafpr@0;
+dasfu1 ON dasbl1;
+dasfu1 ON dasbl0@0;
+dasfu0 ON pafpt;
+dasfu0 ON pafpr@0;
+dasfu0 ON dasbl1;
+dasfu0 ON dasbl0;
+rel ON pafpt@0;
+rel ON pafpr@0;
+rel ON dasbl1;
+rel ON dasbl0@0;
+
+pafpt WITH pafpr;
+pafpt ON prafpt;
+pafpt ON scpt* (a1);
+pafpt ON ccpt* (a3);
+pafpt ON scpr* (a5);
+pafpt ON ccpr@0;
+pafpr ON prafpr;
+pafpr ON scpr@0;
+pafpr ON ccpr@0;
+pafpr ON scpt* (a5);
+pafpr ON ccpt@0;
+scpr ON prafpt@0;
+scpt ON prafpr@0;
+ccpt ON prafpr* (b7);
+ccpr ON prafpt* (b7);
+scpt WITH ccpt;
+scpt WITH scpr;
+scpt WITH ccpr;
+ccpt WITH scpr;
+ccpt WITH ccpr;
+scpr WITH ccpr;
+scpt WITH scpt;
+ccpt WITH ccpt;
+scpr WITH scpr;
+ccpr WITH ccpr;
+prafpt WITH prafpt;
+prafpr WITH prafpr;
+pafpt WITH pafpt;
+pafpr WITH pafpr;
+DASFU1 WITH DASFU1;
+DASFU0 WITH DASFU0;
+[DASFU1];
+[DASFU0];
+DASBL1 WITH DASBL1;
+DASBL0 WITH DASBL0;
+[DASBL1];
+[DASBL0];
+DASFU1 WITH DASFU0;
+DASBL0 WITH DASBL1;
+!DASFU1 WITH REL@0;
+!DASFU0 WITH REL@0;
+DASFU0 ON PRAFPR;
+!SCPR     ON DASBL0;
+!DASFU1 ON SCPT;
+!PRAFPT ON DASBL1;
+!PRAFPR ON DASBL0;
+PAFPR ON DASBL0;
+PRAFPR WITH PRAFPT;
+PRAFPR ON DASBL0;
+PRAFPT   ON DASBL1;
+DASFU0 ON PRAFPT;
+[scpt];
+[ccpt@0];
+[scpr];
+[ccpr@0];
+[prafpt];
+[prafpr];
+[pafpt];
+[pafpr@0];
+MODEL CONSTRAINT:
+NEW ( ka3 xka3); ! a7b7 a4b7 zka3 );
+!ha3 = h*a3;
+ka3 = k*a3;
+xka3= x*k*a3;
+!a3b7 = a3*b7;
+!a7b7 = a7*b7;
+!a4b7 = a4*b7;
+!zka3 = z*k*a3;
+
+!OUTPUT:
+!STANDARDIZED;  MODINDICES(ALL 3);
+!savedata: file=infludiagnostics.txt; save is
+!cooks;

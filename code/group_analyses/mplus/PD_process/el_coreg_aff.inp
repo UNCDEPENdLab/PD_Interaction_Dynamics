@@ -1,0 +1,54 @@
+TITLE:
+El -> Aff -> Coreg -> Aff AND fix non-sig parameters to zero. Only using
+CC to reduce number of parameters;
+DATA:
+FILE = "../df67.dat";
+
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id;
+ MISSING=.;
+USEVARIABLES = scpt ccpt scpr ccpr prafpt
+prafpr pafpt pafpr elpt elpr id;
+IDVARIABLE IS id;
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2; BITERATIONS = (49000);
+MODEL:
+prafpt ON elpt@0;
+prafpr ON elpr@0;
+ccpt ON elpt* (x);
+ccpr ON elpr;
+elpt WITH elpt;
+elpr WITH elpr;
+elpt WITH elpr;
+[elpt];
+[elpr];
+
+pafpt WITH pafpr;
+pafpt ON prafpt;
+pafpt ON ccpt* (a3);
+pafpt ON ccpr@0;
+pafpr ON prafpr;
+pafpr ON ccpr@0;
+pafpr ON ccpt@0;
+ccpt ON prafpr;
+ccpr ON prafpt;
+ccpt WITH ccpr;
+ccpt WITH ccpt;
+ccpr WITH ccpr;
+prafpt WITH prafpt;
+prafpr WITH prafpr;
+pafpt WITH pafpt;
+pafpr WITH pafpr;
+PRAFPR WITH PRAFPT;
+[ccpt@0];
+[ccpr@0];
+[prafpt];
+[prafpr];
+[pafpt];
+[pafpr@0];
+MODEL CONSTRAINT:
+NEW ( xa3);
+xa3= x*a3;
+OUTPUT:
+STANDARDIZED;

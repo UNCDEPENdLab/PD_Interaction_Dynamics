@@ -1,0 +1,294 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+12/11/2018   9:33 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "../df67.dat";
+
+  VARIABLE:
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+  elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id;
+   MISSING=.;
+  USEVARIABLES = scpt ccpt scpr ccpr prnapt
+  prnapr pnapt pnapr id;
+  IDVARIABLE IS id;
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  !ESTIMATOR = MLR;
+  MODEL:
+  pnapt WITH pnapr;
+  pnapt ON prnapt;
+  pnapt ON scpt;
+  pnapt ON ccpt* (c);
+  pnapr ON prnapr;
+  pnapr ON scpr;
+  pnapr ON ccpr* (d);
+  scpt ON prnapt* (a1);
+  scpr ON prnapr* (a1);
+  ccpt ON prnapt* (b1);
+  ccpr ON prnapr* (b1);
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  scpr WITH ccpt;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  scpt WITH scpt;
+  scpr WITH scpr;
+  ccpt WITH ccpt;
+  ccpr WITH ccpr;
+  prnapt WITH prnapt;
+  prnapr WITH prnapr;
+  pnapt WITH pnapt;
+  pnapr WITH pnapr;
+  [scpt];
+  [scpr];
+  [ccpt];
+  [ccpr];
+  [prnapt];
+  [prnapr];
+  [pnapt];
+  [pnapr];
+  PRNAPR   WITH PRNAPT;
+  MODEL CONSTRAINT:
+  NEW ( b1c );!b1d hb1c whb1c uhc );
+  b1c = b1*c;
+  !hb1c = h*b1*c;
+  !whb1c = w*h*b1*c;
+  !uhc = u*h*c;
+
+
+  !OUTPUT:
+  !STANDARDIZED;  MODINDICES(ALL 5);
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    6
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR        PNAPT       PNAPR
+
+Observed independent variables
+   PRNAPT      PRNAPR
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  ../df67.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          PNAPT
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ PNAPT          0.990         0.990         0.990         0.990         0.990
+ PNAPR          1.000         1.000         1.000         1.000         0.990
+ PRNAPT         1.000         1.000         1.000         1.000         0.990
+ PRNAPR         1.000         1.000         1.000         1.000         0.990
+
+
+           Covariance Coverage
+              PNAPR         PRNAPT        PRNAPR
+              ________      ________      ________
+ PNAPR          1.000
+ PRNAPT         1.000         1.000
+ PRNAPR         1.000         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.559       0.551       7.450    1.01%      19.197     26.648     29.841
+              99.000     129.762      -0.204      58.807    1.01%      31.821     39.920
+     CCPT                 -0.890      -0.259     -81.685    1.01%     -26.415     -7.559      2.881
+              99.000    1013.048       0.128      80.417    1.01%       8.529     24.280
+     SCPR                 28.538       0.567       9.085    1.01%      16.451     24.118     27.494
+              99.000     153.716      -0.221      66.121    1.01%      29.684     39.272
+     CCPR                 -0.283      -0.178    -116.491    1.01%     -27.251     -8.605     -2.107
+              99.000    1435.257       0.411      79.366    1.01%       5.588     28.790
+     PNAPT                17.803       1.082      10.000   16.33%      11.000     13.000     16.000
+              98.000      55.916       1.241      47.000    1.02%      19.000     24.000
+     PNAPR                14.380       1.080      10.000   36.36%      10.000     11.000     12.000
+              99.000      27.507      -0.070      30.000    1.01%      13.000     20.000
+     PRNAPT               16.030       1.450      10.000   13.13%      11.000     13.000     14.000
+              99.000      31.928       2.460      39.000    1.01%      16.000     20.000
+     PRNAPR               13.621       1.725      10.000   24.24%      10.000     11.000     12.000
+              99.000      17.354       3.160      31.000    1.01%      13.000     16.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              32
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -20.475            28.860
+
+          Posterior Predictive P-Value              0.396
+
+Information Criteria
+
+          Deviance (DIC)                         5819.785
+          Estimated Number of Parameters (pD)      30.460
+          Bayesian (BIC)                         5904.946
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ PNAPT      ON
+    PRNAPT             0.799       0.103      0.000       0.597       1.000      *
+    SCPT              -0.034       0.051      0.253      -0.133       0.066
+    CCPT              -0.039       0.019      0.021      -0.077      -0.001      *
+
+ PNAPR      ON
+    PRNAPR             0.718       0.108      0.000       0.503       0.931      *
+    SCPR              -0.041       0.036      0.123      -0.113       0.028
+    CCPR               0.009       0.012      0.232      -0.015       0.032
+
+ SCPT       ON
+    PRNAPT             0.211       0.171      0.110      -0.127       0.542
+
+ SCPR       ON
+    PRNAPR             0.211       0.171      0.110      -0.127       0.542
+
+ CCPT       ON
+    PRNAPT            -1.068       0.285      0.000      -1.628      -0.509      *
+
+ CCPR       ON
+    PRNAPR            -1.068       0.285      0.000      -1.628      -0.509      *
+
+ PNAPT    WITH
+    PNAPR              6.669       2.975      0.008       1.300      13.096      *
+
+ SCPT     WITH
+    CCPT               9.108      43.844      0.416     -76.368      97.219
+    SCPR             -25.836      17.558      0.059     -62.762       6.725
+    CCPR             -28.624      52.172      0.280    -136.001      71.056
+
+ SCPR     WITH
+    CCPT              12.365      46.733      0.394     -79.341     104.890
+    CCPR             -78.519      56.354      0.069    -196.472      25.184
+
+ CCPT     WITH
+    CCPR            -998.344     179.492      0.000   -1417.779    -713.609      *
+
+ PRNAPT   WITH
+    PRNAPR             8.174       2.792      0.000       3.338      14.325      *
+
+ Means
+    PRNAPT            16.033       0.590      0.000      14.862      17.190      *
+    PRNAPR            13.618       0.436      0.000      12.758      14.471      *
+
+ Intercepts
+    SCPT              27.211       2.994      0.000      21.322      33.026      *
+    CCPT              16.233       5.672      0.002       5.137      27.316      *
+    SCPR              25.686       2.676      0.000      20.453      30.879      *
+    CCPR              14.253       5.557      0.005       3.313      25.132      *
+    PNAPT              5.920       2.300      0.005       1.411      10.444      *
+    PNAPR              5.804       1.738      0.001       2.358       9.197      *
+
+ Variances
+    PRNAPT            33.830       5.114      0.000      25.776      45.764      *
+    PRNAPR            18.396       2.792      0.000      14.012      24.835      *
+
+ Residual Variances
+    SCPT             145.929      22.875      0.000     109.525     198.741      *
+    CCPT            1090.770     169.090      0.000     825.238    1478.472      *
+    SCPR             167.829      25.914      0.000     126.904     227.978      *
+    CCPR            1546.967     239.630      0.000    1171.020    2107.818      *
+    PNAPT             33.721       5.248      0.000      25.584      46.036      *
+    PNAPR             19.923       3.075      0.000      15.107      27.126      *
+
+New/Additional Parameters
+    B1C                0.039       0.024      0.022       0.001       0.095      *
+
+
+     Beginning Time:  09:33:28
+        Ending Time:  09:33:32
+       Elapsed Time:  00:00:04
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

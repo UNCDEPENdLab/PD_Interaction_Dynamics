@@ -1,0 +1,430 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  10:49 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "depen_apfixed_m.dat";
+
+  VARIABLE:
+  NAMES = scpt ccpt scpr ccpr depen_1 depen_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  scpt ON depen_1* (a);
+  scpt ON depen_0* (c);
+  ccpt ON depen_1* (b);
+  ccpt ON depen_0* (d);
+  scpr ON depen_1* (c);
+  scpr ON depen_0* (a);
+  ccpr ON depen_1* (d);
+  ccpr ON depen_0* (b);
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  ccpt WITH scpr;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  depen_1 WITH depen_0;
+  scpt WITH scpt;
+  ccpt WITH ccpt;
+  scpr WITH scpr;
+  ccpr WITH ccpr;
+  depen_1 WITH depen_1;
+  depen_0 WITH depen_0;
+  [scpt];
+  [ccpt];
+  [scpr];
+  [ccpr];
+  [depen_1];
+  [depen_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR
+
+Observed independent variables
+   DEPEN_1     DEPEN_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  depen_apfixed_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          DEPEN_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ DEPEN_1        0.990         0.990         0.990         0.990         0.990
+ DEPEN_0        0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              DEPEN_0
+              ________
+ DEPEN_0        0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.051       0.557       7.000    1.01%      19.000     26.000     29.000
+              99.000     130.270      -0.214      58.000    1.01%      31.000     39.000
+     CCPT                 -0.879      -0.261     -81.000    1.01%     -26.000     -7.000      2.000
+              99.000     990.713       0.169      80.000    1.01%       8.000     24.000
+     SCPR                 28.030       0.568       9.000    2.02%      16.000     24.000     27.000
+              99.000     154.575      -0.200      66.000    1.01%      29.000     39.000
+     CCPR                 -0.253      -0.176    -116.000    1.01%     -27.000     -8.000     -2.000
+              99.000    1405.603       0.459      79.000    1.01%       5.000     28.000
+     DEPEN_1               1.959       1.831       0.000   44.90%       0.000      0.000      1.000
+              98.000       6.692       4.211      14.000    1.02%       2.000      3.000
+     DEPEN_0               0.694       2.373       0.000   65.31%       0.000      0.000      0.000
+              98.000       1.478       7.016       7.000    1.02%       0.000      1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              23
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -21.330            21.081
+
+          Posterior Predictive P-Value              0.510
+
+Information Criteria
+
+          Deviance (DIC)                         4236.835
+          Estimated Number of Parameters (pD)      21.517
+          Bayesian (BIC)                         4298.775
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ SCPT       ON
+    DEPEN_1           -0.177       0.432      0.340      -1.028       0.673
+    DEPEN_0           -0.399       0.450      0.187      -1.287       0.490
+
+ CCPT       ON
+    DEPEN_1           -1.148       1.171      0.162      -3.451       1.154
+    DEPEN_0           -0.575       1.296      0.326      -3.122       1.960
+
+ SCPR       ON
+    DEPEN_1           -0.399       0.450      0.187      -1.287       0.490
+    DEPEN_0           -0.177       0.432      0.340      -1.028       0.673
+
+ CCPR       ON
+    DEPEN_1           -0.575       1.296      0.326      -3.122       1.960
+    DEPEN_0           -1.148       1.171      0.162      -3.451       1.154
+
+ SCPT     WITH
+    CCPT              10.368      44.597      0.403     -76.646      99.912
+    SCPR             -23.739      17.605      0.075     -60.925       8.882
+    CCPR             -39.020      52.853      0.215    -148.019      60.959
+
+ CCPT     WITH
+    SCPR              -1.132      48.149      0.491     -96.780      95.376
+    CCPR            -978.674     181.041      0.000   -1402.994    -691.643      *
+
+ SCPR     WITH
+    CCPR             -98.544      57.601      0.032    -220.811       6.124
+
+ DEPEN_1  WITH
+    DEPEN_0           -0.261       0.359      0.224      -0.994       0.426
+
+ Means
+    DEPEN_1            1.967       0.271      0.000       1.436       2.498      *
+    DEPEN_0            0.694       0.128      0.000       0.444       0.945      *
+
+ Intercepts
+    SCPT              30.668       1.515      0.000      27.718      33.638      *
+    CCPT               1.791       3.813      0.317      -5.772       9.303
+    SCPR              28.939       1.601      0.000      25.823      32.069      *
+    CCPR               1.681       4.476      0.352      -7.147      10.461
+
+ Variances
+    DEPEN_1            7.102       1.081      0.000       5.394       9.618      *
+    DEPEN_0            1.565       0.238      0.000       1.189       2.120      *
+
+ Residual Variances
+    SCPT             147.048      23.061      0.000     110.914     201.022      *
+    CCPT            1116.233     174.189      0.000     840.217    1520.121      *
+    SCPR             171.112      26.535      0.000     128.850     232.635      *
+    CCPR            1553.553     242.718      0.000    1170.530    2120.785      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    DEPEN_1           -0.039       0.093      0.340      -0.220       0.147
+    DEPEN_0           -0.041       0.046      0.187      -0.132       0.051
+
+ CCPT       ON
+    DEPEN_1           -0.091       0.091      0.162      -0.266       0.090
+    DEPEN_0           -0.021       0.048      0.326      -0.117       0.071
+
+ SCPR       ON
+    DEPEN_1           -0.081       0.090      0.187      -0.258       0.099
+    DEPEN_0           -0.017       0.041      0.340      -0.100       0.064
+
+ CCPR       ON
+    DEPEN_1           -0.039       0.086      0.326      -0.208       0.131
+    DEPEN_0           -0.036       0.037      0.162      -0.110       0.036
+
+ SCPT     WITH
+    CCPT               0.026       0.106      0.403      -0.181       0.231
+    SCPR              -0.152       0.103      0.075      -0.349       0.055
+    CCPR              -0.083       0.105      0.215      -0.286       0.124
+
+ CCPT     WITH
+    SCPR              -0.003       0.106      0.491      -0.211       0.206
+    CCPR              -0.748       0.048      0.000      -0.826      -0.641      *
+
+ SCPR     WITH
+    CCPR              -0.194       0.102      0.032      -0.388       0.012
+
+ DEPEN_1  WITH
+    DEPEN_0           -0.079       0.103      0.224      -0.278       0.124
+
+ Means
+    DEPEN_1            0.740       0.114      0.000       0.517       0.962      *
+    DEPEN_0            0.556       0.109      0.000       0.341       0.769      *
+
+ Intercepts
+    SCPT               2.512       0.220      0.000       2.079       2.949      *
+    CCPT               0.053       0.112      0.317      -0.169       0.270
+    SCPR               2.198       0.201      0.000       1.803       2.591      *
+    CCPR               0.042       0.112      0.352      -0.177       0.261
+
+ Variances
+    DEPEN_1            1.000       0.000      0.000       1.000       1.000
+    DEPEN_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.991       0.015      0.000       0.945       1.000      *
+    CCPT               0.988       0.020      0.000       0.924       0.999      *
+    SCPR               0.990       0.018      0.000       0.932       1.000      *
+    CCPR               0.993       0.013      0.000       0.952       0.999      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    DEPEN_1           -0.039       0.093      0.340      -0.220       0.147
+    DEPEN_0           -0.041       0.046      0.187      -0.132       0.051
+
+ CCPT       ON
+    DEPEN_1           -0.091       0.091      0.162      -0.266       0.090
+    DEPEN_0           -0.021       0.048      0.326      -0.117       0.071
+
+ SCPR       ON
+    DEPEN_1           -0.081       0.090      0.187      -0.258       0.099
+    DEPEN_0           -0.017       0.041      0.340      -0.100       0.064
+
+ CCPR       ON
+    DEPEN_1           -0.039       0.086      0.326      -0.208       0.131
+    DEPEN_0           -0.036       0.037      0.162      -0.110       0.036
+
+ SCPT     WITH
+    CCPT               0.026       0.106      0.403      -0.181       0.231
+    SCPR              -0.152       0.103      0.075      -0.349       0.055
+    CCPR              -0.083       0.105      0.215      -0.286       0.124
+
+ CCPT     WITH
+    SCPR              -0.003       0.106      0.491      -0.211       0.206
+    CCPR              -0.748       0.048      0.000      -0.826      -0.641      *
+
+ SCPR     WITH
+    CCPR              -0.194       0.102      0.032      -0.388       0.012
+
+ DEPEN_1  WITH
+    DEPEN_0           -0.079       0.103      0.224      -0.278       0.124
+
+ Means
+    DEPEN_1            0.740       0.114      0.000       0.517       0.962      *
+    DEPEN_0            0.556       0.109      0.000       0.341       0.769      *
+
+ Intercepts
+    SCPT               2.512       0.220      0.000       2.079       2.949      *
+    CCPT               0.053       0.112      0.317      -0.169       0.270
+    SCPR               2.198       0.201      0.000       1.803       2.591      *
+    CCPR               0.042       0.112      0.352      -0.177       0.261
+
+ Variances
+    DEPEN_1            1.000       0.000      0.000       1.000       1.000
+    DEPEN_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.991       0.015      0.000       0.945       1.000      *
+    CCPT               0.988       0.020      0.000       0.924       0.999      *
+    SCPR               0.990       0.018      0.000       0.932       1.000      *
+    CCPR               0.993       0.013      0.000       0.952       0.999      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    DEPEN_1           -0.177       0.432      0.340      -1.028       0.673
+    DEPEN_0           -0.399       0.450      0.187      -1.287       0.490
+
+ CCPT       ON
+    DEPEN_1           -1.148       1.171      0.162      -3.451       1.154
+    DEPEN_0           -0.575       1.296      0.326      -3.122       1.960
+
+ SCPR       ON
+    DEPEN_1           -0.399       0.450      0.187      -1.287       0.490
+    DEPEN_0           -0.177       0.432      0.340      -1.028       0.673
+
+ CCPR       ON
+    DEPEN_1           -0.575       1.296      0.326      -3.122       1.960
+    DEPEN_0           -1.148       1.171      0.162      -3.451       1.154
+
+ SCPT     WITH
+    CCPT               0.026       0.106      0.403      -0.181       0.231
+    SCPR              -0.152       0.103      0.075      -0.349       0.055
+    CCPR              -0.083       0.105      0.215      -0.286       0.124
+
+ CCPT     WITH
+    SCPR              -0.003       0.106      0.491      -0.211       0.206
+    CCPR              -0.748       0.048      0.000      -0.826      -0.641      *
+
+ SCPR     WITH
+    CCPR              -0.194       0.102      0.032      -0.388       0.012
+
+ DEPEN_1  WITH
+    DEPEN_0           -0.079       0.103      0.224      -0.278       0.124
+
+ Means
+    DEPEN_1            1.967       0.271      0.000       1.436       2.498      *
+    DEPEN_0            0.694       0.128      0.000       0.444       0.945      *
+
+ Intercepts
+    SCPT              30.668       1.515      0.000      27.718      33.638      *
+    CCPT               1.791       3.813      0.317      -5.772       9.303
+    SCPR              28.939       1.601      0.000      25.823      32.069      *
+    CCPR               1.681       4.476      0.352      -7.147      10.461
+
+ Variances
+    DEPEN_1            7.102       1.081      0.000       5.394       9.618      *
+    DEPEN_0            1.565       0.238      0.000       1.189       2.120      *
+
+ Residual Variances
+    SCPT             147.048      23.061      0.000     110.914     201.022      *
+    CCPT            1116.233     174.189      0.000     840.217    1520.121      *
+    SCPR             171.112      26.535      0.000     128.850     232.635      *
+    CCPR            1553.553     242.718      0.000    1170.530    2120.785      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    SCPT               0.009       0.015      0.000       0.000       0.055
+    CCPT               0.012       0.020      0.000       0.001       0.076
+    SCPR               0.010       0.018      0.000       0.000       0.068
+    CCPR               0.007       0.013      0.000       0.001       0.048
+
+
+     Beginning Time:  10:49:33
+        Ending Time:  10:49:40
+       Elapsed Time:  00:00:07
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

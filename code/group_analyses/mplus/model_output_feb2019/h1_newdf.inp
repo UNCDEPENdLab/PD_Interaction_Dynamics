@@ -1,0 +1,72 @@
+TITLE:
+Testing
+DATA:
+FILE = "h1_newdf.dat";
+ 
+VARIABLE:
+NAMES = scpt scpr ccpt ccpr prnapt prnapr ECRanx_1 ECRanx_0 pnapt pnapr elpt elpr; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+scpt ON elpt; 
+scpr ON elpr; 
+ccpt ON elpt* (u); 
+ccpr ON elpr; 
+prnapt ON elpt* (w); 
+prnapr ON elpr* (j); 
+ECRanx_1 ON pnapt* (h); 
+ECRanx_0 ON pnapr* (k); 
+pnapt WITH pnapr; 
+pnapt ON prnapt; 
+pnapt ON scpt; 
+pnapt ON ccpt* (c); 
+pnapr ON prnapr; 
+pnapr ON scpr; 
+pnapr ON ccpr* (d); 
+scpt ON prnapt* (a1); 
+scpr ON prnapr* (a1); 
+ccpt ON prnapt* (b1); 
+ccpr ON prnapr* (b1); 
+scpt WITH ccpt; 
+scpt WITH scpr; 
+scpt WITH ccpr; 
+scpr WITH ccpt; 
+ccpt WITH ccpr; 
+scpr WITH ccpr; 
+scpt WITH scpt; 
+scpr WITH scpr; 
+ccpt WITH ccpt; 
+ccpr WITH ccpr; 
+prnapt WITH prnapt; 
+prnapr WITH prnapr; 
+ECRanx_1 WITH ECRanx_1; 
+ECRanx_0 WITH ECRanx_0; 
+pnapt WITH pnapt; 
+pnapr WITH pnapr; 
+ECRanx_1 WITH ECRanx_0; 
+elpt WITH elpt; 
+elpt WITH elpr; 
+elpr WITH elpr; 
+[scpt]; 
+[scpr]; 
+[ccpt]; 
+[ccpr]; 
+[prnapt]; 
+[prnapr]; 
+[ECRanx_1]; 
+[ECRanx_0]; 
+[pnapt]; 
+[pnapr]; 
+[elpt]; 
+[elpr]; 
+
+MODEL CONSTRAINT: 
+NEW ( b1c b1d hb1c whb1c uhc ); 
+b1c = b1*c;
+b1d = b1*d;
+hb1c = h*b1*c;
+whb1c = w*h*b1*c;
+uhc = u*h*c;
+

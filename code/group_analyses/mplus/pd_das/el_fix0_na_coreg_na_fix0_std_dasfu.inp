@@ -1,0 +1,105 @@
+TITLE:
+Testing
+DATA:
+FILE = "../mplus_modelcomparison_dec2018/df67_das_dem.dat";
+
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr elpt
+     elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id rel
+     dasfu1 dasfu0 dasbl1 dasbl0 age_0 age_1 r_0 r_1 female_0 female_1 R2_cut
+     uni_cut;
+ MISSING=.;
+USEVARIABLES = scpt ccpt scpr ccpr prnapt
+prnapr pnapt pnapr elpt elpr   dasfu1 dasfu0 dasbl1 dasbl0 rel id;
+CATEGORICAL IS rel;
+IDVARIABLE IS id;
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+!ESTIMATOR=MLR;
+MODEL:
+dasfu1 ON pnapt* (l);
+dasfu1 ON pnapr* (u);
+dasfu0 ON pnapt@0;
+dasfu0 ON pnapr@0;
+dasfu1 ON dasbl0@0;
+dasfu1 ON dasbl1* (v);
+dasfu0 ON dasbl0* (v);
+dasfu0 ON dasbl1* (v);
+dasfu1 WITH dasfu1;
+dasfu0 WITH dasfu0;
+dasbl1 WITH dasbl1;
+dasbl0 WITH dasbl0;
+[dasfu1];
+[dasfu0];
+[dasbl1];
+[dasbl0];
+rel ON pnapt;
+rel ON pnapr@0;
+rel ON dasbl1;
+rel ON dasbl0;
+
+
+prnapt ON elpt* (w);
+prnapr ON elpr;
+scpr ON elpr@0;
+ccpr ON elpr;
+scpt ON elpt@0;
+ccpt ON elpt;
+prnapt WITH prnapr;
+pnapt WITH pnapr;
+pnapt ON prnapt;
+pnapt ON scpt@0;
+pnapt ON ccpt* (c);
+pnapr ON prnapr;
+pnapr ON scpr@0;
+pnapr ON ccpr* (d);
+scpt ON prnapt@0;
+scpr ON prnapr@0;
+ccpt ON prnapt* (b1);
+ccpr ON prnapr* (b1);
+scpt WITH ccpt;
+scpt WITH scpr;
+scpt WITH ccpr;
+scpr WITH ccpt;
+ccpt WITH ccpr;
+scpr WITH ccpr;
+scpt WITH scpt;
+scpr WITH scpr;
+ccpt WITH ccpt;
+ccpr WITH ccpr;
+prnapt WITH prnapt;
+prnapr WITH prnapr;
+pnapt WITH pnapt;
+pnapr WITH pnapr;
+elpt WITH elpt;
+elpr WITH elpr;
+[scpt];
+[scpr];
+[ccpt];
+[ccpr];
+[prnapt];
+[prnapr];
+[pnapt];
+[pnapr];
+[elpt];
+[elpr];
+DASFU1 ON SCPT* (u);
+DASFU0 ON SCPT;
+DASFU0   ON PRNAPR;
+SCPR ON DASBL0;
+PRNAPR   ON DASBL0  ;
+PNAPT   ON DASBL0  ;
+PRNAPR   WITH PRNAPT;
+MODEL CONSTRAINT:
+NEW ( b1c wb1c lwb1c);!b1d hb1c whb1c uhc );
+b1c = b1*c;
+!hb1c = h*b1*c;
+!whb1c = w*h*b1*c;
+!uhc = u*h*c;
+wb1c = w*b1*c;
+lwb1c = l*w*b1*c;
+
+
+OUTPUT:
+STANDARDIZED;
+!MODINDICES(ALL 5);

@@ -1,0 +1,430 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  10:49 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "avoid_ponly_m.dat";
+
+  VARIABLE:
+  NAMES = scpt ccpt scpr ccpr avoid_1 avoid_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  scpt ON avoid_1@0;
+  scpt ON avoid_0;
+  ccpt ON avoid_1@0;
+  ccpt ON avoid_0;
+  scpr ON avoid_1;
+  scpr ON avoid_0@0;
+  ccpr ON avoid_1;
+  ccpr ON avoid_0@0;
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  ccpt WITH scpr;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  avoid_1 WITH avoid_0;
+  scpt WITH scpt;
+  ccpt WITH ccpt;
+  scpr WITH scpr;
+  ccpr WITH ccpr;
+  avoid_1 WITH avoid_1;
+  avoid_0 WITH avoid_0;
+  [scpt];
+  [ccpt];
+  [scpr];
+  [ccpr];
+  [avoid_1];
+  [avoid_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR
+
+Observed independent variables
+   AVOID_1     AVOID_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  avoid_ponly_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          AVOID_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ AVOID_1        0.990         0.990         0.990         0.990         0.990
+ AVOID_0        0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              AVOID_0
+              ________
+ AVOID_0        0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.051       0.557       7.000    1.01%      19.000     26.000     29.000
+              99.000     130.270      -0.214      58.000    1.01%      31.000     39.000
+     CCPT                 -0.879      -0.261     -81.000    1.01%     -26.000     -7.000      2.000
+              99.000     990.713       0.169      80.000    1.01%       8.000     24.000
+     SCPR                 28.030       0.568       9.000    2.02%      16.000     24.000     27.000
+              99.000     154.575      -0.200      66.000    1.01%      29.000     39.000
+     CCPR                 -0.253      -0.176    -116.000    1.01%     -27.000     -8.000     -2.000
+              99.000    1405.603       0.459      79.000    1.01%       5.000     28.000
+     AVOID_1               2.867       1.278       0.000   29.59%       0.000      1.000      2.000
+              98.000      10.278       0.930      13.000    1.02%       3.000      5.000
+     AVOID_0               1.439       2.341       0.000   56.12%       0.000      0.000      0.000
+              98.000       6.103       5.269      11.000    2.04%       1.000      2.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              23
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -17.056            25.586
+
+          Posterior Predictive P-Value              0.343
+
+Information Criteria
+
+          Deviance (DIC)                         4416.106
+          Estimated Number of Parameters (pD)      21.510
+          Bayesian (BIC)                         4478.038
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ SCPT       ON
+    AVOID_1            0.000       0.000      1.000       0.000       0.000
+    AVOID_0            1.281       0.478      0.004       0.344       2.228      *
+
+ CCPT       ON
+    AVOID_1            0.000       0.000      1.000       0.000       0.000
+    AVOID_0            0.092       0.928      0.460      -1.725       1.893
+
+ SCPR       ON
+    AVOID_1           -0.103       0.412      0.402      -0.901       0.717
+    AVOID_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPR       ON
+    AVOID_1           -0.726       0.830      0.188      -2.350       0.898
+    AVOID_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPT     WITH
+    CCPT               1.850      42.080      0.481     -81.326      85.042
+    SCPR             -13.393      17.050      0.204     -48.474      19.349
+    CCPR             -35.602      49.958      0.226    -138.331      59.843
+
+ CCPT     WITH
+    SCPR               3.400      48.650      0.472     -92.957     100.152
+    CCPR            -956.482     178.043      0.000   -1373.964    -672.360      *
+
+ SCPR     WITH
+    CCPR             -94.224      57.792      0.040    -217.413      11.304
+
+ AVOID_1  WITH
+    AVOID_0            0.025       0.900      0.488      -1.762       1.808
+
+ Means
+    AVOID_1            2.871       0.336      0.000       2.215       3.530      *
+    AVOID_0            1.433       0.260      0.000       0.923       1.943      *
+
+ Intercepts
+    SCPT              28.219       1.355      0.000      25.560      30.872      *
+    CCPT              -0.978       3.610      0.388      -8.142       6.096
+    SCPR              28.313       1.773      0.000      24.854      31.799      *
+    CCPR               1.825       4.639      0.345      -7.363      10.909
+
+ Variances
+    AVOID_1           10.902       1.662      0.000       8.298      14.785      *
+    AVOID_0            6.461       0.982      0.000       4.915       8.748      *
+
+ Residual Variances
+    SCPT             132.968      20.850      0.000     100.169     181.583      *
+    CCPT            1103.473     171.585      0.000     830.441    1499.666      *
+    SCPR             173.377      26.949      0.000     130.584     235.783      *
+    CCPR            1551.736     241.884      0.000    1170.013    2118.115      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    AVOID_1            0.000       0.000      1.000       0.000       0.000
+    AVOID_0            0.273       0.097      0.004       0.073       0.453      *
+
+ CCPT       ON
+    AVOID_1            0.000       0.000      1.000       0.000       0.000
+    AVOID_0            0.007       0.071      0.460      -0.132       0.147
+
+ SCPR       ON
+    AVOID_1           -0.026       0.102      0.402      -0.222       0.175
+    AVOID_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPR       ON
+    AVOID_1           -0.061       0.069      0.188      -0.198       0.075
+    AVOID_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPT     WITH
+    CCPT               0.005       0.106      0.481      -0.202       0.209
+    SCPR              -0.089       0.107      0.204      -0.294       0.124
+    CCPR              -0.079       0.105      0.226      -0.283       0.128
+
+ CCPT     WITH
+    SCPR               0.008       0.107      0.472      -0.203       0.219
+    CCPR              -0.735       0.050      0.000      -0.818      -0.624      *
+
+ SCPR     WITH
+    CCPR              -0.184       0.102      0.040      -0.380       0.022
+
+ AVOID_1  WITH
+    AVOID_0            0.003       0.103      0.488      -0.200       0.205
+
+ Means
+    AVOID_1            0.871       0.119      0.000       0.640       1.105      *
+    AVOID_0            0.564       0.110      0.000       0.350       0.779      *
+
+ Intercepts
+    SCPT               2.344       0.222      0.000       1.917       2.789      *
+    CCPT              -0.029       0.108      0.388      -0.242       0.181
+    SCPR               2.143       0.206      0.000       1.736       2.544      *
+    CCPR               0.046       0.116      0.345      -0.183       0.275
+
+ Variances
+    AVOID_1            1.000       0.000      0.000       1.000       1.000
+    AVOID_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.926       0.052      0.000       0.795       0.994      *
+    CCPT               0.998       0.007      0.000       0.974       1.000      *
+    SCPR               0.995       0.015      0.000       0.946       1.000      *
+    CCPR               0.996       0.011      0.000       0.961       1.000      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    AVOID_1            0.000       0.000      1.000       0.000       0.000
+    AVOID_0            0.273       0.097      0.004       0.073       0.453      *
+
+ CCPT       ON
+    AVOID_1            0.000       0.000      1.000       0.000       0.000
+    AVOID_0            0.007       0.071      0.460      -0.132       0.147
+
+ SCPR       ON
+    AVOID_1           -0.026       0.102      0.402      -0.222       0.175
+    AVOID_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPR       ON
+    AVOID_1           -0.061       0.069      0.188      -0.198       0.075
+    AVOID_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPT     WITH
+    CCPT               0.005       0.106      0.481      -0.202       0.209
+    SCPR              -0.089       0.107      0.204      -0.294       0.124
+    CCPR              -0.079       0.105      0.226      -0.283       0.128
+
+ CCPT     WITH
+    SCPR               0.008       0.107      0.472      -0.203       0.219
+    CCPR              -0.735       0.050      0.000      -0.818      -0.624      *
+
+ SCPR     WITH
+    CCPR              -0.184       0.102      0.040      -0.380       0.022
+
+ AVOID_1  WITH
+    AVOID_0            0.003       0.103      0.488      -0.200       0.205
+
+ Means
+    AVOID_1            0.871       0.119      0.000       0.640       1.105      *
+    AVOID_0            0.564       0.110      0.000       0.350       0.779      *
+
+ Intercepts
+    SCPT               2.344       0.222      0.000       1.917       2.789      *
+    CCPT              -0.029       0.108      0.388      -0.242       0.181
+    SCPR               2.143       0.206      0.000       1.736       2.544      *
+    CCPR               0.046       0.116      0.345      -0.183       0.275
+
+ Variances
+    AVOID_1            1.000       0.000      0.000       1.000       1.000
+    AVOID_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.926       0.052      0.000       0.795       0.994      *
+    CCPT               0.998       0.007      0.000       0.974       1.000      *
+    SCPR               0.995       0.015      0.000       0.946       1.000      *
+    CCPR               0.996       0.011      0.000       0.961       1.000      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    AVOID_1            0.000       0.000      1.000       0.000       0.000
+    AVOID_0            1.281       0.478      0.004       0.344       2.228      *
+
+ CCPT       ON
+    AVOID_1            0.000       0.000      1.000       0.000       0.000
+    AVOID_0            0.092       0.928      0.460      -1.725       1.893
+
+ SCPR       ON
+    AVOID_1           -0.103       0.412      0.402      -0.901       0.717
+    AVOID_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPR       ON
+    AVOID_1           -0.726       0.830      0.188      -2.350       0.898
+    AVOID_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPT     WITH
+    CCPT               0.005       0.106      0.481      -0.202       0.209
+    SCPR              -0.089       0.107      0.204      -0.294       0.124
+    CCPR              -0.079       0.105      0.226      -0.283       0.128
+
+ CCPT     WITH
+    SCPR               0.008       0.107      0.472      -0.203       0.219
+    CCPR              -0.735       0.050      0.000      -0.818      -0.624      *
+
+ SCPR     WITH
+    CCPR              -0.184       0.102      0.040      -0.380       0.022
+
+ AVOID_1  WITH
+    AVOID_0            0.003       0.103      0.488      -0.200       0.205
+
+ Means
+    AVOID_1            2.871       0.336      0.000       2.215       3.530      *
+    AVOID_0            1.433       0.260      0.000       0.923       1.943      *
+
+ Intercepts
+    SCPT              28.219       1.355      0.000      25.560      30.872      *
+    CCPT              -0.978       3.610      0.388      -8.142       6.096
+    SCPR              28.313       1.773      0.000      24.854      31.799      *
+    CCPR               1.825       4.639      0.345      -7.363      10.909
+
+ Variances
+    AVOID_1           10.902       1.662      0.000       8.298      14.785      *
+    AVOID_0            6.461       0.982      0.000       4.915       8.748      *
+
+ Residual Variances
+    SCPT             132.968      20.850      0.000     100.169     181.583      *
+    CCPT            1103.473     171.585      0.000     830.441    1499.666      *
+    SCPR             173.377      26.949      0.000     130.584     235.783      *
+    CCPR            1551.736     241.884      0.000    1170.013    2118.115      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    SCPT               0.074       0.052      0.000       0.006       0.205
+    CCPT               0.002       0.007      0.000       0.000       0.026
+    SCPR               0.005       0.015      0.000       0.000       0.054
+    CCPR               0.004       0.011      0.000       0.000       0.039
+
+
+     Beginning Time:  10:49:10
+        Ending Time:  10:49:17
+       Elapsed Time:  00:00:07
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

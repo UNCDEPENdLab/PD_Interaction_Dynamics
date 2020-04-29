@@ -1,0 +1,430 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  10:49 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "histr_allfree_m.dat";
+
+  VARIABLE:
+  NAMES = scpt ccpt scpr ccpr histr_1 histr_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  scpt ON histr_1;
+  scpt ON histr_0;
+  ccpt ON histr_1;
+  ccpt ON histr_0;
+  scpr ON histr_1;
+  scpr ON histr_0;
+  ccpr ON histr_1;
+  ccpr ON histr_0;
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  ccpt WITH scpr;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  histr_1 WITH histr_0;
+  scpt WITH scpt;
+  ccpt WITH ccpt;
+  scpr WITH scpr;
+  ccpr WITH ccpr;
+  histr_1 WITH histr_1;
+  histr_0 WITH histr_0;
+  [scpt];
+  [ccpt];
+  [scpr];
+  [ccpr];
+  [histr_1];
+  [histr_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR
+
+Observed independent variables
+   HISTR_1     HISTR_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  histr_allfree_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          HISTR_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ HISTR_1        0.990         0.990         0.990         0.990         0.990
+ HISTR_0        0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              HISTR_0
+              ________
+ HISTR_0        0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.051       0.557       7.000    1.01%      19.000     26.000     29.000
+              99.000     130.270      -0.214      58.000    1.01%      31.000     39.000
+     CCPT                 -0.879      -0.261     -81.000    1.01%     -26.000     -7.000      2.000
+              99.000     990.713       0.169      80.000    1.01%       8.000     24.000
+     SCPR                 28.030       0.568       9.000    2.02%      16.000     24.000     27.000
+              99.000     154.575      -0.200      66.000    1.01%      29.000     39.000
+     CCPR                 -0.253      -0.176    -116.000    1.01%     -27.000     -8.000     -2.000
+              99.000    1405.603       0.459      79.000    1.01%       5.000     28.000
+     HISTR_1               1.673       1.393       0.000   35.71%       0.000      1.000      1.000
+              98.000       3.648       1.471       8.000    1.02%       2.000      3.000
+     HISTR_0               0.714       1.995       0.000   70.41%       0.000      0.000      0.000
+              98.000       1.918       2.725       5.000    4.08%       0.000      1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              27
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -18.900            23.440
+
+          Posterior Predictive P-Value              0.442
+
+Information Criteria
+
+          Deviance (DIC)                         4203.025
+          Estimated Number of Parameters (pD)      25.319
+          Bayesian (BIC)                         4275.587
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ SCPT       ON
+    HISTR_1           -0.152       0.661      0.405      -1.456       1.130
+    HISTR_0           -0.260       0.910      0.388      -2.036       1.516
+
+ CCPT       ON
+    HISTR_1           -3.597       1.781      0.022      -7.073      -0.097      *
+    HISTR_0            1.940       2.450      0.212      -2.850       6.778
+
+ SCPR       ON
+    HISTR_1           -0.384       0.704      0.291      -1.766       0.986
+    HISTR_0            2.014       0.976      0.019       0.106       3.945      *
+
+ CCPR       ON
+    HISTR_1            3.861       2.136      0.033      -0.267       8.110
+    HISTR_0           -4.075       2.922      0.081      -9.835       1.610
+
+ SCPT     WITH
+    CCPT               6.614      43.780      0.435     -79.476      94.199
+    SCPR             -22.580      17.508      0.085     -59.214       9.784
+    CCPR             -37.949      52.550      0.224    -146.126      64.360
+
+ CCPT     WITH
+    SCPR              -8.121      46.926      0.429    -102.237      83.158
+    CCPR            -921.979     173.643      0.000   -1327.805    -645.569      *
+
+ SCPR     WITH
+    CCPR             -75.011      56.034      0.078    -193.074      28.664
+
+ HISTR_1  WITH
+    HISTR_0            0.612       0.308      0.016       0.052       1.264      *
+
+ Means
+    HISTR_1            1.674       0.200      0.000       1.280       2.063      *
+    HISTR_0            0.713       0.145      0.000       0.427       0.998      *
+
+ Intercepts
+    SCPT              30.487       1.701      0.000      27.167      33.826      *
+    CCPT               3.769       4.548      0.204      -5.220      12.654
+    SCPR              27.247       1.799      0.000      23.696      30.746      *
+    CCPR              -3.850       5.424      0.236     -14.452       6.782
+
+ Variances
+    HISTR_1            3.873       0.581      0.000       2.945       5.208      *
+    HISTR_0            2.035       0.310      0.000       1.543       2.757      *
+
+ Residual Variances
+    SCPT             147.128      23.105      0.000     111.060     201.238      *
+    CCPT            1067.418     166.470      0.000     808.983    1454.779      *
+    SCPR             166.621      26.179      0.000     125.541     227.587      *
+    CCPR            1512.630     237.664      0.000    1139.671    2066.906      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    HISTR_1           -0.025       0.105      0.405      -0.229       0.177
+    HISTR_0           -0.031       0.105      0.388      -0.233       0.174
+
+ CCPT       ON
+    HISTR_1           -0.211       0.101      0.022      -0.398      -0.006      *
+    HISTR_0            0.082       0.102      0.212      -0.119       0.279
+
+ SCPR       ON
+    HISTR_1           -0.057       0.103      0.291      -0.255       0.144
+    HISTR_0            0.217       0.101      0.019       0.011       0.406      *
+
+ CCPR       ON
+    HISTR_1            0.190       0.102      0.033      -0.013       0.382
+    HISTR_0           -0.146       0.101      0.081      -0.338       0.058
+
+ SCPT     WITH
+    CCPT               0.017       0.106      0.435      -0.192       0.226
+    SCPR              -0.146       0.104      0.085      -0.344       0.062
+    CCPR              -0.081       0.106      0.224      -0.286       0.133
+
+ CCPT     WITH
+    SCPR              -0.019       0.107      0.429      -0.229       0.188
+    CCPR              -0.729       0.051      0.000      -0.813      -0.613      *
+
+ SCPR     WITH
+    CCPR              -0.151       0.104      0.078      -0.349       0.057
+
+ HISTR_1  WITH
+    HISTR_0            0.221       0.098      0.016       0.018       0.404      *
+
+ Means
+    HISTR_1            0.851       0.119      0.000       0.620       1.084      *
+    HISTR_0            0.501       0.108      0.000       0.289       0.709      *
+
+ Intercepts
+    SCPT               2.488       0.230      0.000       2.033       2.937      *
+    CCPT               0.112       0.132      0.204      -0.155       0.364
+    SCPR               2.045       0.212      0.000       1.631       2.460      *
+    CCPR              -0.096       0.133      0.236      -0.350       0.169
+
+ Variances
+    HISTR_1            1.000       0.000      0.000       1.000       1.000
+    HISTR_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.984       0.022      0.000       0.917       0.999      *
+    CCPT               0.946       0.043      0.000       0.833       0.996      *
+    SCPR               0.945       0.044      0.000       0.831       0.996      *
+    CCPR               0.944       0.044      0.000       0.829       0.996      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    HISTR_1           -0.025       0.105      0.405      -0.229       0.177
+    HISTR_0           -0.031       0.105      0.388      -0.233       0.174
+
+ CCPT       ON
+    HISTR_1           -0.211       0.101      0.022      -0.398      -0.006      *
+    HISTR_0            0.082       0.102      0.212      -0.119       0.279
+
+ SCPR       ON
+    HISTR_1           -0.057       0.103      0.291      -0.255       0.144
+    HISTR_0            0.217       0.101      0.019       0.011       0.406      *
+
+ CCPR       ON
+    HISTR_1            0.190       0.102      0.033      -0.013       0.382
+    HISTR_0           -0.146       0.101      0.081      -0.338       0.058
+
+ SCPT     WITH
+    CCPT               0.017       0.106      0.435      -0.192       0.226
+    SCPR              -0.146       0.104      0.085      -0.344       0.062
+    CCPR              -0.081       0.106      0.224      -0.286       0.133
+
+ CCPT     WITH
+    SCPR              -0.019       0.107      0.429      -0.229       0.188
+    CCPR              -0.729       0.051      0.000      -0.813      -0.613      *
+
+ SCPR     WITH
+    CCPR              -0.151       0.104      0.078      -0.349       0.057
+
+ HISTR_1  WITH
+    HISTR_0            0.221       0.098      0.016       0.018       0.404      *
+
+ Means
+    HISTR_1            0.851       0.119      0.000       0.620       1.084      *
+    HISTR_0            0.501       0.108      0.000       0.289       0.709      *
+
+ Intercepts
+    SCPT               2.488       0.230      0.000       2.033       2.937      *
+    CCPT               0.112       0.132      0.204      -0.155       0.364
+    SCPR               2.045       0.212      0.000       1.631       2.460      *
+    CCPR              -0.096       0.133      0.236      -0.350       0.169
+
+ Variances
+    HISTR_1            1.000       0.000      0.000       1.000       1.000
+    HISTR_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.984       0.022      0.000       0.917       0.999      *
+    CCPT               0.946       0.043      0.000       0.833       0.996      *
+    SCPR               0.945       0.044      0.000       0.831       0.996      *
+    CCPR               0.944       0.044      0.000       0.829       0.996      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    HISTR_1           -0.152       0.661      0.405      -1.456       1.130
+    HISTR_0           -0.260       0.910      0.388      -2.036       1.516
+
+ CCPT       ON
+    HISTR_1           -3.597       1.781      0.022      -7.073      -0.097      *
+    HISTR_0            1.940       2.450      0.212      -2.850       6.778
+
+ SCPR       ON
+    HISTR_1           -0.384       0.704      0.291      -1.766       0.986
+    HISTR_0            2.014       0.976      0.019       0.106       3.945      *
+
+ CCPR       ON
+    HISTR_1            3.861       2.136      0.033      -0.267       8.110
+    HISTR_0           -4.075       2.922      0.081      -9.835       1.610
+
+ SCPT     WITH
+    CCPT               0.017       0.106      0.435      -0.192       0.226
+    SCPR              -0.146       0.104      0.085      -0.344       0.062
+    CCPR              -0.081       0.106      0.224      -0.286       0.133
+
+ CCPT     WITH
+    SCPR              -0.019       0.107      0.429      -0.229       0.188
+    CCPR              -0.729       0.051      0.000      -0.813      -0.613      *
+
+ SCPR     WITH
+    CCPR              -0.151       0.104      0.078      -0.349       0.057
+
+ HISTR_1  WITH
+    HISTR_0            0.221       0.098      0.016       0.018       0.404      *
+
+ Means
+    HISTR_1            1.674       0.200      0.000       1.280       2.063      *
+    HISTR_0            0.713       0.145      0.000       0.427       0.998      *
+
+ Intercepts
+    SCPT              30.487       1.701      0.000      27.167      33.826      *
+    CCPT               3.769       4.548      0.204      -5.220      12.654
+    SCPR              27.247       1.799      0.000      23.696      30.746      *
+    CCPR              -3.850       5.424      0.236     -14.452       6.782
+
+ Variances
+    HISTR_1            3.873       0.581      0.000       2.945       5.208      *
+    HISTR_0            2.035       0.310      0.000       1.543       2.757      *
+
+ Residual Variances
+    SCPT             147.128      23.105      0.000     111.060     201.238      *
+    CCPT            1067.418     166.470      0.000     808.983    1454.779      *
+    SCPR             166.621      26.179      0.000     125.541     227.587      *
+    CCPR            1512.630     237.664      0.000    1139.671    2066.906      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    SCPT               0.016       0.022      0.000       0.001       0.083
+    CCPT               0.054       0.043      0.000       0.004       0.167
+    SCPR               0.055       0.044      0.000       0.004       0.169
+    CCPR               0.056       0.044      0.000       0.004       0.171
+
+
+     Beginning Time:  10:49:46
+        Ending Time:  10:50:00
+       Elapsed Time:  00:00:14
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

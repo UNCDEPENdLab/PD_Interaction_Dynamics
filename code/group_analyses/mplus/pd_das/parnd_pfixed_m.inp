@@ -1,0 +1,29 @@
+TITLE:
+Testing
+DATA:
+FILE = "parnd_pfixed_m.dat";
+ 
+VARIABLE:
+NAMES = dasbl1 dasbl0 parnd_1 parnd_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+dasbl1 ON parnd_1; 
+dasbl1 ON parnd_0* (b); 
+dasbl0 ON parnd_1* (b); 
+dasbl0 ON parnd_0; 
+dasbl1 WITH dasbl0; 
+parnd_1 WITH parnd_0; 
+dasbl1 WITH dasbl1; 
+dasbl0 WITH dasbl0; 
+parnd_1 WITH parnd_1; 
+parnd_0 WITH parnd_0; 
+[dasbl1]; 
+[dasbl0]; 
+[parnd_1]; 
+[parnd_0]; 
+
+OUTPUT:
+STANDARDIZED

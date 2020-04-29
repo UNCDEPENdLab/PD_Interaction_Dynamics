@@ -1,0 +1,334 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+12/13/2018  10:47 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Aff -> Coreg -> Aff -> DASFU AND fix non-sig parameters to zero. Only using
+  CC to reduce number of parameters;
+  DATA:
+  FILE = "../df67_das.dat";
+
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+  elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id
+  rel dasfu1 dasfu0 dasbl1 dasbl0;
+   MISSING=.;
+  USEVARIABLES = cmpr ccpr prafpr pafpr dasfu0
+  dasbl0 rel;
+  CATEGORICAL IS rel;
+  IDVARIABLE IS id;
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2; BITERATIONS = (49000); !ALGORITHM=MH;
+  !ESTIMATOR = MLR;
+  MODEL:
+  !prafpt ON cmpt@0;
+  prafpr ON cmpr@0;
+  !ccpt ON cmpt* (x);
+  ccpr ON cmpr@0;
+  !cmpt WITH cmpt;
+  cmpr WITH cmpr;
+  !cmpt WITH cmpr;
+  ![cmpt];
+  [cmpr];
+  !dasfu1 ON pafpt* (k);
+  !dasfu1 ON pafpr@0;
+  !dasfu1 ON dasbl1;
+  !dasfu1 ON dasbl0@0;
+  !dasfu0 ON pafpt;
+  dasfu0 ON pafpr@0;
+  !dasfu0 ON dasbl1;
+  dasfu0 ON dasbl0;
+  !rel ON pafpt@0;
+  rel ON pafpr@0;
+  !rel ON dasbl1;
+  rel ON dasbl0@0;
+
+  !pafpt WITH pafpr;
+  !pafpt ON prafpt;
+  !pafpt ON scpt* (a1);
+  !pafpt ON ccpt* (a3);
+  !pafpt ON scpr* (a5);
+  !pafpt ON ccpr@0;
+  pafpr ON prafpr;
+  !pafpr ON scpr@0;
+  pafpr ON ccpr@0;
+  !pafpr ON scpt* (a5);
+  !pafpr ON ccpt@0;
+  !scpr ON prafpt@0;
+  !scpt ON prafpr@0;
+  !ccpt ON prafpr* (b7);
+  !ccpr ON prafpt* (b7);
+  !scpt WITH ccpt;
+  !scpt WITH scpr;
+  !scpt WITH ccpr;
+  !ccpt WITH scpr;
+  !ccpt WITH ccpr;
+  !scpr WITH ccpr;
+  !scpt WITH scpt;
+  !ccpt WITH ccpt;
+  !scpr WITH scpr;
+  ccpr WITH ccpr;
+  !prafpt WITH prafpt;
+  prafpr WITH prafpr;
+  !pafpt WITH pafpt;
+  pafpr WITH pafpr;
+  !DASFU1 WITH DASFU1;
+  DASFU0 WITH DASFU0;
+  ![DASFU1];
+  [DASFU0];
+  !DASBL1 WITH DASBL1;
+  DASBL0 WITH DASBL0;
+  ![DASBL1];
+  [DASBL0];
+  !DASFU1 WITH DASFU0;
+  !DASBL0 WITH DASBL1;
+  !DASFU1 WITH REL@0;
+  !DASFU0 WITH REL@0;
+  DASFU0 ON PRAFPR;
+  !SCPR     ON DASBL0;
+  !DASFU1 ON SCPT;
+  !PRAFPT ON DASBL1;
+  !PRAFPR ON DASBL0;
+  PAFPR ON DASBL0;
+  !PRAFPR WITH PRAFPT;
+  PRAFPR ON DASBL0;
+  !PRAFPT   ON DASBL1;
+  !DASFU0 ON PRAFPT;
+  ![scpt];
+  ![ccpt@0];
+  ![scpr];
+  [ccpr@0];
+  ![prafpt];
+  [prafpr];
+  ![pafpt];
+  [pafpr@0];
+  !MODEL CONSTRAINT:
+  !NEW ( ka3 xka3); ! a7b7 a4b7 zka3 );
+  !ha3 = h*a3;
+  !ka3 = k*a3;
+  !xka3= x*k*a3;
+  !a3b7 = a3*b7;
+  !a7b7 = a7*b7;
+  !a4b7 = a4*b7;
+  !zka3 = z*k*a3;
+
+  !OUTPUT:
+  !STANDARDIZED;  MODINDICES(ALL 3);
+  !savedata: file=infludiagnostics.txt; save is
+  !cooks;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Aff -> Coreg -> Aff -> DASFU AND fix non-sig parameters to zero. Only using
+CC to reduce number of parameters;
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    5
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   CCPR        PRAFPR      PAFPR       DASFU0
+
+  Binary and ordered categorical (ordinal)
+   REL
+
+Observed independent variables
+   CMPR        DASBL0
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+Link                                                        PROBIT
+
+Input data file(s)
+  ../df67_das.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             7
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              REL           CCPR          PRAFPR        PAFPR         DASFU0
+              ________      ________      ________      ________      ________
+ REL            0.980
+ CCPR           0.980         1.000
+ PRAFPR         0.970         0.990         0.990
+ PAFPR          0.960         0.980         0.980         0.980
+ DASFU0         0.616         0.616         0.616         0.606         0.616
+ CMPR           0.970         0.990         0.980         0.970         0.616
+ DASBL0         0.949         0.970         0.960         0.949         0.616
+
+
+           Covariance Coverage
+              CMPR          DASBL0
+              ________      ________
+ CMPR           0.990
+ DASBL0         0.970         0.970
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    REL
+      Category 1    0.216           21.000
+      Category 2    0.784           76.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     CCPR                 -0.283      -0.178    -116.491    1.01%     -27.251     -8.605     -2.107
+              99.000    1435.257       0.411      79.366    1.01%       5.588     28.790
+     PRAFPR                3.041      -0.668      -2.414    1.02%       1.500      2.884      3.289
+              98.000       3.714       0.004       6.181    1.02%       3.737      4.724
+     PAFPR                 2.876      -0.642      -2.914    1.03%       1.103      2.634      3.207
+              97.000       4.221      -0.137       6.358    1.03%       3.737      4.651
+     DASFU0                3.788      -0.672       2.200    1.64%       3.400      3.700      3.900
+              61.000       0.304      -0.076       4.600    3.28%       4.000      4.300
+     CMPR                  1.003       0.174      -7.742    1.02%      -1.030      0.250      0.713
+              98.000       7.311       0.888       8.285    1.02%       1.397      2.957
+     DASBL0                3.660       0.559       2.500    1.04%       3.400      3.600      3.700
+              96.000       0.156       4.038       5.500    1.04%       3.800      3.900
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              17
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -21.336            23.934
+
+          Posterior Predictive P-Value              0.447
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ PRAFPR     ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    DASBL0             2.176       0.459      0.000       1.278       3.081      *
+
+ CCPR       ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.543       0.204      0.004       0.141       0.945      *
+    PRAFPR             0.132       0.037      0.001       0.058       0.204      *
+
+ REL        ON
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PAFPR      ON
+    PRAFPR             0.668       0.090      0.000       0.490       0.845      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.228       0.089      0.006       0.053       0.402      *
+
+ DASBL0   WITH
+    CMPR               0.118       0.126      0.161      -0.120       0.378
+
+ Means
+    CMPR               1.003       0.285      0.000       0.446       1.562      *
+    DASBL0             3.662       0.042      0.000       3.579       3.744      *
+
+ Intercepts
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPR            -4.939       1.694      0.002      -8.286      -1.615      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASFU0             1.358       0.718      0.030      -0.053       2.780
+
+ Thresholds
+    REL$1             -0.784       0.142      0.000      -1.068      -0.510      *
+
+ Variances
+    CMPR               7.774       1.180      0.000       5.880      10.509      *
+    DASBL0             0.165       0.026      0.000       0.125       0.225      *
+
+ Residual Variances
+    CCPR            1475.264     218.526      0.000    1125.212    1978.489      *
+    PRAFPR             3.130       0.474      0.000       2.385       4.241      *
+    PAFPR              2.517       0.384      0.000       1.907       3.411      *
+    DASFU0             0.213       0.043      0.000       0.150       0.315      *
+
+
+RESULTS IN PROBABILITY SCALE
+
+ REL
+    Category 1         0.217       0.041      0.000       0.143       0.305      *
+    Category 2         0.783       0.041      0.000       0.695       0.857      *
+
+
+     Beginning Time:  10:47:28
+        Ending Time:  10:47:38
+       Elapsed Time:  00:00:10
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

@@ -1,0 +1,771 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+12/17/2018   9:28 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Aff -> Coreg -> Aff -> DASFU AND fix non-sig parameters to zero. Only using
+  CC to reduce number of parameters;
+  DATA:
+  FILE = "../df67_das_dem.dat";
+
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+  elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id
+  rel dasfu1 dasfu0 dasbl1 dasbl0;
+   MISSING=.;
+  USEVARIABLES = cmpt cmpr ccpt ccpr prafpt prafpr pafpt pafpr dasfu0 dasfu1
+  dasbl1 dasbl0 rel;
+  CATEGORICAL IS rel;
+  IDVARIABLE IS id;
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2; BITERATIONS = (49000); !ALGORITHM=MH;
+  !ESTIMATOR = MLR;
+  MODEL:
+  prafpt ON cmpt@0;
+  prafpr ON cmpr@0;
+  ccpt ON cmpt* (x);
+  ccpr ON cmpr@0;
+  cmpt WITH cmpt;
+  cmpr WITH cmpr;
+  cmpt WITH cmpr;
+  [cmpt];
+  [cmpr];
+  dasfu1 ON pafpt* (k);
+  dasfu1 ON pafpr@0;
+  dasfu1 ON dasbl1;
+  dasfu1 ON dasbl0@0;
+  dasfu0 ON pafpt;
+  dasfu0 ON pafpr@0;
+  dasfu0 ON dasbl1;
+  dasfu0 ON dasbl0;
+  rel ON pafpt@0;
+  rel ON pafpr@0;
+  rel ON dasbl1;
+  rel ON dasbl0@0;
+
+  pafpt WITH pafpr;
+  pafpt ON prafpt;
+  !pafpt ON scpt* (a1);
+  pafpt ON ccpt* (a3);
+  !pafpt ON scpr* (a5);
+  pafpt ON ccpr@0;
+  pafpr ON prafpr;
+  !pafpr ON scpr@0;
+  pafpr ON ccpr@0;
+  !pafpr ON scpt* (a5);
+  pafpr ON ccpt@0;
+  !scpr ON prafpt@0;
+  !scpt ON prafpr@0;
+  ccpt ON prafpr* (b7);
+  ccpr ON prafpt* (b7);
+  !scpt WITH ccpt;
+  !scpt WITH scpr;
+  !scpt WITH ccpr;
+  !ccpt WITH scpr;
+  ccpt WITH ccpr;
+  !scpr WITH ccpr;
+  !scpt WITH scpt;
+  ccpt WITH ccpt;
+  !scpr WITH scpr;
+  ccpr WITH ccpr;
+  prafpt WITH prafpt;
+  prafpr WITH prafpr;
+  pafpt WITH pafpt;
+  pafpr WITH pafpr;
+  DASFU1 WITH DASFU1;
+  DASFU0 WITH DASFU0;
+  [DASFU1];
+  [DASFU0];
+  DASBL1 WITH DASBL1;
+  DASBL0 WITH DASBL0;
+  [DASBL1];
+  [DASBL0];
+  DASFU1 WITH DASFU0;
+  DASBL0 WITH DASBL1;
+  !DASFU1 WITH REL@0;
+  !DASFU0 WITH REL@0;
+  DASFU0 ON PRAFPR;
+  !SCPR     ON DASBL0;
+  !DASFU1 ON SCPT;
+  !PRAFPT ON DASBL1;
+  !PRAFPR ON DASBL0;
+  PAFPR ON DASBL0;
+  PRAFPR WITH PRAFPT;
+  PRAFPR ON DASBL0;
+  PRAFPT   ON DASBL1;
+  DASFU0 ON PRAFPT;
+  ![scpt];
+  [ccpt@0];
+  ![scpr];
+  [ccpr@0];
+  [prafpt];
+  [prafpr];
+  [pafpt];
+  [pafpr@0];
+  !MODEL CONSTRAINT:
+  !NEW ( ka3 xka3); ! a7b7 a4b7 zka3 );
+  !ha3 = h*a3;
+  !ka3 = k*a3;
+  !xka3= x*k*a3;
+  !a3b7 = a3*b7;
+  !a7b7 = a7*b7;
+  !a4b7 = a4*b7;
+  !zka3 = z*k*a3;
+
+  OUTPUT:
+  STANDARDIZED;  !MODINDICES(ALL 3);
+  !savedata: file=infludiagnostics.txt; save is
+  !cooks;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Aff -> Coreg -> Aff -> DASFU AND fix non-sig parameters to zero. Only using
+CC to reduce number of parameters;
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    9
+Number of independent variables                                  4
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   CCPT        CCPR        PRAFPT      PRAFPR      PAFPT       PAFPR
+   DASFU0      DASFU1
+
+  Binary and ordered categorical (ordinal)
+   REL
+
+Observed independent variables
+   CMPT        CMPR        DASBL1      DASBL0
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+Link                                                        PROBIT
+
+Input data file(s)
+  ../df67_das_dem.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns            10
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              REL           CCPT          CCPR          PRAFPT        PRAFPR
+              ________      ________      ________      ________      ________
+ REL            0.980
+ CCPT           0.980         1.000
+ CCPR           0.980         1.000         1.000
+ PRAFPT         0.970         0.990         0.990         0.990
+ PRAFPR         0.970         0.990         0.990         0.990         0.990
+ PAFPT          0.949         0.970         0.970         0.970         0.970
+ PAFPR          0.960         0.980         0.980         0.980         0.980
+ DASFU0         0.616         0.616         0.616         0.616         0.616
+ DASFU1         0.737         0.737         0.737         0.737         0.737
+ CMPT           0.980         1.000         1.000         0.990         0.990
+ CMPR           0.970         0.990         0.990         0.980         0.980
+ DASBL1         0.980         1.000         1.000         0.990         0.990
+ DASBL0         0.949         0.970         0.970         0.960         0.960
+
+
+           Covariance Coverage
+              PAFPT         PAFPR         DASFU0        DASFU1        CMPT
+              ________      ________      ________      ________      ________
+ PAFPT          0.970
+ PAFPR          0.970         0.980
+ DASFU0         0.596         0.606         0.616
+ DASFU1         0.717         0.727         0.606         0.737
+ CMPT           0.970         0.980         0.616         0.737         1.000
+ CMPR           0.960         0.970         0.616         0.727         0.990
+ DASBL1         0.970         0.980         0.616         0.737         1.000
+ DASBL0         0.939         0.949         0.616         0.727         0.970
+
+
+           Covariance Coverage
+              CMPR          DASBL1        DASBL0
+              ________      ________      ________
+ CMPR           0.990
+ DASBL1         0.990         1.000
+ DASBL0         0.970         0.970         0.970
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    REL
+      Category 1    0.216           21.000
+      Category 2    0.784           76.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     CCPT                 -0.890      -0.259     -81.685    1.01%     -26.415     -7.559      2.881
+              99.000    1013.048       0.128      80.417    1.01%       8.529     24.280
+     CCPR                 -0.283      -0.178    -116.491    1.01%     -27.251     -8.605     -2.107
+              99.000    1435.257       0.411      79.366    1.01%       5.588     28.790
+     PRAFPT                3.078      -0.410      -2.061    1.02%       1.207      2.634      3.186
+              98.000       3.791      -0.719       6.358    1.02%       3.944      4.944
+     PRAFPR                3.041      -0.668      -2.414    1.02%       1.500      2.884      3.289
+              98.000       3.714       0.004       6.181    1.02%       3.737      4.724
+     PAFPT                 2.306      -0.499      -3.134    1.04%       0.177      1.707      2.722
+              96.000       5.174      -0.502       6.108    2.08%       3.341      4.444
+     PAFPR                 2.876      -0.642      -2.914    1.03%       1.103      2.634      3.207
+              97.000       4.221      -0.137       6.358    1.03%       3.737      4.651
+     DASFU0                3.788      -0.672       2.200    1.64%       3.400      3.700      3.900
+              61.000       0.304      -0.076       4.600    3.28%       4.000      4.300
+     DASFU1                3.661      -0.631       1.778    1.37%       3.100      3.600      3.800
+              73.000       0.406       0.010       4.800    1.37%       3.900      4.200
+     CMPT                  1.140       0.179      -6.169    1.01%      -1.444      0.366      0.866
+              99.000       9.104      -0.160       8.225    1.01%       1.884      3.207
+     CMPR                  1.003       0.174      -7.742    1.02%      -1.030      0.250      0.713
+              98.000       7.311       0.888       8.285    1.02%       1.397      2.957
+     DASBL1                3.589      -0.863       2.200    1.01%       3.300      3.500      3.600
+              99.000       0.112       1.797       4.200    1.01%       3.700      3.900
+     DASBL0                3.660       0.559       2.500    1.04%       3.400      3.600      3.700
+              96.000       0.156       4.038       5.500    1.04%       3.800      3.900
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              48
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -36.019            42.090
+
+          Posterior Predictive P-Value              0.419
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ PRAFPT     ON
+    CMPT               0.000       0.000      1.000       0.000       0.000
+    DASBL1             1.457       0.551      0.005       0.362       2.539      *
+
+ PRAFPR     ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    DASBL0             2.184       0.434      0.000       1.341       3.040      *
+
+ CCPT       ON
+    CMPT              -2.450       0.682      0.000      -3.803      -1.114      *
+    PRAFPR             0.570       0.372      0.061      -0.159       1.296
+
+ CCPR       ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPT             0.570       0.372      0.061      -0.159       1.296
+
+ DASFU1     ON
+    PAFPT              0.101       0.030      0.000       0.043       0.159      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.614       0.191      0.001       0.236       0.992      *
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PAFPT              0.102       0.032      0.001       0.039       0.167      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.333       0.181      0.032      -0.021       0.688
+    DASBL0             0.287       0.192      0.068      -0.091       0.663
+    PRAFPR             0.110       0.034      0.001       0.043       0.176      *
+    PRAFPT            -0.066       0.037      0.040      -0.138       0.008
+
+ REL        ON
+    PAFPT              0.000       0.000      1.000       0.000       0.000
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.404       0.350      0.124      -0.279       1.088
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PAFPT      ON
+    PRAFPT             0.697       0.078      0.000       0.542       0.851      *
+    CCPT               0.011       0.005      0.013       0.001       0.021      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+
+ PAFPR      ON
+    PRAFPR             0.630       0.077      0.000       0.478       0.781      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    CCPT               0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.255       0.079      0.001       0.098       0.410      *
+
+ CMPT     WITH
+    CMPR              -0.141       0.844      0.430      -1.817       1.530
+
+ PAFPT    WITH
+    PAFPR              1.612       0.356      0.000       1.031       2.425      *
+
+ CCPT     WITH
+    CCPR            -917.556     162.267      0.000   -1287.519    -656.799      *
+
+ PRAFPT   WITH
+    PRAFPR             1.273       0.396      0.000       0.592       2.146      *
+
+ DASFU1   WITH
+    DASFU0             0.107       0.039      0.000       0.043       0.195      *
+
+ DASBL1   WITH
+    DASBL0             0.058       0.016      0.000       0.031       0.094      *
+    CMPT               0.054       0.108      0.301      -0.157       0.273
+    CMPR              -0.103       0.099      0.138      -0.306       0.084
+
+ DASBL0   WITH
+    CMPT               0.309       0.132      0.005       0.073       0.592      *
+    CMPR               0.116       0.117      0.150      -0.106       0.359
+
+ Means
+    CMPT               1.140       0.304      0.000       0.538       1.730      *
+    CMPR               1.005       0.276      0.000       0.462       1.549      *
+    DASBL1             3.589       0.035      0.000       3.520       3.658      *
+    DASBL0             3.662       0.041      0.000       3.582       3.744      *
+
+ Intercepts
+    CCPT               0.000       0.000      1.000       0.000       0.000
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPT            -2.156       1.988      0.140      -6.070       1.798
+    PRAFPR            -4.963       1.601      0.001      -8.119      -1.857      *
+    PAFPT              0.184       0.301      0.268      -0.406       0.778
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASFU0             1.127       0.724      0.059      -0.292       2.561
+    DASFU1             1.190       0.679      0.039      -0.137       2.529
+
+ Thresholds
+    REL$1              0.646       1.246      0.303      -1.779       3.083
+
+ Variances
+    CMPT               9.084       1.334      0.000       6.947      12.156      *
+    CMPR               7.308       1.076      0.000       5.591       9.800      *
+    DASBL1             0.122       0.018      0.000       0.093       0.163      *
+    DASBL0             0.166       0.025      0.000       0.127       0.224      *
+
+ Residual Variances
+    CCPT             990.587     149.225      0.000     753.898    1340.070      *
+    CCPR            1500.494     226.353      0.000    1141.550    2024.289      *
+    PRAFPT             3.694       0.560      0.000       2.804       4.994      *
+    PRAFPR             3.191       0.491      0.000       2.421       4.339      *
+    PAFPT              3.128       0.487      0.000       2.359       4.268      *
+    PAFPR              2.568       0.394      0.000       1.948       3.492      *
+    DASFU0             0.187       0.040      0.000       0.129       0.286      *
+    DASFU1             0.306       0.056      0.000       0.220       0.439      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ PRAFPT     ON
+    CMPT               0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.256       0.094      0.005       0.063       0.432      *
+
+ PRAFPR     ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.446       0.079      0.000       0.280       0.588      *
+
+ CCPT       ON
+    CMPT              -0.228       0.065      0.000      -0.357      -0.103      *
+    PRAFPR             0.035       0.023      0.061      -0.010       0.081
+
+ CCPR       ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPT             0.029       0.020      0.061      -0.008       0.069
+
+ DASFU1     ON
+    PAFPT              0.356       0.097      0.000       0.153       0.533      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.329       0.097      0.001       0.126       0.506      *
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PAFPT              0.393       0.119      0.001       0.148       0.615      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.194       0.105      0.032      -0.012       0.397
+    DASBL0             0.196       0.126      0.068      -0.062       0.430
+    PRAFPR             0.368       0.107      0.001       0.145       0.568      *
+    PRAFPT            -0.219       0.122      0.040      -0.451       0.026
+
+ REL        ON
+    PAFPT              0.000       0.000      1.000       0.000       0.000
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.140       0.117      0.124      -0.097       0.360
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PAFPT      ON
+    PRAFPT             0.608       0.059      0.000       0.482       0.715      *
+    CCPT               0.156       0.070      0.013       0.019       0.292      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+
+ PAFPR      ON
+    PRAFPR             0.609       0.063      0.000       0.475       0.719      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    CCPT               0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.050       0.018      0.001       0.018       0.088      *
+
+ CMPT     WITH
+    CMPR              -0.017       0.100      0.430      -0.212       0.180
+
+ PAFPT    WITH
+    PAFPR              0.573       0.071      0.000       0.416       0.697      *
+
+ CCPT     WITH
+    CCPR              -0.756       0.045      0.000      -0.830      -0.653      *
+
+ PRAFPT   WITH
+    PRAFPR             0.375       0.090      0.000       0.184       0.537      *
+
+ DASFU1   WITH
+    DASFU0             0.455       0.116      0.000       0.197       0.650      *
+
+ DASBL1   WITH
+    DASBL0             0.412       0.084      0.000       0.232       0.561      *
+    CMPT               0.052       0.099      0.301      -0.144       0.244
+    CMPR              -0.110       0.099      0.138      -0.300       0.087
+
+ DASBL0   WITH
+    CMPT               0.254       0.094      0.005       0.061       0.428      *
+    CMPR               0.107       0.101      0.150      -0.094       0.300
+
+ Means
+    CMPT               0.379       0.104      0.000       0.175       0.580      *
+    CMPR               0.372       0.105      0.000       0.167       0.578      *
+    DASBL1            10.288       0.735      0.000       8.889      11.752      *
+    DASBL0             8.975       0.653      0.000       7.732      10.294      *
+
+ Intercepts
+    CCPT               0.000       0.000      1.000       0.000       0.000
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPT            -1.083       0.965      0.140      -2.875       0.911
+    PRAFPR            -2.485       0.715      0.001      -3.759      -0.980      *
+    PAFPT              0.080       0.133      0.268      -0.165       0.360
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASFU0             1.884       1.259      0.059      -0.450       4.497
+    DASFU1             1.823       1.086      0.039      -0.188       4.043
+
+ Thresholds
+    REL$1              0.640       1.200      0.303      -1.771       2.879
+
+ Variances
+    CMPT               1.000       0.000      0.000       1.000       1.000
+    CMPR               1.000       0.000      0.000       1.000       1.000
+    DASBL1             1.000       0.000      0.000       1.000       1.000
+    DASBL0             1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    CCPT               0.948       0.030      0.000       0.873       0.989      *
+    CCPR               0.999       0.001      0.000       0.995       1.000      *
+    PRAFPT             0.935       0.048      0.000       0.813       0.996      *
+    PRAFPR             0.801       0.069      0.000       0.654       0.922      *
+    PAFPT              0.598       0.072      0.000       0.459       0.739      *
+    PAFPR              0.599       0.072      0.000       0.461       0.740      *
+    DASFU0             0.523       0.089      0.000       0.365       0.711      *
+    DASFU1             0.717       0.080      0.000       0.559       0.869      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ PRAFPT     ON
+    CMPT               0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.256       0.094      0.005       0.063       0.432      *
+
+ PRAFPR     ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.446       0.079      0.000       0.280       0.588      *
+
+ CCPT       ON
+    CMPT              -0.228       0.065      0.000      -0.357      -0.103      *
+    PRAFPR             0.035       0.023      0.061      -0.010       0.081
+
+ CCPR       ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPT             0.029       0.020      0.061      -0.008       0.069
+
+ DASFU1     ON
+    PAFPT              0.356       0.097      0.000       0.153       0.533      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.329       0.097      0.001       0.126       0.506      *
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PAFPT              0.393       0.119      0.001       0.148       0.615      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.194       0.105      0.032      -0.012       0.397
+    DASBL0             0.196       0.126      0.068      -0.062       0.430
+    PRAFPR             0.368       0.107      0.001       0.145       0.568      *
+    PRAFPT            -0.219       0.122      0.040      -0.451       0.026
+
+ REL        ON
+    PAFPT              0.000       0.000      1.000       0.000       0.000
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.140       0.117      0.124      -0.097       0.360
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PAFPT      ON
+    PRAFPT             0.608       0.059      0.000       0.482       0.715      *
+    CCPT               0.156       0.070      0.013       0.019       0.292      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+
+ PAFPR      ON
+    PRAFPR             0.609       0.063      0.000       0.475       0.719      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    CCPT               0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.050       0.018      0.001       0.018       0.088      *
+
+ CMPT     WITH
+    CMPR              -0.017       0.100      0.430      -0.212       0.180
+
+ PAFPT    WITH
+    PAFPR              0.573       0.071      0.000       0.416       0.697      *
+
+ CCPT     WITH
+    CCPR              -0.756       0.045      0.000      -0.830      -0.653      *
+
+ PRAFPT   WITH
+    PRAFPR             0.375       0.090      0.000       0.184       0.537      *
+
+ DASFU1   WITH
+    DASFU0             0.455       0.116      0.000       0.197       0.650      *
+
+ DASBL1   WITH
+    DASBL0             0.412       0.084      0.000       0.232       0.561      *
+    CMPT               0.052       0.099      0.301      -0.144       0.244
+    CMPR              -0.110       0.099      0.138      -0.300       0.087
+
+ DASBL0   WITH
+    CMPT               0.254       0.094      0.005       0.061       0.428      *
+    CMPR               0.107       0.101      0.150      -0.094       0.300
+
+ Means
+    CMPT               0.379       0.104      0.000       0.175       0.580      *
+    CMPR               0.372       0.105      0.000       0.167       0.578      *
+    DASBL1            10.288       0.735      0.000       8.889      11.752      *
+    DASBL0             8.975       0.653      0.000       7.732      10.294      *
+
+ Intercepts
+    CCPT               0.000       0.000      1.000       0.000       0.000
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPT            -1.083       0.965      0.140      -2.875       0.911
+    PRAFPR            -2.485       0.715      0.001      -3.759      -0.980      *
+    PAFPT              0.080       0.133      0.268      -0.165       0.360
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASFU0             1.884       1.259      0.059      -0.450       4.497
+    DASFU1             1.823       1.086      0.039      -0.188       4.043
+
+ Thresholds
+    REL$1              0.640       1.200      0.303      -1.771       2.879
+
+ Variances
+    CMPT               1.000       0.000      0.000       1.000       1.000
+    CMPR               1.000       0.000      0.000       1.000       1.000
+    DASBL1             1.000       0.000      0.000       1.000       1.000
+    DASBL0             1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    CCPT               0.948       0.030      0.000       0.873       0.989      *
+    CCPR               0.999       0.001      0.000       0.995       1.000      *
+    PRAFPT             0.935       0.048      0.000       0.813       0.996      *
+    PRAFPR             0.801       0.069      0.000       0.654       0.922      *
+    PAFPT              0.598       0.072      0.000       0.459       0.739      *
+    PAFPR              0.599       0.072      0.000       0.461       0.740      *
+    DASFU0             0.523       0.089      0.000       0.365       0.711      *
+    DASFU1             0.717       0.080      0.000       0.559       0.869      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ PRAFPT     ON
+    CMPT               0.000       0.000      1.000       0.000       0.000
+    DASBL1             1.457       0.551      0.005       0.362       2.539      *
+
+ PRAFPR     ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    DASBL0             2.184       0.434      0.000       1.341       3.040      *
+
+ CCPT       ON
+    CMPT              -2.450       0.682      0.000      -3.803      -1.114      *
+    PRAFPR             0.570       0.372      0.061      -0.159       1.296
+
+ CCPR       ON
+    CMPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPT             0.570       0.372      0.061      -0.159       1.296
+
+ DASFU1     ON
+    PAFPT              0.101       0.030      0.000       0.043       0.159      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.614       0.191      0.001       0.236       0.992      *
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PAFPT              0.102       0.032      0.001       0.039       0.167      *
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.333       0.181      0.032      -0.021       0.688
+    DASBL0             0.287       0.192      0.068      -0.091       0.663
+    PRAFPR             0.110       0.034      0.001       0.043       0.176      *
+    PRAFPT            -0.066       0.037      0.040      -0.138       0.008
+
+ REL        ON
+    PAFPT              0.000       0.000      1.000       0.000       0.000
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.404       0.350      0.124      -0.279       1.088
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PAFPT      ON
+    PRAFPT             0.697       0.078      0.000       0.542       0.851      *
+    CCPT               0.011       0.005      0.013       0.001       0.021      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+
+ PAFPR      ON
+    PRAFPR             0.630       0.077      0.000       0.478       0.781      *
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    CCPT               0.000       0.000      1.000       0.000       0.000
+    DASBL0             0.255       0.079      0.001       0.098       0.410      *
+
+ CMPT     WITH
+    CMPR              -0.017       0.100      0.430      -0.212       0.180
+
+ PAFPT    WITH
+    PAFPR              0.573       0.071      0.000       0.416       0.697      *
+
+ CCPT     WITH
+    CCPR              -0.756       0.045      0.000      -0.830      -0.653      *
+
+ PRAFPT   WITH
+    PRAFPR             0.375       0.090      0.000       0.184       0.537      *
+
+ DASFU1   WITH
+    DASFU0             0.455       0.116      0.000       0.197       0.650      *
+
+ DASBL1   WITH
+    DASBL0             0.412       0.084      0.000       0.232       0.561      *
+    CMPT               0.052       0.099      0.301      -0.144       0.244
+    CMPR              -0.110       0.099      0.138      -0.300       0.087
+
+ DASBL0   WITH
+    CMPT               0.254       0.094      0.005       0.061       0.428      *
+    CMPR               0.107       0.101      0.150      -0.094       0.300
+
+ Means
+    CMPT               1.140       0.304      0.000       0.538       1.730      *
+    CMPR               1.005       0.276      0.000       0.462       1.549      *
+    DASBL1             3.589       0.035      0.000       3.520       3.658      *
+    DASBL0             3.662       0.041      0.000       3.582       3.744      *
+
+ Intercepts
+    CCPT               0.000       0.000      1.000       0.000       0.000
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PRAFPT            -2.156       1.988      0.140      -6.070       1.798
+    PRAFPR            -4.963       1.601      0.001      -8.119      -1.857      *
+    PAFPT              0.184       0.301      0.268      -0.406       0.778
+    PAFPR              0.000       0.000      1.000       0.000       0.000
+    DASFU0             1.127       0.724      0.059      -0.292       2.561
+    DASFU1             1.190       0.679      0.039      -0.137       2.529
+
+ Thresholds
+    REL$1              0.646       1.246      0.303      -1.779       3.083
+
+ Variances
+    CMPT               9.084       1.334      0.000       6.947      12.156      *
+    CMPR               7.308       1.076      0.000       5.591       9.800      *
+    DASBL1             0.122       0.018      0.000       0.093       0.163      *
+    DASBL0             0.166       0.025      0.000       0.127       0.224      *
+
+ Residual Variances
+    CCPT             990.587     149.225      0.000     753.898    1340.070      *
+    CCPR            1500.494     226.353      0.000    1141.550    2024.289      *
+    PRAFPT             3.694       0.560      0.000       2.804       4.994      *
+    PRAFPR             3.191       0.491      0.000       2.421       4.339      *
+    PAFPT              3.128       0.487      0.000       2.359       4.268      *
+    PAFPR              2.568       0.394      0.000       1.948       3.492      *
+    DASFU0             0.187       0.040      0.000       0.129       0.286      *
+    DASFU1             0.306       0.056      0.000       0.220       0.439      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    REL                0.020       0.036      0.000       0.000       0.130
+    CCPT               0.052       0.030      0.000       0.011       0.126
+    CCPR               0.001       0.001      0.000       0.000       0.005
+    PRAFPT             0.065       0.048      0.000       0.004       0.187
+    PRAFPR             0.199       0.069      0.000       0.078       0.346
+    PAFPT              0.402       0.072      0.000       0.261       0.541
+    PAFPR              0.401       0.072      0.000       0.260       0.539
+    DASFU0             0.477       0.089      0.000       0.289       0.635
+    DASFU1             0.283       0.080      0.000       0.130       0.440
+
+
+     Beginning Time:  09:28:58
+        Ending Time:  09:29:19
+       Elapsed Time:  00:00:21
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

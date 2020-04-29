@@ -1,0 +1,788 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+12/10/2018   3:33 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  el -> na -> coreg -> na -> anx. No log transform. Include 8066. Use MLR;
+  DATA:
+  !FILE = "m1df6_model.dat";
+  FILE = "../../df67.dat";
+  !DEFINE:
+  ! prnapt=LOG(prnapt);
+  ! prnapr=LOG(prnapr);
+  ! pnapt=LOG(pnapt);
+  ! pnapr=LOG(pnapr);
+
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt
+  prnapr pnapt pnapr elpt elpr whichdf_num id;
+   MISSING=.;
+  USEVARIABLES = scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt
+  prnapr pnapt pnapr elpt elpr id;
+  IDVARIABLE IS id;
+
+  !USEOBSERVATIONS = id NE 99; !one case identified as high cooks d
+
+  ANALYSIS:
+  ESTIMATOR=MLR; !for modindices
+  !ESTIMATOR=BAYES;
+  !PROCESSORS = 2;
+  !BITERATIONS = (30000);
+  !ALGORITHM=GIBBS(PX1);
+
+  MODEL:
+  scpt ON elpt@0;
+  scpr ON elpr@0;
+  ccpt ON elpt* (u);
+  ccpr ON elpr;
+  prnapt ON elpt* (w);
+  prnapr ON elpr* (j);
+  ECRanx_1 ON pnapt* (h);
+  ECRanx_0 ON pnapr* (k);
+  pnapt WITH pnapr;
+  pnapt ON prnapt;
+  pnapt ON scpt@0;
+  pnapt ON ccpt* (c);
+  pnapr ON prnapr;
+  pnapr ON scpr@0;
+  pnapr ON ccpr* (d);
+  !scpt ON prnapt* (a1);
+  !scpr ON prnapr* (a1);
+  scpt ON prnapt@0;
+  scpr ON prnapr@0;
+
+  ccpt ON prnapt* (b1);
+  ccpr ON prnapr* (b1);
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  scpr WITH ccpt;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  scpt WITH scpt;
+  scpr WITH scpr;
+  ccpt WITH ccpt;
+  ccpr WITH ccpr;
+  prnapt WITH prnapt;
+  prnapr WITH prnapr;
+  ECRanx_1 WITH ECRanx_1;
+  ECRanx_0 WITH ECRanx_0;
+  pnapt WITH pnapt;
+  pnapr WITH pnapr;
+  ECRanx_1 WITH ECRanx_0;
+  elpt WITH elpt;
+  elpt WITH elpr@0;
+  elpr WITH elpr;
+  [scpt];
+  [scpr];
+  [ccpt];
+  [ccpr];
+  [prnapt];
+  [prnapr];
+  [ECRanx_1];
+  [ECRanx_0];
+  [pnapt];
+  [pnapr];
+  [elpt];  !remove mean structure
+  [elpr];  !remove mean structure
+
+  !mod indices: direct effect of elevation on ECR
+  ECRANX_1 ON ELPT;
+  ECRANX_0 ON ELPR;
+
+  !MODEL CONSTRAINT:
+  !NEW ( b1c b1d hb1c whb1c uhc );
+  !b1c = b1*c;
+  !b1d = b1*d;
+  !hb1c = h*b1*c;
+  !whb1c = w*h*b1*c;
+  !uhc = u*h*c;
+
+
+  OUTPUT:
+  STANDARDIZED;  MODINDICES(ALL 5);
+
+  SAVEDATA:
+  FILE=m1df6_include8066_savedata.dat;
+  SAVE=COOKS;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+el -> na -> coreg -> na -> anx. No log transform. Include 8066. Use MLR;
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                   10
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR        ECRANX_1    ECRANX_0
+   PRNAPT      PRNAPR      PNAPT       PNAPR
+
+Observed independent variables
+   ELPT        ELPR
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+
+Input data file(s)
+  ../../df67.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             4
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          ECRANX_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ ECRANX_1       0.990         0.990         0.990         0.990         0.990
+ ECRANX_0       0.990         0.990         0.990         0.990         0.980
+ PRNAPT         1.000         1.000         1.000         1.000         0.990
+ PRNAPR         1.000         1.000         1.000         1.000         0.990
+ PNAPT          0.990         0.990         0.990         0.990         0.980
+ PNAPR          1.000         1.000         1.000         1.000         0.990
+ ELPT           1.000         1.000         1.000         1.000         0.990
+ ELPR           0.990         0.990         0.990         0.990         0.980
+
+
+           Covariance Coverage
+              ECRANX_0      PRNAPT        PRNAPR        PNAPT         PNAPR
+              ________      ________      ________      ________      ________
+ ECRANX_0       0.990
+ PRNAPT         0.990         1.000
+ PRNAPR         0.990         1.000         1.000
+ PNAPT          0.980         0.990         0.990         0.990
+ PNAPR          0.990         1.000         1.000         0.990         1.000
+ ELPT           0.990         1.000         1.000         0.990         1.000
+ ELPR           0.990         0.990         0.990         0.980         0.990
+
+
+           Covariance Coverage
+              ELPT          ELPR
+              ________      ________
+ ELPT           1.000
+ ELPR           0.990         0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.559       0.551       7.450    1.01%      19.197     26.648     29.841
+              99.000     129.762      -0.204      58.807    1.01%      31.821     39.920
+     CCPT                 -0.890      -0.259     -81.685    1.01%     -26.415     -7.559      2.881
+              99.000    1013.048       0.128      80.417    1.01%       8.529     24.280
+     SCPR                 28.538       0.567       9.085    1.01%      16.451     24.118     27.494
+              99.000     153.716      -0.221      66.121    1.01%      29.684     39.272
+     CCPR                 -0.283      -0.178    -116.491    1.01%     -27.251     -8.605     -2.107
+              99.000    1435.257       0.411      79.366    1.01%       5.588     28.790
+     ECRANX_1              3.551       0.253       1.222    2.04%       2.500      2.944      3.389
+              98.000       1.360      -0.769       6.000    1.02%       3.833      4.611
+     ECRANX_0              2.942       0.444       1.000    2.04%       1.833      2.444      2.750
+              98.000       1.490      -0.683       6.000    1.02%       3.000      4.056
+     PRNAPT               16.030       1.450      10.000   13.13%      11.000     13.000     14.000
+              99.000      31.928       2.460      39.000    1.01%      16.000     20.000
+     PRNAPR               13.621       1.725      10.000   24.24%      10.000     11.000     12.000
+              99.000      17.354       3.160      31.000    1.01%      13.000     16.000
+     PNAPT                17.803       1.082      10.000   16.33%      11.000     13.000     16.000
+              98.000      55.916       1.241      47.000    1.02%      19.000     24.000
+     PNAPR                14.380       1.080      10.000   36.36%      10.000     11.000     12.000
+              99.000      27.507      -0.070      30.000    1.01%      13.000     20.000
+     ELPT                  9.658       0.082       1.375    1.01%       5.750      8.375      9.500
+              99.000      15.289      -0.698      18.000    1.01%      10.625     12.875
+     ELPR                  6.835       0.329       0.750    3.06%       3.250      5.250      6.812
+              98.000      15.020      -0.679      15.625    1.02%       7.750     10.375
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       45
+
+Loglikelihood
+
+          H0 Value                       -3699.315
+          H0 Scaling Correction Factor      1.0903
+            for MLR
+          H1 Value                       -3662.881
+          H1 Scaling Correction Factor      1.0656
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                    7488.630
+          Bayesian (BIC)                  7605.410
+          Sample-Size Adjusted BIC        7463.298
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                             70.008*
+          Degrees of Freedom                    45
+          P-Value                           0.0099
+          Scaling Correction Factor         1.0409
+            for MLR
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.075
+          90 Percent C.I.                    0.037  0.108
+          Probability RMSEA <= .05           0.120
+
+CFI/TLI
+
+          CFI                                0.911
+          TLI                                0.871
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                            344.761
+          Degrees of Freedom                    65
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.102
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ SCPT     ON
+    ELPT               0.000      0.000    999.000    999.000
+    PRNAPT             0.000      0.000    999.000    999.000
+
+ SCPR     ON
+    ELPR               0.000      0.000    999.000    999.000
+    PRNAPR             0.000      0.000    999.000    999.000
+
+ CCPT     ON
+    ELPT              -0.837      0.572     -1.463      0.144
+    PRNAPT            -1.003      0.280     -3.579      0.000
+
+ CCPR     ON
+    ELPR               1.792      0.621      2.885      0.004
+    PRNAPR            -1.003      0.280     -3.579      0.000
+
+ PRNAPT   ON
+    ELPT               0.479      0.127      3.783      0.000
+
+ PRNAPR   ON
+    ELPR               0.291      0.117      2.495      0.013
+
+ ECRANX_1 ON
+    PNAPT              0.048      0.014      3.371      0.001
+    ELPT               0.100      0.027      3.711      0.000
+
+ ECRANX_0 ON
+    PNAPR              0.037      0.023      1.653      0.098
+    ELPR               0.135      0.032      4.219      0.000
+
+ PNAPT    ON
+    PRNAPT             0.799      0.101      7.894      0.000
+    SCPT               0.000      0.000    999.000    999.000
+    CCPT              -0.040      0.018     -2.241      0.025
+
+ PNAPR    ON
+    PRNAPR             0.702      0.096      7.339      0.000
+    SCPR               0.000      0.000    999.000    999.000
+    CCPR               0.011      0.009      1.199      0.231
+
+ PNAPT    WITH
+    PNAPR              6.677      2.599      2.569      0.010
+
+ SCPT     WITH
+    CCPT              15.071     31.984      0.471      0.637
+    SCPR             -20.504     14.552     -1.409      0.159
+    CCPR             -38.064     43.033     -0.885      0.376
+
+ SCPR     WITH
+    CCPT               7.812     43.045      0.181      0.856
+    CCPR             -70.264     57.866     -1.214      0.225
+
+ CCPT     WITH
+    CCPR            -931.460    130.237     -7.152      0.000
+
+ ECRANX_1 WITH
+    ECRANX_0           0.019      0.109      0.177      0.860
+
+ ELPT     WITH
+    ELPR               0.000      0.000    999.000    999.000
+
+ Means
+    ELPT               9.658      0.393     24.577      0.000
+    ELPR               6.832      0.391     17.486      0.000
+
+ Intercepts
+    SCPT              30.559      1.145     26.692      0.000
+    CCPT              23.280      7.526      3.093      0.002
+    SCPR              28.538      1.246     22.902      0.000
+    CCPR               1.138      6.438      0.177      0.860
+    ECRANX_1           1.741      0.283      6.148      0.000
+    ECRANX_0           1.485      0.333      4.455      0.000
+    PRNAPT            11.401      1.162      9.815      0.000
+    PRNAPR            11.630      0.775     15.002      0.000
+    PNAPT              4.876      1.512      3.225      0.001
+    PNAPR              4.820      1.198      4.023      0.000
+
+ Variances
+    ELPT              15.289      1.754      8.719      0.000
+    ELPR              14.998      1.739      8.622      0.000
+
+ Residual Variances
+    SCPT             129.761     17.475      7.425      0.000
+    CCPT             973.003    141.981      6.853      0.000
+    SCPR             153.716     20.603      7.461      0.000
+    CCPR            1411.089    204.491      6.900      0.000
+    ECRANX_1           0.982      0.110      8.901      0.000
+    ECRANX_0           1.096      0.140      7.846      0.000
+    PRNAPT            28.416      6.198      4.585      0.000
+    PRNAPR            16.081      3.511      4.580      0.000
+    PNAPT             31.097      7.171      4.336      0.000
+    PNAPR             18.553      3.105      5.976      0.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ SCPT     ON
+    ELPT               0.000      0.000    999.000    999.000
+    PRNAPT             0.000      0.000    999.000    999.000
+
+ SCPR     ON
+    ELPR               0.000      0.000    999.000    999.000
+    PRNAPR             0.000      0.000    999.000    999.000
+
+ CCPT     ON
+    ELPT              -0.102      0.069     -1.481      0.139
+    PRNAPT            -0.177      0.051     -3.447      0.001
+
+ CCPR     ON
+    ELPR               0.182      0.057      3.188      0.001
+    PRNAPR            -0.109      0.033     -3.356      0.001
+
+ PRNAPT   ON
+    ELPT               0.332      0.083      3.994      0.000
+
+ PRNAPR   ON
+    ELPR               0.271      0.099      2.724      0.006
+
+ ECRANX_1 ON
+    PNAPT              0.311      0.081      3.833      0.000
+    ELPT               0.340      0.090      3.763      0.000
+
+ ECRANX_0 ON
+    PNAPR              0.162      0.102      1.595      0.111
+    ELPR               0.434      0.091      4.749      0.000
+
+ PNAPT    ON
+    PRNAPT             0.606      0.066      9.138      0.000
+    SCPT               0.000      0.000    999.000    999.000
+    CCPT              -0.172      0.080     -2.162      0.031
+
+ PNAPR    ON
+    PRNAPR             0.562      0.062      9.008      0.000
+    SCPR               0.000      0.000    999.000    999.000
+    CCPR               0.078      0.065      1.201      0.230
+
+ PNAPT    WITH
+    PNAPR              0.278      0.100      2.780      0.005
+
+ SCPT     WITH
+    CCPT               0.042      0.090      0.470      0.639
+    SCPR              -0.145      0.103     -1.410      0.159
+    CCPR              -0.089      0.100     -0.888      0.375
+
+ SCPR     WITH
+    CCPT               0.020      0.111      0.182      0.856
+    CCPR              -0.151      0.117     -1.289      0.197
+
+ CCPT     WITH
+    CCPR              -0.795      0.031    -25.852      0.000
+
+ ECRANX_1 WITH
+    ECRANX_0           0.019      0.105      0.177      0.859
+
+ ELPT     WITH
+    ELPR               0.000      0.000    999.000    999.000
+
+ Means
+    ELPT               2.470      0.168     14.733      0.000
+    ELPR               1.764      0.121     14.525      0.000
+
+ Intercepts
+    SCPT               2.683      0.167     16.085      0.000
+    CCPT               0.726      0.227      3.203      0.001
+    SCPR               2.302      0.144     15.996      0.000
+    CCPR               0.030      0.169      0.176      0.860
+    ECRANX_1           1.511      0.299      5.058      0.000
+    ECRANX_0           1.238      0.297      4.168      0.000
+    PRNAPT             2.018      0.318      6.343      0.000
+    PRNAPR             2.792      0.394      7.094      0.000
+    PNAPT              0.654      0.227      2.879      0.004
+    PNAPR              0.925      0.253      3.656      0.000
+
+ Variances
+    ELPT               1.000      0.000    999.000    999.000
+    ELPR               1.000      0.000    999.000    999.000
+
+ Residual Variances
+    SCPT               1.000      0.000    999.000    999.000
+    CCPT               0.946      0.026     36.702      0.000
+    SCPR               1.000      0.000    999.000    999.000
+    CCPR               0.966      0.018     53.393      0.000
+    ECRANX_1           0.740      0.065     11.347      0.000
+    ECRANX_0           0.762      0.079      9.655      0.000
+    PRNAPT             0.890      0.055     16.155      0.000
+    PRNAPR             0.927      0.054     17.198      0.000
+    PNAPT              0.559      0.081      6.942      0.000
+    PNAPR              0.684      0.070      9.730      0.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ SCPT     ON
+    ELPT               0.000      0.000    999.000    999.000
+    PRNAPT             0.000      0.000    999.000    999.000
+
+ SCPR     ON
+    ELPR               0.000      0.000    999.000    999.000
+    PRNAPR             0.000      0.000    999.000    999.000
+
+ CCPT     ON
+    ELPT              -0.102      0.069     -1.481      0.139
+    PRNAPT            -0.177      0.051     -3.447      0.001
+
+ CCPR     ON
+    ELPR               0.182      0.057      3.188      0.001
+    PRNAPR            -0.109      0.033     -3.356      0.001
+
+ PRNAPT   ON
+    ELPT               0.332      0.083      3.994      0.000
+
+ PRNAPR   ON
+    ELPR               0.271      0.099      2.724      0.006
+
+ ECRANX_1 ON
+    PNAPT              0.311      0.081      3.833      0.000
+    ELPT               0.340      0.090      3.763      0.000
+
+ ECRANX_0 ON
+    PNAPR              0.162      0.102      1.595      0.111
+    ELPR               0.434      0.091      4.749      0.000
+
+ PNAPT    ON
+    PRNAPT             0.606      0.066      9.138      0.000
+    SCPT               0.000      0.000    999.000    999.000
+    CCPT              -0.172      0.080     -2.162      0.031
+
+ PNAPR    ON
+    PRNAPR             0.562      0.062      9.008      0.000
+    SCPR               0.000      0.000    999.000    999.000
+    CCPR               0.078      0.065      1.201      0.230
+
+ PNAPT    WITH
+    PNAPR              0.278      0.100      2.780      0.005
+
+ SCPT     WITH
+    CCPT               0.042      0.090      0.470      0.639
+    SCPR              -0.145      0.103     -1.410      0.159
+    CCPR              -0.089      0.100     -0.888      0.375
+
+ SCPR     WITH
+    CCPT               0.020      0.111      0.182      0.856
+    CCPR              -0.151      0.117     -1.289      0.197
+
+ CCPT     WITH
+    CCPR              -0.795      0.031    -25.852      0.000
+
+ ECRANX_1 WITH
+    ECRANX_0           0.019      0.105      0.177      0.859
+
+ ELPT     WITH
+    ELPR               0.000      0.000    999.000    999.000
+
+ Means
+    ELPT               2.470      0.168     14.733      0.000
+    ELPR               1.764      0.121     14.525      0.000
+
+ Intercepts
+    SCPT               2.683      0.167     16.085      0.000
+    CCPT               0.726      0.227      3.203      0.001
+    SCPR               2.302      0.144     15.996      0.000
+    CCPR               0.030      0.169      0.176      0.860
+    ECRANX_1           1.511      0.299      5.058      0.000
+    ECRANX_0           1.238      0.297      4.168      0.000
+    PRNAPT             2.018      0.318      6.343      0.000
+    PRNAPR             2.792      0.394      7.094      0.000
+    PNAPT              0.654      0.227      2.879      0.004
+    PNAPR              0.925      0.253      3.656      0.000
+
+ Variances
+    ELPT               1.000      0.000    999.000    999.000
+    ELPR               1.000      0.000    999.000    999.000
+
+ Residual Variances
+    SCPT               1.000      0.000    999.000    999.000
+    CCPT               0.946      0.026     36.702      0.000
+    SCPR               1.000      0.000    999.000    999.000
+    CCPR               0.966      0.018     53.393      0.000
+    ECRANX_1           0.740      0.065     11.347      0.000
+    ECRANX_0           0.762      0.079      9.655      0.000
+    PRNAPT             0.890      0.055     16.155      0.000
+    PRNAPR             0.927      0.054     17.198      0.000
+    PNAPT              0.559      0.081      6.942      0.000
+    PNAPR              0.684      0.070      9.730      0.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ SCPT     ON
+    ELPT               0.000      0.000    999.000    999.000
+    PRNAPT             0.000      0.000    999.000    999.000
+
+ SCPR     ON
+    ELPR               0.000      0.000    999.000    999.000
+    PRNAPR             0.000      0.000    999.000    999.000
+
+ CCPT     ON
+    ELPT              -0.837      0.572     -1.463      0.144
+    PRNAPT            -1.003      0.280     -3.579      0.000
+
+ CCPR     ON
+    ELPR               1.792      0.621      2.885      0.004
+    PRNAPR            -1.003      0.280     -3.579      0.000
+
+ PRNAPT   ON
+    ELPT               0.479      0.127      3.783      0.000
+
+ PRNAPR   ON
+    ELPR               0.291      0.117      2.495      0.013
+
+ ECRANX_1 ON
+    PNAPT              0.048      0.014      3.371      0.001
+    ELPT               0.100      0.027      3.711      0.000
+
+ ECRANX_0 ON
+    PNAPR              0.037      0.023      1.653      0.098
+    ELPR               0.135      0.032      4.219      0.000
+
+ PNAPT    ON
+    PRNAPT             0.799      0.101      7.894      0.000
+    SCPT               0.000      0.000    999.000    999.000
+    CCPT              -0.040      0.018     -2.241      0.025
+
+ PNAPR    ON
+    PRNAPR             0.702      0.096      7.339      0.000
+    SCPR               0.000      0.000    999.000    999.000
+    CCPR               0.011      0.009      1.199      0.231
+
+ PNAPT    WITH
+    PNAPR              6.677      2.599      2.569      0.010
+
+ SCPT     WITH
+    CCPT              15.071     31.984      0.471      0.637
+    SCPR             -20.504     14.552     -1.409      0.159
+    CCPR             -38.064     43.033     -0.885      0.376
+
+ SCPR     WITH
+    CCPT               7.812     43.045      0.181      0.856
+    CCPR             -70.264     57.866     -1.214      0.225
+
+ CCPT     WITH
+    CCPR            -931.460    130.237     -7.152      0.000
+
+ ECRANX_1 WITH
+    ECRANX_0           0.019      0.109      0.177      0.860
+
+ ELPT     WITH
+    ELPR               0.000      0.000    999.000    999.000
+
+ Means
+    ELPT               9.658      0.393     24.577      0.000
+    ELPR               6.832      0.391     17.486      0.000
+
+ Intercepts
+    SCPT              30.559      1.145     26.692      0.000
+    CCPT              23.280      7.526      3.093      0.002
+    SCPR              28.538      1.246     22.902      0.000
+    CCPR               1.138      6.438      0.177      0.860
+    ECRANX_1           1.741      0.283      6.148      0.000
+    ECRANX_0           1.485      0.333      4.455      0.000
+    PRNAPT            11.401      1.162      9.815      0.000
+    PRNAPR            11.630      0.775     15.002      0.000
+    PNAPT              4.876      1.512      3.225      0.001
+    PNAPR              4.820      1.198      4.023      0.000
+
+ Variances
+    ELPT              15.289      1.754      8.719      0.000
+    ELPR              14.998      1.739      8.622      0.000
+
+ Residual Variances
+    SCPT             129.761     17.475      7.425      0.000
+    CCPT             973.003    141.981      6.853      0.000
+    SCPR             153.716     20.603      7.461      0.000
+    CCPR            1411.089    204.491      6.900      0.000
+    ECRANX_1           0.982      0.110      8.901      0.000
+    ECRANX_0           1.096      0.140      7.846      0.000
+    PRNAPT            28.416      6.198      4.585      0.000
+    PRNAPR            16.081      3.511      4.580      0.000
+    PNAPT             31.097      7.171      4.336      0.000
+    PNAPR             18.553      3.105      5.976      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    SCPT               0.000      0.000    999.000    999.000
+    CCPT               0.054      0.026      2.081      0.037
+    SCPR               0.000      0.000    999.000    999.000
+    CCPR               0.034      0.018      1.889      0.059
+    ECRANX_1           0.260      0.065      3.996      0.000
+    ECRANX_0           0.238      0.079      3.018      0.003
+    PRNAPT             0.110      0.055      1.997      0.046
+    PRNAPR             0.073      0.054      1.362      0.173
+    PNAPT              0.441      0.081      5.467      0.000
+    PNAPR              0.316      0.070      4.498      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.212E-06
+       (ratio of smallest to largest eigenvalue)
+
+
+MODEL MODIFICATION INDICES
+
+Minimum M.I. value for printing the modification index     5.000
+
+                                   M.I.     E.P.C.  Std E.P.C.  StdYX E.P.C.
+
+ON Statements
+
+PRNAPT   ON PRNAPR                 8.230     0.376      0.376        0.278
+PRNAPR   ON PRNAPT                10.190     0.232      0.232        0.315
+PRNAPR   ON PNAPT                  6.262     0.138      0.138        0.248
+PNAPR    ON ECRANX_0               8.121     1.533      1.533        0.353
+PNAPR    ON ELPR                   8.626     0.342      0.342        0.254
+
+WITH Statements
+
+PRNAPR   WITH PRNAPT               9.487     6.753      6.753        0.316
+PNAPR    WITH PRNAPR               8.628   -18.846    -18.846       -1.091
+ELPR     WITH PNAPR                8.626     5.122      5.122        0.307
+ELPR     WITH ELPT                 6.924     4.103      4.103        0.271
+
+
+SAVEDATA INFORMATION
+
+
+  Save file
+    m1df6_include8066_savedata.dat
+
+  Order and format of variables
+
+    SCPT           F10.3
+    CCPT           F10.3
+    SCPR           F10.3
+    CCPR           F10.3
+    ECRANX_1       F10.3
+    ECRANX_0       F10.3
+    PRNAPT         F10.3
+    PRNAPR         F10.3
+    PNAPT          F10.3
+    PNAPR          F10.3
+    ELPT           F10.3
+    ELPR           F10.3
+    OUTCOOK        F10.3
+    ID             I3
+
+  Save file format
+    13F10.3 I3
+
+  Save file record length    10000
+
+
+     Beginning Time:  15:33:52
+        Ending Time:  15:33:53
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

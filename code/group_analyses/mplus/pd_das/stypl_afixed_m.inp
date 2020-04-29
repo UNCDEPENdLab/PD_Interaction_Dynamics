@@ -1,0 +1,29 @@
+TITLE:
+Testing
+DATA:
+FILE = "stypl_afixed_m.dat";
+ 
+VARIABLE:
+NAMES = dasbl1 dasbl0 stypl_1 stypl_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+dasbl1 ON stypl_1* (a); 
+dasbl1 ON stypl_0; 
+dasbl0 ON stypl_1; 
+dasbl0 ON stypl_0* (a); 
+dasbl1 WITH dasbl0; 
+stypl_1 WITH stypl_0; 
+dasbl1 WITH dasbl1; 
+dasbl0 WITH dasbl0; 
+stypl_1 WITH stypl_1; 
+stypl_0 WITH stypl_0; 
+[dasbl1]; 
+[dasbl0]; 
+[stypl_1]; 
+[stypl_0]; 
+
+OUTPUT:
+STANDARDIZED

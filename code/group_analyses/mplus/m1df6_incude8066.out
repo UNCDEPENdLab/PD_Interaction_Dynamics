@@ -1,0 +1,125 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+12/10/2018   3:12 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  el -> na -> coreg -> na -> anx. No log transform;
+  DATA:
+  !FILE = "m1df6_model.dat";
+  FILE = "../../df67.dat";
+  !DEFINE:
+  ! prnapt=LOG(prnapt);
+  ! prnapr=LOG(prnapr);
+  ! pnapt=LOG(pnapt);
+  ! pnapr=LOG(pnapr);
+
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt
+  prnapr pnapt pnapr elpt elpr whichdf_num id;
+   MISSING=.;
+  USEVARIABLES = scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt
+  prnapr pnapt pnapr elpt elpr id;
+  IDVARIABLE IS id;
+
+  !USEOBSERVATIONS = P15; !one case identified as high cooks d
+
+  ANALYSIS:
+  !ESTIMATOR=MLR; !for modindices
+  ESTIMATOR=BAYES;
+  PROCESSORS = 2;
+  BITERATIONS = (30000);
+  ALGORITHM=GIBBS(PX1);
+
+  MODEL:
+  scpt ON elpt@0;
+  scpr ON elpr@0;
+  ccpt ON elpt* (u);
+  ccpr ON elpr;
+  prnapt ON elpt* (w);
+  prnapr ON elpr* (j);
+  ECRanx_1 ON pnapt* (h);
+  ECRanx_0 ON pnapr* (k);
+  pnapt WITH pnapr;
+  pnapt ON prnapt;
+  pnapt ON scpt@0;
+  pnapt ON ccpt* (c);
+  pnapr ON prnapr;
+  pnapr ON scpr@0;
+  pnapr ON ccpr* (d);
+  !scpt ON prnapt* (a1);
+  !scpr ON prnapr* (a1);
+  scpt ON prnapt@0;
+  scpr ON prnapr@0;
+
+  ccpt ON prnapt* (b1);
+  ccpr ON prnapr* (b1);
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  scpr WITH ccpt;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  scpt WITH scpt;
+  scpr WITH scpr;
+  ccpt WITH ccpt;
+  ccpr WITH ccpr;
+  prnapt WITH prnapt;
+  prnapr WITH prnapr;
+  ECRanx_1 WITH ECRanx_1;
+  ECRanx_0 WITH ECRanx_0;
+  pnapt WITH pnapt;
+  pnapr WITH pnapr;
+  ECRanx_1 WITH ECRanx_0;
+  elpt WITH elpt;
+  elpt WITH elpr@0;
+  elpr WITH elpr;
+  [scpt];
+  [scpr];
+  [ccpt];
+  [ccpr];
+  [prnapt];
+  [prnapr];
+  [ECRanx_1];
+  [ECRanx_0];
+  [pnapt];
+  [pnapr];
+  [elpt@0];  !remove mean structure
+  [elpr@0];  !remove mean structure
+
+  !mod indices: direct effect of elevation on ECR
+  ECRANX_1 ON ELPT;
+  ECRANX_0 ON ELPR;
+
+  MODEL CONSTRAINT:
+  NEW ( b1c b1d hb1c whb1c uhc );
+  b1c = b1*c;
+  b1d = b1*d;
+  hb1c = h*b1*c;
+  whb1c = w*h*b1*c;
+  uhc = u*h*c;
+
+
+  OUTPUT:
+  STANDARDIZED; ! MODINDICES(ALL 5);
+
+  !SAVEDATA:
+  !FILE=m1df6_savedata.dat;
+  !SAVE=COOKS;
+
+*** ERROR in DATA command
+  The file specified for the FILE option cannot be found.  Check that this
+  file exists:  ../../df67.dat
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

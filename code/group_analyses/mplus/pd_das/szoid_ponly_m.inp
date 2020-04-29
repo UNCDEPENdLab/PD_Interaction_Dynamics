@@ -1,0 +1,29 @@
+TITLE:
+Testing
+DATA:
+FILE = "szoid_ponly_m.dat";
+ 
+VARIABLE:
+NAMES = dasbl1 dasbl0 szoid_1 szoid_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+dasbl1 ON szoid_1@0;
+dasbl1 ON szoid_0; 
+dasbl0 ON szoid_1; 
+dasbl0 ON szoid_0@0;
+dasbl1 WITH dasbl0; 
+szoid_1 WITH szoid_0; 
+dasbl1 WITH dasbl1; 
+dasbl0 WITH dasbl0; 
+szoid_1 WITH szoid_1; 
+szoid_0 WITH szoid_0; 
+[dasbl1]; 
+[dasbl0]; 
+[szoid_1]; 
+[szoid_0]; 
+
+OUTPUT:
+STANDARDIZED

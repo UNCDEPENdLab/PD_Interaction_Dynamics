@@ -1,0 +1,42 @@
+TITLE:
+Testing
+DATA:
+FILE = "bordl_pfixed_m.dat";
+ 
+VARIABLE:
+NAMES = scpt ccpt scpr ccpr bordl_1 bordl_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+scpt ON bordl_1; 
+scpt ON bordl_0* (c); 
+ccpt ON bordl_1; 
+ccpt ON bordl_0* (d); 
+scpr ON bordl_1* (c); 
+scpr ON bordl_0; 
+ccpr ON bordl_1* (d); 
+ccpr ON bordl_0; 
+scpt WITH ccpt; 
+scpt WITH scpr; 
+scpt WITH ccpr; 
+ccpt WITH scpr; 
+ccpt WITH ccpr; 
+scpr WITH ccpr; 
+bordl_1 WITH bordl_0; 
+scpt WITH scpt; 
+ccpt WITH ccpt; 
+scpr WITH scpr; 
+ccpr WITH ccpr; 
+bordl_1 WITH bordl_1; 
+bordl_0 WITH bordl_0; 
+[scpt]; 
+[ccpt]; 
+[scpr]; 
+[ccpr]; 
+[bordl_1]; 
+[bordl_0]; 
+
+OUTPUT:
+STANDARDIZED

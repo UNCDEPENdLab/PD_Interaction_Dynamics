@@ -1,0 +1,961 @@
+---
+title: "Results_Section_PDID"
+author: "Alison Schreiber"
+date: "9/23/2017"
+output:
+  html_document:
+    df_print: kable
+    mathjax: default
+    number_sections: yes
+    theme: sandstone
+    toc: yes
+  pdf_document:
+    df_print: kable
+    number_sections: yes
+    toc: yes
+    toc_depth: 4
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Descriptives of Paremeter Estimates
+## Interaction Data
+
+```{r}
+library(tidyverse)
+dat4 <- read.csv("data/SITAR_Analyses/dat4.csv")
+dat4_sccc <- dplyr::select(dat4, scpt, scpr, ccpt, ccpr, PTNUM)
+dat4_sccc_long <- gather(dat4_sccc, key = "Coupling_Param", value = "Value", -PTNUM)
+#pdf("Histograms of Coupling.pdf", width = 20, height = 10)
+g <- ggplot(dat4_sccc_long, aes(x = Value))  + geom_histogram(bins = 15)  + facet_wrap(~ as.factor(Coupling_Param), nrow = 1, ncol = 4) + theme_bw(base_size = 10) + ylab("Frequency") + xlab("Coupling Parameter") 
+#dev.off()
+t.test(dat4$scpt, dat4$scpr)
+t.test(dat4$ccpt, dat4$ccpr)
+mean(dat4$scpt/1000)
+sd(dat4$scpt/1000)
+mean(dat4$scpr/1000)
+sd(dat4$scpr/1000)
+mean(dat4$ccpt/1000)
+sd(dat4$ccpt/1000)
+mean(dat4$ccpr/1000)
+sd(dat4$ccpr/1000)
+
+
+```
+
+## Baseline Data
+
+```{r}
+
+dat4_v_sccc <- dplyr::select(dat4, v_scpt, v_scpr, v_ccpt, v_ccpr, PTNUM)
+dat4_v_sccc_long <- gather(dat4_v_sccc, key = "Coupling_Param", value = "Value", -PTNUM)
+#pdf("Histograms of Coupling.pdf", width = 20, height = 10)
+ggplot(dat4_v_sccc_long, aes(x = Value))  + geom_histogram(bins = 15)  + facet_wrap(~ as.factor(Coupling_Param), nrow = 1, ncol = 4) + theme_bw(base_size = 10) + ylab("Frequency") + xlab("Coupling Parameter") 
+#dev.off()
+t.test(dat4$v_scpt, dat4$v_scpr)
+t.test(dat4$v_ccpt, dat4$v_ccpr)
+mean(dat4$v_scpt/1000)
+sd(dat4$v_scpt/1000)
+mean(dat4$v_scpr/1000)
+sd(dat4$v_scpr/1000)
+mean(dat4$v_ccpt/1000)
+sd(dat4$v_ccpt/1000)
+mean(dat4$v_ccpr/1000)
+sd(dat4$v_ccpr/1000)
+
+```
+
+
+#Phsyio + Dispositional Traits
+
+First, examine correlation between interpersonal problem severity and overall personality pathology. This is to ensure that collinearity does not pose an issue.
+```{r}
+cor(dplyr::select(m2dat4, iip_elevation_patient, iip_elevation_partner, pdtot_patient, pdtot_partner))
+```
+
+
+```{r}
+library(lavaan)
+m3 <- "
+scpt ~ iip_elevation_patient + v_scpt
+scpr ~ iip_elevation_partner + v_scpr
+ccpt ~ iip_elevation_patient + v_ccpt
+ccpr ~ iip_elevation_partner+ v_ccpr
+scpr ~ v_ccpr
+ccpr ~ v_scpr
+ccpr ~ v_scpt
+ccpr ~ v_ccpt
+"
+m3_m <- sem(m3, m2dat4, estimator = "MLR", missing = "ML",meanstructure = TRUE, mimic = "Mplus")
+parTable(m3_m)
+summary(m3_m, fit.measures = TRUE)
+
+```
+
+
+```{r}
+m12 <- "
+scpt ~ pdtot_patient + v_scpt
+scpr ~ pdtot_partner + v_scpr
+ccpt ~ pdtot_patient + v_ccpt
+ccpr ~ pdtot_partner + v_ccpr
+scpr ~ v_ccpr
+ccpr ~ v_scpr
+"
+m11dat6 <- read.csv(file = "data/SITAR_Analyses/m11dat6.csv")
+m12_m <- sem(m12, m11dat6, estimator = "MLR", missing = "ML", meanstructure = TRUE, mimic= "Mplus")
+parTable(m12_m)
+summary(m12_m, fit.measures = TRUE)
+
+
+```
+
+```{r}
+m14dat6 <- read.csv("data/SITAR_Analyses/m14dat6.csv")
+m14 <- "
+scpt ~ pdtot_patient + iip_elevation_patient + v_scpt
+scpr ~ pdtot_partner + iip_elevation_partner + v_scpr
+ccpt ~ pdtot_patient+  pdtot_partner + iip_elevation_patient + v_ccpt
+ccpr ~   iip_elevation_patient + v_ccpr
+scpr ~ v_ccpr
+ccpr ~ v_scpr + v_scpt # + v_ccpt
+"
+m14_m <- sem(m14, m14dat6, estimator = "MLR", missing = "ML", meanstructure = TRUE, mimic = "Mplus")
+summary(m14_m, fit.measures = TRUE)
+parTable(m14_m)
+
+```
+
+
+#Physio + SPAFF
+
+```{r}
+
+readSPAFFFile <- function(fname) {
+  stopifnot(file.exists(fname))
+  
+  #Handle three possible file formats, one uses semicolons and has slightly different field names (newer), the other uses commas (older).
+  #The newest has a separate set of fields
+  head <- scan(fname, what="character", n=10, sep = "\n") #, fileEncoding="UTF-16LE") #NEWEST FILES HAVE UTF 16 encoding, which throws things off
+  hlineRow <- grep("Header Lines:", head, fixed=TRUE) #this line always comes just before field names
+  if (length(hlineRow) == 0L) {
+    #newest format does not have the Header Lines: row in the text file, just begins with field names on first row
+    hlineRow <- 1
+    fieldRow <- head[1L]
+    skip <- 1
+  } else {	
+    fieldRow <- scan(fname, what="character", n=1, skip=hlineRow, sep="\n")
+    skip <- hlineRow + 1
+  }
+  
+  #expect a bunch of semicolons or commas in this row
+  ncommas <- sapply(regmatches(fieldRow, gregexpr(",", fieldRow)), length)
+  nsemicolons <- sapply(regmatches(fieldRow, gregexpr(";", fieldRow)), length)
+  
+  if (ncommas >= 5 && ncommas > nsemicolons) {
+    sep <- ","
+  } else if (nsemicolons >= 5 && nsemicolons > ncommas) {
+    sep <- ";"
+  } else { warning("Unable to determine field separator.") }
+  
+  # old field names format (e.g., 8003_P1.txt)
+  # [1] "Relative Time (seconds)" "Observation Name"        "Event Log File Name"     "Subject"                
+  # [5] "Behavior"                "Event Type"              "Comment" 
+  
+  # new field names format (e.g., 8015_P1.txt)
+  # [1] "Time"                "ObservationName"     "Event Log File Name"      "Subject"
+  # [5] "Behavior"            "State Event"         "Comment" 
+  
+  fieldNames <- gsub("\"", "", strsplit(fieldRow, sep)[[1]])
+  behav <- read.table(fname, skip=skip, header=FALSE, sep=sep)
+  #for almost all files, there is a trailing comma/semicolon in file format, so drop last column
+  if (ncol(behav) - length(fieldNames) == 1) { behav[[ncol(behav)]] <- NULL }
+  names(behav) <- make.names(fieldNames)
+  
+  if (identical(names(behav), c("Time", "ObservationName", "Event.Log.File.Name", "Subject", "Behavior", "State.Event", "Comment"))) {
+    #rename to old-style names for consistency
+    names(behav) <- c("Relative.Time..seconds.", "Observation.Name", "Event.Log.File.Name", "Subject", "Behavior", "Event.Type", "Comment")
+  } else if (identical(names(behav),  c("Relative.Time..seconds.", "Observation.Name", "Event.Log.File.Name", "Subject", "Behavior", "Event.Type", "Comment"))) {
+   
+    names(behav) <- c("Relative.Time..seconds.", "Observation.Name", "Event.Log.File.Name", "Subject", "Behavior", "Event.Type", "Comment")
+  
+  } else if (identical(names(behav), c("Date_Time_Absolute_dmy_hmsf", "Date_dmy", "Time_Absolute_hms", "Time_Absolute_f", "Time_Relative_hmsf", "Time_Relative_hms",
+                                       "Time_Relative_f", "Time_Relative_sf", "Duration_sf", "Observation", "Event_Log", "Behavior", "Event_Type"))) {
+    #newest format: drop irrelevant columns
+    behav <- behav[,c("Time_Relative_sf", "Observation", "Behavior", "Event_Type")]
+    names(behav) <- c("Relative.Time..seconds.", "Observation.Name", "Behavior", "Event.Type")
+  } else {
+    print(names(behav))
+    stop("Unable to identify column names in SPAFF file: ", fname)
+  }
+  
+  return(behav[,c("Relative.Time..seconds.", "Observation.Name", "Behavior", "Event.Type")])
+} 
+
+idfolders <- list.files(path="/Users/alisonmarie526/Box Sync/DEPENd/Projects/GSR/data/renamed_files", full.names=TRUE, recursive = FALSE)
+idlist <- as.numeric(sub("/Users/alisonmarie526/Box Sync/DEPENd/Projects/GSR/data/renamed_files/(8[0-9]{3}).*", "\\1", idfolders, perl = TRUE))
+
+tb <- as.data.frame(table(idlist))
+allSPAFFfiles <- c()
+for (i in 1:length(idfolders)) {
+  filename = idfolders[i]
+  f <- readSPAFFFile(filename)
+  f <- dplyr::rename(f, time = Relative.Time..seconds.)
+  f <- dplyr::filter(f, Event.Type == "State stop")
+  f <- dplyr::mutate(f, diff_event = c(f$time[[1]], diff(time)))
+  f$PTNUM <- factor(idlist[i])
+  f$K <- sub("/Users/alisonmarie526/Box Sync/DEPENd/Projects/GSR/data/renamed_files/8[0-9]{3}.*(P[1-2]{1}).*", "\\1",idfolders[i],perl= TRUE)
+  allSPAFFfiles <-rbind(allSPAFFfiles, f)
+}
+physLog <- read.csv(file = "/Users/alisonmarie526/Box Sync/DEPENd/Projects/GSR/data/physLog.csv")
+physLog <- dplyr::select(physLog, PTNUM, DyadID, UsrID, K)
+physLog$PTNUM <- as.character(physLog$PTNUM)
+physLog$K <- as.character(physLog$K)
+allSPAFFfiles$K <- as.character(allSPAFFfiles$K)
+allSPAFFfiles$PTNUM <- as.character(allSPAFFfiles$PTNUM)
+spaff_patpar <- dplyr::inner_join(allSPAFFfiles, physLog, by = c("PTNUM", "K")) 
+spaff_patpar$Behavior <- as.character(spaff_patpar$Behavior)
+spaff_patpar$valence <- sapply(spaff_patpar$Behavior, function(x) {
+  x <- tolower(as.character(x))
+  
+  if (x=="disgust") { -3
+  } else if (x=="contempt") { -4
+  } else if (x=="belligerence") { -2
+  } else if (x=="low domineering") { -1
+  } else if (x=="high domineering") { -1
+  } else if (x=="criticism") { -2              
+  } else if (x=="anger") { -1
+  } else if (x=="tension") { 0              
+  } else if (x=="tense humor" || x=="tension/humor") { 2              
+  } else if (x=="defensive") { -2
+  } else if (x=="whining") { -1
+  } else if (x=="sadness") { -1
+  } else if (x=="stonewalling" || x=="stonewall") { -2
+  } else if (x=="neutral") { 0.1
+  } else if (x=="interest") { 2
+  } else if (x=="low validation") { 4
+  } else if (x=="high validation") { 4
+  } else if (x=="affection") { 4
+  } else if (x=="humor") { 4
+  } else if (x=="surprise/joy") { 4              
+  } else if (x=="physical affection") { 4              
+  } else { stop("cannot match code: ", x)}            
+})
+
+spaff_patpar$n3 <- factor(sapply(spaff_patpar$Behavior, function(x) {
+  x <- tolower(as.character(x))
+  
+  if (x=="disgust") { "nasty"
+  } else if (x=="contempt") { "nasty"
+  } else if (x=="belligerence") { "nasty"
+  } else if (x=="low domineering") { "nasty"
+  } else if (x=="high domineering") { "nasty"
+  } else if (x=="criticism") { "nasty"   
+  } else if (x=="anger") { "nasty"
+  } else if (x=="tension") { "nasty"              
+  } else if (x=="tense humor" || x=="tension/humor") { "nice"              
+  } else if (x=="defensive") { "nasty"
+  } else if (x=="whining") { "nasty"
+  } else if (x=="sadness") { "nasty"
+  } else if (x=="stonewalling" || x=="stonewall") { "nasty"
+  } else if (x=="neutral") { "neutral"
+  } else if (x=="interest") { "nice"
+  } else if (x=="low validation") { "nice"
+  } else if (x=="high validation") { "nice"
+  } else if (x=="affection") { "nice"
+  } else if (x=="humor") { "nice"
+  } else if (x=="surprise/joy") { "nice"              
+  } else if (x=="physical affection") { "nice"              
+  } else { stop("cannot match code: ", x)}            
+}))
+
+df <- read.csv(file = "~/Box Sync/DEPENd/Projects/PD_Interaction_Dynamics/data/params_personalitydata_all.csv")
+
+df_personalitydata <- dplyr::select(df, PTNUM, iip_elevation_patient, iip_elevation_partner, pdtot_patient, pdtot_partner, self_coupling_patient, self_coupling_partner, cross_coupling_patient, cross_coupling_partner)
+df_personalitydata_patient <- dplyr::select(df_personalitydata, iip_elevation_patient, pdtot_patient, self_coupling_patient, cross_coupling_patient, PTNUM)
+df_personalitydata_partner <- dplyr::select(df_personalitydata, iip_elevation_partner, pdtot_partner, self_coupling_partner, cross_coupling_partner, PTNUM)
+df_personalitydata_patient$DyadID <- paste0(df_personalitydata_patient$PTNUM, "_1")
+df_personalitydata_patient$Patient <- 1
+df_personalitydata_partner$DyadID <- paste0(df_personalitydata_partner$PTNUM, "_0")
+df_personalitydata_partner$Patient <- 0
+df_personalitydata_patient <-dplyr::rename(df_personalitydata_patient, iip_elevation = iip_elevation_patient, pdtot = pdtot_patient, self_coupling = self_coupling_patient, cross_coupling = cross_coupling_patient)
+df_personalitydata_partner <-dplyr::rename(df_personalitydata_partner, iip_elevation = iip_elevation_partner, pdtot = pdtot_partner, self_coupling = self_coupling_partner, cross_coupling = cross_coupling_partner)
+df_personaitydata_long <- dplyr::bind_rows(df_personalitydata_patient, df_personalitydata_partner)
+
+
+#df_personalitydata <- dplyr::select(m13dat4, PTNUM, iip_elevation_patient, iip_elevation_partner, pdcpt, pdcpr, scpr, scpt, ccpt, ccpr)
+df_personalitydata_patient <- dplyr::select(df_personalitydata, iip_elevation_patient, pdtot_patient, self_coupling_patient, cross_coupling_patient, PTNUM)
+df_personalitydata_partner <- dplyr::select(df_personalitydata, iip_elevation_partner, pdtot_partner, self_coupling_partner, cross_coupling_partner, PTNUM)
+df_personalitydata_patient$DyadID <- paste0(df_personalitydata_patient$PTNUM, "_1")
+df_personalitydata_patient$Patient <- 1
+df_personalitydata_partner$DyadID <- paste0(df_personalitydata_partner$PTNUM, "_0")
+df_personalitydata_partner$Patient <- 0
+df_personalitydata_patient <-dplyr::rename(df_personalitydata_patient, iip_elevation = iip_elevation_patient, pdtot = pdtot_patient, self_coupling = self_coupling_patient, cross_coupling = cross_coupling_patient)
+df_personalitydata_partner <-dplyr::rename(df_personalitydata_partner, iip_elevation = iip_elevation_partner, pdtot = pdtot_partner, self_coupling = self_coupling_partner, cross_coupling = cross_coupling_partner)
+df_personaitydata_long <- bind_rows(df_personalitydata_patient, df_personalitydata_partner)
+
+#merge personality data with SPAFF
+
+df_personaitydata_long$UsrID <- paste0(df_personaitydata_long$PTNUM, df_personaitydata_long$Patient)
+spaff_simp <- dplyr::select(df_personaitydata_long, DyadID, DyadID, iip_elevation, pdtot, Patient, UsrID, PTNUM) 
+spaff_patpar_UsrIDs <- dplyr::select(spaff_patpar, UsrID) %>% unique()
+spaff_patpar_UsrIDs <- as.vector(spaff_patpar_UsrIDs[["UsrID"]])
+spaff_simp <- dplyr::filter(spaff_simp, UsrID %in% spaff_patpar_UsrIDs) 
+spaff_simp_split <- split(spaff_simp, spaff_simp$UsrID)
+spaff_patpar <- dplyr::filter(spaff_patpar, UsrID %in% as.vector(spaff_simp$UsrID))
+spaff_patpar$n3 <- as.character(spaff_patpar$n3)
+spaff_split <- split(spaff_patpar, spaff_patpar$UsrID)
+# spaff_split <- lapply(spaff_split, function(x) {
+#   x$n3 <- as.character(x$n3)
+# })
+for (i in 1:length(unique(spaff_patpar$UsrID))) {
+  #num_nasty <- sum(as.character(x$n3) =="nasty")
+  # num_nice <- sum(as.character(x$n3) == "nice")
+  # num_neutral <- sum(as.character(x$n3) == "neutral")
+  # time_nasty <- dplyr::filter(x, n3 == "nasty") %>% summarise(total_time= sum(diff_event)
+  # time_neutral <- dplyr::filter(x,n3 == "neutral") %>% summarise(total_time = sum(diff_event)
+  # time_nice <- dplyr::filter(x, n3 == "nice") %>% summarise(total_time = sum(diff_event)
+  time_nasty = dplyr::filter(spaff_split[[i]],n3 =="nasty") %>% summarise(sum(diff_event))
+  time_nice = dplyr::filter(spaff_split[[i]],n3 =="nice") %>% summarise(sum(diff_event))
+  time_neutral = dplyr::filter(spaff_split[[i]],n3 == "neutral") %>% summarise(sum(diff_event))
+  spaff_simp_split[[i]] <- dplyr::mutate(spaff_simp_split[[i]], 
+                              num_nasty = sum(as.character(spaff_split[[i]]$n3) == "nasty"),
+                              num_nice = sum(as.character(spaff_split[[i]]$n3) == "nice"),
+                              num_neutral = sum(as.character(spaff_split[[i]]$n3) == "neutral"),
+                              nastytime = time_nasty[[1]],
+                              neutraltime = time_neutral[[1]],
+                              nicetime = time_nice[[1]]
+)
+}
+#cuts out 8093, because got cut from personality data
+
+spaff_summarized <- ldply(spaff_simp_split, data.frame)
+spaff_summarized_patient <- dplyr::filter(spaff_summarized, Patient == 1)
+spaff_summarized_partner <- dplyr::filter(spaff_summarized, Patient == 0)
+spaff_summarized_patient <- dplyr::rename(spaff_summarized_patient, pdtot_patient = pdtot, iip_elevation_patient = iip_elevation, num_nasty_patient = num_nasty, num_neutral_patient = num_neutral, num_nice_patient = num_nice, nastytime_patient = nastytime, neutraltime_patient = neutraltime, nicetime_patient = nicetime)
+spaff_summarized_partner <- dplyr::rename(spaff_summarized_partner, pdtot_partner = pdtot, iip_elevation_partner = iip_elevation, num_nasty_partner = num_nasty, num_neutral_partner = num_neutral, num_nice_partner = num_nice, nastytime_partner = nastytime, neutraltime_partner = neutraltime, nicetime_partner= nicetime)
+spaff_summarized_wide <- merge(spaff_summarized_patient, spaff_summarized_partner, by = c("PTNUM")) #117
+spaff_summarized_wide <- spaff_summarized_wide %>% mutate(nastyratio_patient = nastytime_patient/(nicetime_patient + neutraltime_patient),
+                                                                                                                                 niceratio_patient = 100*(nicetime_patient/(nastytime_patient + neutraltime_patient)),
+                                                                                                                                 neutralratio_patient = neutraltime_patient/(nastytime_patient + nicetime_patient),
+                                                                                                                                 nastyratio_partner = nastytime_partner/(nicetime_partner + neutraltime_partner),
+                                                                                                                                 niceratio_partner = 100*(nicetime_partner/(nastytime_partner + neutraltime_partner)),
+                                                                                                                                 neutralratio_partner = neutraltime_partner/(nastytime_partner + nicetime_partner),
+                                                          nastnice_patient = nastytime_patient/nicetime_patient,
+                                                          nastynice_partner = nastytime_partner/nicetime_partner,
+                                                          nastyneutral_patient = nastytime_patient/neutraltime_patient,
+                                                          nastyneutral_partner= nastytime_partner/neutraltime_partner)
+
+spaff_summarized_wide_sccc <- inner_join(spaff_summarized_wide, dat4) # n = 101
+cor(dplyr::select(spaff_summarized_wide_sccc, scpt, scpr, ccpt, ccpr, niceratio_patient, niceratio_partner, nastyratio_patient, nastyratio_partner, neutralratio_patient, neutralratio_partner))
+tocor <- dplyr::mutate(saamprepost_spaff_personalitydata_rescaled_noOutliers, resid_scpt = resid(lm(scpt ~ v_scpt)),
+                       resid_scpr = resid(lm(scpr ~ v_scpr)),
+                       resid_ccpt = resid(lm(ccpt ~ v_ccpt)),
+                       resid_ccpr = resid(lm(ccpr ~ v_ccpr)))
+cor(dplyr::select(tocor, resid_scpt, resid_scpr, resid_ccpt, resid_ccpr, nastynice_patient, nastynice_partner, nastyneutral_patient, nastyneutral_partner))
+
+
+spaff_summarized_wide_sccc <- mutate(spaff_summarized_wide_sccc, nastyproportion_patient = 1000*nastytime_patient/(nastytime_patient + neutraltime_patient + nicetime_patient),
+                                     nastyproportion_partner = 1000*nastytime_partner/(nastytime_partner + nicetime_partner + neutraltime_partner))
+
+```
+
+```{r}
+physio_spaff<- "
+scpt ~ v_scpt  + nastyratio_patient + niceratio_patient + neutralratio_patient 
+ccpt ~ v_ccpt  + nastyratio_patient + niceratio_patient + neutralratio_patient 
+scpr ~ v_scpr  + nastyratio_partner + niceratio_partner + neutralratio_partner + v_ccpr
+ccpr ~ v_ccpr  + nastyratio_partner + niceratio_partner + neutralratio_partner + v_scpr
+
+"
+
+physio_spaff_m <- sem(physio_spaff, spaff_summarized_wide_sccc, estimator= "MLR", missing = "ML", meanstructure = TRUE, standardized = TRUE)
+
+
+
+
+iipel_physio_spaff<- "
+scpt ~ v_scpt + iip_elevation_patient + nastyratio_patient + niceratio_patient + neutralratio_patient 
+ccpt ~ v_ccpt + iip_elevation_patient + nastyratio_patient + niceratio_patient + neutralratio_patient 
+scpr ~ v_scpr + iip_elevation_partner + nastyratio_partner + niceratio_partner + neutralratio_partner + v_ccpr
+ccpr ~ v_ccpr + iip_elevation_partner + nastyratio_partner + niceratio_partner + neutralratio_partner + v_scpr
+
+"
+iipel_physio_m <- sem(iipel_physio, spaff_summarized_wide_sccc, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+iipel_physio_nicespaff<- "
+scpt ~ v_scpt + iip_elevation_patient + niceratio_patient 
+ccpt ~ v_ccpt + iip_elevation_patient +niceratio_patient 
+scpr ~ v_scpr + iip_elevation_partner + niceratio_partner + v_ccpr
+ccpr ~ v_ccpr + iip_elevation_partner + iip_elevation_patient +  niceratio_partner +  v_scpr
+
+"
+iipel_physio_nicespaff_m <- sem(iipel_physio_nicespaff, iipelphysiospaff, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+iipel_physio_nastyspaff<- "
+scpt ~ v_scpt + iip_elevation_patient + nastyratio_patient 
+ccpt ~ v_ccpt + iip_elevation_patient +nastyratio_patient + v_ccpr
+scpr ~ v_scpr + iip_elevation_partner + nastyratio_partner + v_ccpr + v_ccpt
+ccpr ~ v_ccpr + iip_elevation_partner + iip_elevation_patient +  nastyratio_partner +  v_scpr + v_scpt
+
+"
+iipel_physio_nastyspaff_m <- sem(iipel_physio_nastyspaff, iipelphysiospaff, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+
+iipel_physio_neutralspaff<- "
+scpt ~ v_scpt + iip_elevation_patient + neutralratio_patient 
+ccpt ~ v_ccpt + iip_elevation_patient +neutralratio_patient 
+scpr ~ v_scpr + iip_elevation_partner + neutralratio_partner + v_ccpr + v_ccpt
+ccpr ~ v_ccpr + iip_elevation_partner  +  neutralratio_partner +  v_scpr + v_scpt + iip_elevation_patient + v_ccpt
+
+"
+iipelphysiospaff <- inner_join(spaff_summarized_wide_sccc, m2dat4, by = c("PTNUM", "scpt", "ccpt", "scpr", "ccpr",
+                                                                          "v_scpr", "v_ccpr","v_scpt", "v_ccpt",
+                                                                          "iip_elevation_patient", "iip_elevation_partner"))
+
+iipel_physio_neutralspaff_m <- sem(iipel_physio_neutralspaff, iipelphysiospaff, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+#iipel_physio_neutralspaff_m2 <- sem(iipel_physio_neutralspaff, iipelphysiospaff, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+
+iipel_physio_nastyproportion <- "
+scpt ~ v_scpt + iip_elevation_patient + nastyproportion_patient + nastyproportion_partner + v_ccpt
+ccpt ~ v_ccpt + iip_elevation_patient + nastyproportion_patient + nastyproportion_partner + v_scpt
+scpr ~ v_scpr + iip_elevation_partner  + nastyproportion_patient + nastyproportion_partner+ v_ccpr + v_scpt
+ccpr ~ v_ccpr + iip_elevation_partner  + nastyproportion_patient + nastyproportion_partner+ v_scpr  + v_scpt
+
+"
+datatofit <- inner_join(spaff_summarized_wide_sccc, m2dat4, by = c("scpt", "scpr", "ccpt", "ccpr", "v_scpt", "v_ccpt", "v_scpr", "v_ccpr","PTNUM", "iip_elevation_patient", "iip_elevation_partner"))
+iipel_physio_nastyproportion_m <- sem(iipel_physio_nastyproportion, datatofit, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+
+
+
+
+
+```
+
+```{r}
+
+
+pdtot_physio_spaff<- "
+scpt ~ v_scpt + pdtot_patient + nastyratio_patient + niceratio_patient + neutralratio_patient 
+ccpt ~ v_ccpt + pdtot_patient + nastyratio_patient + niceratio_patient + neutralratio_patient 
+scpr ~ v_scpr + pdtot_partner + nastyratio_partner + niceratio_partner + neutralratio_partner + v_ccpr
+ccpr ~ v_ccpr + pdtot_partner + nastyratio_partner + niceratio_partner + neutralratio_partner + v_scpr
+
+"
+pdtot_physio_m <- sem(pdtot_physio_spaff, spaff_summarized_wide_sccc, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+pdtot_physio_nicespaff<- "
+scpt ~ v_scpt + pdtot_patient + niceratio_patient 
+ccpt ~ v_ccpt + pdtot_patient  +niceratio_patient 
+scpr ~ v_scpr + pdtot_partner + niceratio_partner + v_ccpr
+ccpr ~ v_ccpr + pdtot_partner +  niceratio_partner +  v_scpr
+
+"
+pdtot_physio_nicespaff_m <- sem(pdtot_physio_nicespaff, spaff_summarized_wide_sccc, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+pdtot_physio_nastyspaff<- "
+scpt ~ v_scpt + pdtot_patient + nastyratio_patient 
+ccpt ~ v_ccpt + pdtot_patient +nastyratio_patient + v_ccpr
+scpr ~ v_scpr + pdtot_partner + nastyratio_partner + v_ccpr + v_ccpt
+ccpr ~ v_ccpr + pdtot_partner +  nastyratio_partner +  v_scpr + v_scpt
+
+"
+pdtot_physio_nastyspaff_m <- sem(pdtot_physio_nastyspaff, spaff_summarized_wide_sccc, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+
+pdtot_physio_neutralspaff<- "
+scpt ~ v_scpt + pdtot_patient + neutralratio_patient 
+ccpt ~ v_ccpt + pdtot_patient +neutralratio_patient 
+scpr ~ v_scpr + pdtot_partner + neutralratio_partner + v_ccpr + v_ccpt
+ccpr ~ v_ccpr + pdtot_partner  +  neutralratio_partner +  v_scpr + v_scpt  + v_ccpt
+
+"
+pdtotphysiospaff <- inner_join(spaff_summarized_wide_sccc, m2dat4, by = c("PTNUM", "scpt", "ccpt", "scpr", "ccpr",
+                                                                          "v_scpr", "v_ccpr","v_scpt", "v_ccpt",
+                                                                          "iip_elevation_patient", "iip_elevation_partner"))
+
+pdtot_physio_neutralspaff_m <- sem(pdtot_physio_neutralspaff, spaff_summarized_wide_sccc, estimator = "MLR", missing = "ML", meanstructure = TRUE)
+
+```
+
+```{r}
+#using nastyproportion as the indicator
+datatofit <- inner_join(spaff_summarized_wide_sccc, m2dat4, by = c("PTNUM", "iip_elevation_patient", "iip_elevation_partner", "scpt", "ccpt", "scpr", "ccpr", "v_scpt", "v_ccpt", "v_scpr", "v_ccpr", "pdtot_patient", "pdtot_partner"))
+el_np <- "
+scpt ~ iip_elevation_patient + nastyproportion_patient + v_scpt 
+scpr ~ iip_elevation_partner + nastyproportion_partner + v_scpr + v_ccpr
+ccpt ~ iip_elevation_patient + nastyproportion_patient + v_ccpt
+ccpr ~ iip_elevation_partner + nastyproportion_partner + v_ccpr + v_scpr + v_scpt
+
+
+"
+el_np_m <- sem(el_np, datatofit, estimator = "MLR", missing = "ML", meansturcture = TRUE, mimic = "Mplus")
+summary(el_np_m, fit.measures = TRUE)
+
+pd_np <- "
+scpt ~ pdtot_patient + nastyproportion_patient + v_scpt 
+scpr ~ pdtot_partner + nastyproportion_partner + v_scpr + v_ccpr
+ccpt ~ pdtot_patient + pdtot_partner + nastyproportion_patient + v_ccpt
+ccpr ~ pdtot_partner + nastyproportion_partner + v_ccpr + v_scpr + v_scpt
+
+
+"
+
+pd_np_m <- sem(pd_np, datatofit, estimator = "MLR", missing = "ML", meansturcture = TRUE, mimic = "Mplus")
+summary(pd_np_m, fit.measures = TRUE)
+
+
+elpd_np <- "
+scpt ~ iip_elevation_patient + pdtot_patient + nastyproportion_patient + v_scpt 
+scpr ~ iip_elevation_partner + pdtot_partner + nastyproportion_partner + v_scpr + v_ccpr
+ccpt ~ iip_elevation_patient + pdtot_patient + pdtot_partner + nastyproportion_patient + v_ccpt
+ccpr ~ iip_elevation_partner + pdtot_partner + nastyproportion_partner + v_ccpr + v_scpr + v_scpt
+
+
+"
+elpd_np_m <- sem(elpd_np, datatofit, estimator = "MLR", missing = "ML", meansturcture = TRUE, mimic = "Mplus")
+summary(elpd_np_m, fit.measures = TRUE)
+
+```
+
+
+
+
+```{r}
+
+
+
+
+
+saam_avo_m1 <- "
+#direct effect
+avo_post_partner ~ e*avo_pre_partner
+#mediators
+avo_post_partner ~  b4*nastyproportion_partner 
+nastyproportion_patient ~ d1*avo_pre_patient
+nastyproportion_partner~a4*avo_pre_partner 
+avo_post_patient ~ f*avo_pre_patient 
+avo_post_patient ~ c1*nastyproportion_patient
+nastyproportion_patient ~~ nastyproportion_partner
+b4a4 := a4*b4
+"
+
+saam_avo_m1_m <- sem(saam_avo_m1, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+
+saam_avo_m2 <- "
+#direct effect
+avo_post_partner ~ e*avo_pre_partner
+#mediators
+avo_post_partner ~  b4*nastyproportion_partner + scpt + ccpt + scpr + ccpr
+nastyproportion_patient ~ d1*avo_pre_patient
+scpt ~ avo_pre_patient + avo_pre_partner
+scpr ~ avo_pre_partner + avo_pre_patient
+ccpt ~ avo_pre_patient + avo_pre_partner
+ccpr ~ avo_pre_partner + avo_pre_patient
+nastyproportion_partner~a4*avo_pre_partner
+avo_post_patient ~ f*avo_pre_patient 
+avo_post_patient ~ c1*nastyproportion_patient + scpt + ccpt + scpr + ccpr
+nastyproportion_patient ~~ nastyproportion_partner
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_avo_m2 <- sem(saam_avo_m2, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_avo_m2, fit.measures = TRUE)
+#getting rid of partner paths except for ccpt 
+
+saam_avo_m3 <- "
+#direct effect
+avo_post_partner ~ e*avo_pre_partner
+#mediators
+avo_post_partner ~  b4*nastyproportion_partner + scpr + ccpr 
+nastyproportion_patient ~ d1*avo_pre_patient
+scpt ~ avo_pre_patient
+scpr ~ avo_pre_partner
+ccpt ~ avo_pre_patient + avo_pre_partner
+ccpr ~ avo_pre_partner
+nastyproportion_partner~a4*avo_pre_partner
+avo_post_patient ~ f*avo_pre_patient 
+avo_post_patient ~ c1*nastyproportion_patient + scpt + ccpt
+nastyproportion_patient ~~ nastyproportion_partner 
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_avo_m3 <- sem(saam_avo_m3, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_avo_m3_m, fit.measures = TRUE)
+
+
+
+saam_avo_m3 <- "
+#direct effect
+avo_post_partner ~ e*avo_pre_partner
+#mediators
+avo_post_partner ~  scpt + ccpt+  scpr + ccpr 
+#nastyproportion_patient ~ d1*avo_pre_patient
+scpt ~ avo_pre_patient
+scpr ~ avo_pre_partner
+ccpt ~ avo_pre_patient
+ccpr ~ avo_pre_partner
+nastyproportion_partner~a4*avo_pre_partner
+avo_post_patient ~ f*avo_pre_patient 
+avo_post_patient ~ scpr + ccpr +  scpt + ccpt
+#nastyproportion_patient ~~ nastyproportion_partner 
+#b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_avo_m3_m <- sem(saam_avo_m3, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_avo_m3, fit.measures = TRUE)
+
+saam_avo_m4 <- "
+#direct effect
+avo_post_partner ~ e*avo_pre_partner
+#mediators
+avo_post_partner ~  b4*nastyproportion_partner + scpr + ccpr 
+nastyproportion_patient ~ d1*avo_pre_patient
+scpt ~ avo_pre_patient + v_scpt
+scpr ~ avo_pre_partner + v_scpr
+ccpt ~ avo_pre_patient + avo_pre_partner + v_ccpt
+ccpr ~ avo_pre_partner + v_ccpr
+nastyproportion_partner~a4*avo_pre_partner
+avo_post_patient ~ f*avo_pre_patient 
+avo_post_patient ~ c1*nastyproportion_patient + scpt + ccpt
+nastyproportion_patient ~~ nastyproportion_partner 
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_avo_m4_m <- sem(saam_avo_m4, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_avo_m4_m, fit.measures = TRUE)
+
+
+
+saam_avo_m5 <- "
+#direct effect
+avo_post_partner ~ e*avo_pre_partner
+#mediators
+avo_post_partner ~  b4*nastyproportion_partner + scpr + ccpr + ccpt + scpt
+nastyproportion_patient ~ d1*avo_pre_patient
+scpt ~ avo_pre_patient + v_scpt
+scpr ~ avo_pre_partner + v_scpr
+ccpt ~ avo_pre_patient + avo_pre_partner + v_ccpt
+ccpr ~ avo_pre_partner + v_ccpr
+nastyproportion_partner~a4*avo_pre_partner
+avo_post_patient ~ f*avo_pre_patient 
+avo_post_patient ~ c1*nastyproportion_patient + scpt + ccpt + ccpr + scpr
+nastyproportion_patient ~~ nastyproportion_partner 
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_avo_m5_m <- sem(saam_avo_m5, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_avo_m5_m, fit.measures = TRUE)
+
+
+saam_avo_m6 <- "
+#direct effect
+avo_post_partner ~ e*avo_pre_partner
+#mediators
+avo_post_partner ~  b4*nastynice_partner + scpr + ccpr + ccpt + scpt
+nastynice_patient ~ d1*avo_pre_patient
+scpt ~ avo_pre_patient + v_scpt
+scpr ~ avo_pre_partner + v_scpr
+ccpt ~ avo_pre_patient + avo_pre_partner + v_ccpt
+ccpr ~ avo_pre_partner + v_ccpr
+nastynice_partner~a4*avo_pre_partner
+avo_post_patient ~ f*avo_pre_patient 
+avo_post_patient ~ c1*nastynice_patient + scpt + ccpt + ccpr + scpr
+nastynice_patient ~~ nastynice_partner 
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_avo_m6_m <- sem(saam_avo_m6, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+cor(dplyr::select(saamprepost_spaff_personalitydata_rescaled_noOutliers, scpt, ccpt, scpr, ccpr, nastynice_patient, nastynice_partner))
+
+summary(saam_avo_m6_m, fit.measures = TRUE)
+
+saam_anx_m1 <- "
+#direct effect
+anx_post_partner ~ e*anx_pre_partner
+#mediators
+anx_post_partner ~  b4*nastyproportion_partner 
+nastyproportion_patient ~ d1*anx_pre_patient
+nastyproportion_partner~a4*anx_pre_partner 
+anx_post_patient ~ f*anx_pre_patient 
+anx_post_patient ~ c1*nastyproportion_patient
+nastyproportion_patient ~~ nastyproportion_partner
+b4a4 := a4*b4
+"
+
+saam_anx_m1_m <- sem(saam_anx_m1, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+
+saam_anx_m2 <- "
+#direct effect
+anx_post_partner ~ e*anx_pre_partner
+#mediators
+anx_post_partner ~  b4*nastyproportion_partner + scpt + ccpt + scpr + ccpr
+nastyproportion_patient ~ d1*anx_pre_patient
+scpt ~ anx_pre_patient + anx_pre_partner
+scpr ~ anx_pre_partner + anx_pre_patient
+ccpt ~ anx_pre_patient + anx_pre_partner
+ccpr ~ anx_pre_partner + anx_pre_patient
+nastyproportion_partner~a4*anx_pre_partner
+anx_post_patient ~ f*anx_pre_patient 
+anx_post_patient ~ c1*nastyproportion_patient + scpt + ccpt + scpr + ccpr
+nastyproportion_patient ~~ nastyproportion_partner
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_anx_m2_m <- sem(saam_anx_m2, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_anx_m2, fit.measures = TRUE)
+#getting rid of partner paths except for ccpt 
+
+saam_anx_m3 <- "
+#direct effect
+anx_post_partner ~ e*anx_pre_partner
+#mediators
+anx_post_partner ~  b4*nastyproportion_partner + scpr + ccpr 
+nastyproportion_patient ~ d1*anx_pre_patient
+scpt ~ anx_pre_patient
+scpr ~ anx_pre_partner
+ccpt ~ anx_pre_patient + anx_pre_partner
+ccpr ~ anx_pre_partner
+nastyproportion_partner~a4*anx_pre_partner
+anx_post_patient ~ f*anx_pre_patient 
+anx_post_patient ~ c1*nastyproportion_patient + scpt + ccpt
+nastyproportion_patient ~~ nastyproportion_partner 
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_anx_m3_m <- sem(saam_anx_m3, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_anx_m3_m, fit.measures = TRUE)
+
+
+
+saam_anx_m4 <- "
+#direct effect
+anx_post_partner ~ e*anx_pre_partner
+#mediators
+anx_post_partner ~  scpt + ccpt+  scpr + ccpr 
+#nastyproportion_patient ~ d1*anx_pre_patient
+scpt ~ anx_pre_patient
+scpr ~ anx_pre_partner
+ccpt ~ anx_pre_patient
+ccpr ~ anx_pre_partner
+nastyproportion_partner~a4*anx_pre_partner
+anx_post_patient ~ f*anx_pre_patient 
+anx_post_patient ~ scpr + ccpr +  scpt + ccpt
+#nastyproportion_patient ~~ nastyproportion_partner 
+#b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_anx_m4_m <- sem(saam_anx_m4, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_anx_m4, fit.measures = TRUE)
+
+saam_anx_m5 <- "
+#direct effect
+anx_post_partner ~ e*anx_pre_partner
+#mediators
+anx_post_partner ~  b4*nastyproportion_partner + scpr + ccpr 
+nastyproportion_patient ~ d1*anx_pre_patient
+scpt ~ anx_pre_patient + v_scpt
+scpr ~ anx_pre_partner + v_scpr
+ccpt ~ anx_pre_patient + anx_pre_partner + v_ccpt
+ccpr ~ anx_pre_partner + v_ccpr
+nastyproportion_partner~a4*anx_pre_partner
+anx_post_patient ~ f*anx_pre_patient 
+anx_post_patient ~ c1*nastyproportion_patient + scpt + ccpt
+nastyproportion_patient ~~ nastyproportion_partner 
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_anx_m5_m <- sem(saam_anx_m5, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_anx_m5_m, fit.measures = TRUE)
+
+
+
+saam_anx_m6 <- "
+#direct effect
+anx_post_partner ~ e*anx_pre_partner
+#mediators
+anx_post_partner ~  b4*nastyproportion_partner + scpr + ccpr + ccpt + scpt
+nastyproportion_patient ~ d1*anx_pre_patient
+scpt ~ anx_pre_patient + v_scpt
+scpr ~ anx_pre_partner + v_scpr
+ccpt ~ anx_pre_patient + anx_pre_partner + v_ccpt
+ccpr ~ anx_pre_partner + v_ccpr
+nastyproportion_partner~a4*anx_pre_partner
+anx_post_patient ~ f*anx_pre_patient 
+anx_post_patient ~ c1*nastyproportion_patient + scpt + ccpt + ccpr + scpr
+nastyproportion_patient ~~ nastyproportion_partner 
+b4a4 := a4*b4
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_anx_m6_m <- sem(saam_anx_m6, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_anx_m6_m, fit.measures = TRUE)
+
+
+
+
+
+saam_anx_m7 <- "
+#direct effect
+anx_post_partner ~ anx_pre_partner
+#mediators
+anx_post_partner ~  nastyproportion_partner + scpr+  scpt + ccpt + ccpr
+nastyproportion_patient ~ anx_pre_patient
+scpt ~ anx_pre_patient + anx_pre_partner + v_scpt
+scpr ~ anx_pre_partner + v_scpr
+ccpt ~ anx_pre_patient + anx_pre_partner + v_ccpt
+ccpr ~ anx_pre_partner + v_ccpr
+nastyproportion_partner~anx_pre_partner
+anx_post_patient ~ anx_pre_patient 
+anx_post_patient ~ nastyproportion_patient + ccpr
+#residual covariances
+nastyproportion_patient ~~ nastyproportion_partner 
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_anx_m7_m <- sem(saam_anx_m7, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+summary(saam_anx_m7_m, fit.measures = TRUE)
+saamprepost_spaff_personalitydata_rescaled_noOutliers <- dplyr::mutate(saamprepost_spaff_personalitydata_rescaled_noOutliers, nastynice_patient = nastytime_patient/5*nicetime_patient, nastynice_partner = nastytime_partner/nicetime_partner,  nastyneutral_patient = nastytime_patient/nicetime_patient, 
+nastyneutral_partner = nastytime_partner/neutraltime_partner)
+
+
+saam_anx_m8 <- "
+#direct effect
+anx_post_partner ~ anx_pre_partner
+#mediators
+anx_post_partner ~  neutralratio_partner + scpr+  scpt + ccpt + ccpr
+neutralratio_patient ~ anx_pre_patient
+scpt ~ anx_pre_patient + anx_pre_partner + v_scpt
+scpr ~ anx_pre_partner + v_scpr
+ccpt ~ anx_pre_patient + anx_pre_partner + v_ccpt 
+ccpr ~ anx_pre_partner + v_ccpr
+neutralratio_partner~anx_pre_partner
+anx_post_patient ~ anx_pre_patient 
+anx_post_patient ~ neutralratio_patient + ccpr
+#residual covariances
+neutralratio_patient ~~ neutralratio_partner 
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+
+"
+
+saam_anx_m8_m <- sem(saam_anx_m8, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+
+
+summary(saam_anx_m8_m, fit.measures = TRUE)
+
+
+saam_anx_m9 <- "
+#direct effect
+anx_post_partner ~ anx_pre_partner
+#mediators
+anx_post_partner ~  nastynice_partner + scpr+  scpt + ccpt + ccpr
+nastynice_patient ~ anx_pre_patient
+scpt ~ anx_pre_patient + anx_pre_partner + v_scpt 
+scpr ~ anx_pre_partner + v_scpr + v_ccpr
+ccpt ~ anx_pre_patient + anx_pre_partner + v_ccpt  + v_ccpr
+ccpr ~ anx_pre_partner + v_ccpr + v_scpr
+nastynice_partner~anx_pre_partner
+anx_post_patient ~ anx_pre_patient 
+anx_post_patient ~ nastynice_patient + ccpr
+#residual covariances
+nastynice_patient ~~ nastynice_partner 
+scpt ~~ scpr
+scpt~~ ccpt
+scpr ~~ ccpr
+nastynice_patient ~~ ccpt
+
+"
+
+saam_anx_m9_m <- sem(saam_anx_m9, saamprepost_spaff_personalitydata_rescaled_noOutliers, missing = "ML", estimator = "MLR", meanstructure = TRUE, mimic = "Mplus")
+summary(saam_anx_m9_m, fit.measures = TRUE)
+
+
+anova(saam_anx_m1_m, saam_anx_m2_m, saam_anx_m3_m, saam_anx_m4_m, saam_anx_m5_m, saam_anx_m6_m)
+
+
+
+```
+
+
+
+
+
+

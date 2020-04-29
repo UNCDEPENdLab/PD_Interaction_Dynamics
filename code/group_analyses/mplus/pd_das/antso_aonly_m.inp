@@ -1,0 +1,29 @@
+TITLE:
+Testing
+DATA:
+FILE = "antso_aonly_m.dat";
+ 
+VARIABLE:
+NAMES = dasbl1 dasbl0 antso_1 antso_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+dasbl1 ON antso_1; 
+dasbl1 ON antso_0@0;
+dasbl0 ON antso_1@0;
+dasbl0 ON antso_0; 
+dasbl1 WITH dasbl0; 
+antso_1 WITH antso_0; 
+dasbl1 WITH dasbl1; 
+dasbl0 WITH dasbl0; 
+antso_1 WITH antso_1; 
+antso_0 WITH antso_0; 
+[dasbl1]; 
+[dasbl0]; 
+[antso_1]; 
+[antso_0]; 
+
+OUTPUT:
+STANDARDIZED

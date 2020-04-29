@@ -1,0 +1,29 @@
+TITLE:
+Testing
+DATA:
+FILE = "avoid_ponly_m.dat";
+ 
+VARIABLE:
+NAMES = dasbl1 dasbl0 avoid_1 avoid_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+dasbl1 ON avoid_1@0;
+dasbl1 ON avoid_0; 
+dasbl0 ON avoid_1; 
+dasbl0 ON avoid_0@0;
+dasbl1 WITH dasbl0; 
+avoid_1 WITH avoid_0; 
+dasbl1 WITH dasbl1; 
+dasbl0 WITH dasbl0; 
+avoid_1 WITH avoid_1; 
+avoid_0 WITH avoid_0; 
+[dasbl1]; 
+[dasbl0]; 
+[avoid_1]; 
+[avoid_0]; 
+
+OUTPUT:
+STANDARDIZED

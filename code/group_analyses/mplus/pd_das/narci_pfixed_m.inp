@@ -1,0 +1,29 @@
+TITLE:
+Testing
+DATA:
+FILE = "narci_pfixed_m.dat";
+ 
+VARIABLE:
+NAMES = dasbl1 dasbl0 narci_1 narci_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+dasbl1 ON narci_1; 
+dasbl1 ON narci_0* (b); 
+dasbl0 ON narci_1* (b); 
+dasbl0 ON narci_0; 
+dasbl1 WITH dasbl0; 
+narci_1 WITH narci_0; 
+dasbl1 WITH dasbl1; 
+dasbl0 WITH dasbl0; 
+narci_1 WITH narci_1; 
+narci_0 WITH narci_0; 
+[dasbl1]; 
+[dasbl0]; 
+[narci_1]; 
+[narci_0]; 
+
+OUTPUT:
+STANDARDIZED

@@ -1,0 +1,806 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+05/15/2019  11:23 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Aff -> Coreg -> Aff -> DASFU AND fix non-sig parameters to zero. Only using
+  CC to reduce number of parameters;
+  DATA:
+  FILE = "../df67_das_dem.dat";
+
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+  elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id
+  rel dasfu1 dasfu0 dasbl1 dasbl0;
+   MISSING=.;
+  USEVARIABLES = elpt elpr ccpt ccpr pnapt pnapr prnapt prnapr dasfu0 dasfu1
+  dasbl1 dasbl0 rel scpr scpt;
+  CATEGORICAL IS rel;
+  IDVARIABLE IS id;
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2; BITERATIONS = (49000); !ALGORITHM=MH;
+  !ESTIMATOR = MLR;
+  MODEL:
+  coreg BY ccpt;
+  coreg BY scpt;
+  coreg BY scpr;
+  coreg BY ccpr;
+
+  prnapt ON elpt* (z);
+  prnapr ON elpr;
+  coreg ON elpr;
+  coreg ON elpt@0;
+  prnapt WITH prnapr;
+  pnapt WITH pnapr;
+  pnapt ON prnapt;
+  pnapt ON coreg* (c);
+  pnapr ON prnapr;
+  pnapr ON coreg@0;
+  coreg ON prnapt* (b1);
+  coreg ON prnapr* (b1);
+
+  !scpt WITH scpr;
+  !scpt WITH ccpt;
+  !scpt WITH ccpr;
+  !scpr WITH ccpt;
+  !scpr WITH ccpr;
+  !ccpt WITH ccpr;
+
+
+  prnapt WITH prnapt;
+  prnapr WITH prnapr;
+  pnapt WITH pnapt;
+  pnapr WITH pnapr;
+  elpt WITH elpt;
+  elpr WITH elpr;
+  [scpt];
+  [scpr];
+  [ccpt];
+  [ccpr@0];
+  [prnapt];
+  [prnapr];
+  [pnapt];
+  [pnapr];
+  [elpt];
+  [elpr];
+
+  !PNAPR ON ELPR;
+  !PRNAPR   WITH PRNAPT;
+
+
+  dasfu1 ON pnapt* (k);
+  dasfu1 ON pnapr@0;
+  dasfu1 ON dasbl1;
+  dasfu1 ON dasbl0@0;
+  dasfu0 ON pnapt;
+  dasfu0 ON pnapr@0;
+  dasfu0 ON dasbl1;
+  dasfu0 ON dasbl0;
+  rel ON pnapt@0;
+  rel ON pnapr@0;
+  rel ON dasbl1;
+  rel ON dasbl0@0;
+
+  DASFU1 WITH DASFU1;
+  DASFU0 WITH DASFU0;
+  [DASFU1];
+  [DASFU0];
+  DASBL1 WITH DASBL1;
+  DASBL0 WITH DASBL0;
+  [DASBL1];
+  [DASBL0];
+  DASFU1 WITH DASFU0;
+  DASBL0 WITH DASBL1;
+  !DASFU1 WITH REL@0;
+  !DASFU0 WITH REL@0;
+  DASFU0 ON PRNAPR;
+
+
+  MODEL CONSTRAINT:
+  NEW ( b1c  zb1c kzcb1);!b1d hb1c whb1c uhc );
+  b1c = b1*c;
+  zb1c = z*b1*c;
+  kzcb1 = k*z*b1*c
+
+
+  OUTPUT:
+  STANDARDIZED;  !MODINDICES(ALL 3);
+  !savedata: file=infludiagnostics.txt; save is
+  !cooks;
+
+
+
+*** WARNING in MODEL CONSTRAINT command
+  Statement not terminated by a semicolon:
+  kzcb1 = k*z*b1*c
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+Aff -> Coreg -> Aff -> DASFU AND fix non-sig parameters to zero. Only using
+CC to reduce number of parameters;
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                   11
+Number of independent variables                                  4
+Number of continuous latent variables                            1
+
+Observed dependent variables
+
+  Continuous
+   CCPT        CCPR        PNAPT       PNAPR       PRNAPT      PRNAPR
+   DASFU0      DASFU1      SCPR        SCPT
+
+  Binary and ordered categorical (ordinal)
+   REL
+
+Observed independent variables
+   ELPT        ELPR        DASBL1      DASBL0
+
+Continuous latent variables
+   COREG
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+Link                                                        PROBIT
+
+Input data file(s)
+  ../df67_das_dem.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             8
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              REL           CCPT          CCPR          PNAPT         PNAPR
+              ________      ________      ________      ________      ________
+ REL            0.980
+ CCPT           0.980         1.000
+ CCPR           0.980         1.000         1.000
+ PNAPT          0.970         0.990         0.990         0.990
+ PNAPR          0.980         1.000         1.000         0.990         1.000
+ PRNAPT         0.980         1.000         1.000         0.990         1.000
+ PRNAPR         0.980         1.000         1.000         0.990         1.000
+ DASFU0         0.616         0.616         0.616         0.606         0.616
+ DASFU1         0.737         0.737         0.737         0.727         0.737
+ SCPR           0.980         1.000         1.000         0.990         1.000
+ SCPT           0.980         1.000         1.000         0.990         1.000
+ ELPT           0.980         1.000         1.000         0.990         1.000
+ ELPR           0.970         0.990         0.990         0.980         0.990
+ DASBL1         0.980         1.000         1.000         0.990         1.000
+ DASBL0         0.949         0.970         0.970         0.960         0.970
+
+
+           Covariance Coverage
+              PRNAPT        PRNAPR        DASFU0        DASFU1        SCPR
+              ________      ________      ________      ________      ________
+ PRNAPT         1.000
+ PRNAPR         1.000         1.000
+ DASFU0         0.616         0.616         0.616
+ DASFU1         0.737         0.737         0.606         0.737
+ SCPR           1.000         1.000         0.616         0.737         1.000
+ SCPT           1.000         1.000         0.616         0.737         1.000
+ ELPT           1.000         1.000         0.616         0.737         1.000
+ ELPR           0.990         0.990         0.616         0.727         0.990
+ DASBL1         1.000         1.000         0.616         0.737         1.000
+ DASBL0         0.970         0.970         0.616         0.727         0.970
+
+
+           Covariance Coverage
+              SCPT          ELPT          ELPR          DASBL1        DASBL0
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ ELPT           1.000         1.000
+ ELPR           0.990         0.990         0.990
+ DASBL1         1.000         1.000         0.990         1.000
+ DASBL0         0.970         0.970         0.970         0.970         0.970
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    REL
+      Category 1    0.216           21.000
+      Category 2    0.784           76.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     CCPT                 -0.890      -0.259     -81.685    1.01%     -26.415     -7.559      2.881
+              99.000    1013.048       0.128      80.417    1.01%       8.529     24.280
+     CCPR                 -0.283      -0.178    -116.491    1.01%     -27.251     -8.605     -2.107
+              99.000    1435.257       0.411      79.366    1.01%       5.588     28.790
+     PNAPT                17.803       1.082      10.000   16.33%      11.000     13.000     16.000
+              98.000      55.916       1.241      47.000    1.02%      19.000     24.000
+     PNAPR                14.380       1.080      10.000   36.36%      10.000     11.000     12.000
+              99.000      27.507      -0.070      30.000    1.01%      13.000     20.000
+     PRNAPT               16.030       1.450      10.000   13.13%      11.000     13.000     14.000
+              99.000      31.928       2.460      39.000    1.01%      16.000     20.000
+     PRNAPR               13.621       1.725      10.000   24.24%      10.000     11.000     12.000
+              99.000      17.354       3.160      31.000    1.01%      13.000     16.000
+     DASFU0                3.788      -0.672       2.200    1.64%       3.400      3.700      3.900
+              61.000       0.304      -0.076       4.600    3.28%       4.000      4.300
+     DASFU1                3.661      -0.631       1.778    1.37%       3.100      3.600      3.800
+              73.000       0.406       0.010       4.800    1.37%       3.900      4.200
+     SCPR                 28.538       0.567       9.085    1.01%      16.451     24.118     27.494
+              99.000     153.716      -0.221      66.121    1.01%      29.684     39.272
+     SCPT                 30.559       0.551       7.450    1.01%      19.197     26.648     29.841
+              99.000     129.762      -0.204      58.807    1.01%      31.821     39.920
+     ELPT                  9.658       0.082       1.375    1.01%       5.750      8.375      9.500
+              99.000      15.289      -0.698      18.000    1.01%      10.625     12.875
+     ELPR                  6.835       0.329       0.750    3.06%       3.250      5.250      6.812
+              98.000      15.020      -0.679      15.625    1.02%       7.750     10.375
+     DASBL1                3.589      -0.863       2.200    1.01%       3.300      3.500      3.600
+              99.000       0.112       1.797       4.200    1.01%       3.700      3.900
+     DASBL0                3.660       0.559       2.500    1.04%       3.400      3.600      3.700
+              96.000       0.156       4.038       5.500    1.04%       3.800      3.900
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              55
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                 25.444           112.682
+
+          Posterior Predictive P-Value              0.002
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ COREG    BY
+    CCPT               1.000       0.000      0.000       1.000       1.000
+    SCPT               0.025       0.048      0.301      -0.066       0.123
+    SCPR               0.048       0.060      0.205      -0.059       0.174
+    CCPR              -1.227       0.270      0.000      -1.786      -0.814      *
+
+ COREG      ON
+    ELPR               0.155       0.960      0.437      -1.494       2.202
+    ELPT               0.000       0.000      1.000       0.000       0.000
+    PRNAPT            -0.017       0.248      0.471      -0.560       0.403
+    PRNAPR            -0.017       0.248      0.471      -0.560       0.403
+
+ PNAPT      ON
+    COREG             -0.039       0.023      0.045      -0.085       0.006
+
+ PNAPR      ON
+    COREG              0.000       0.000      1.000       0.000       0.000
+
+ PRNAPT     ON
+    ELPT               0.444       0.136      0.001       0.177       0.712      *
+
+ PRNAPR     ON
+    ELPR               0.299       0.104      0.002       0.093       0.504      *
+
+ PNAPT      ON
+    PRNAPT             0.831       0.103      0.000       0.628       1.034      *
+
+ PNAPR      ON
+    PRNAPR             0.687       0.105      0.000       0.478       0.892      *
+
+ DASFU1     ON
+    PNAPT             -0.007       0.010      0.237      -0.027       0.012
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.782       0.200      0.000       0.388       1.175      *
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PNAPT              0.001       0.008      0.462      -0.016       0.018
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.502       0.190      0.005       0.126       0.877      *
+    DASBL0             0.582       0.198      0.002       0.190       0.965      *
+    PRNAPR             0.024       0.014      0.042      -0.003       0.051
+
+ REL        ON
+    PNAPT              0.000       0.000      1.000       0.000       0.000
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.402       0.350      0.124      -0.287       1.090
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PRNAPT   WITH
+    PRNAPR             7.162       2.570      0.001       2.657      12.741      *
+
+ PNAPT    WITH
+    PNAPR              6.613       2.892      0.007       1.420      12.846      *
+
+ ELPR     WITH
+    ELPT               4.044       1.602      0.003       1.177       7.521      *
+
+ DASFU1   WITH
+    DASFU0             0.145       0.045      0.000       0.071       0.249      *
+
+ DASBL1   WITH
+    DASBL0             0.058       0.016      0.000       0.030       0.094      *
+    ELPT              -0.204       0.142      0.066      -0.499       0.062
+    ELPR              -0.233       0.143      0.040      -0.534       0.028
+
+ DASBL0   WITH
+    ELPT              -0.099       0.168      0.272      -0.438       0.227
+    ELPR              -0.283       0.168      0.036      -0.639       0.025
+
+ Means
+    ELPT               9.658       0.394      0.000       8.883      10.423      *
+    ELPR               6.838       0.392      0.000       6.067       7.602      *
+    DASBL1             3.589       0.035      0.000       3.519       3.658      *
+    DASBL0             3.662       0.042      0.000       3.580       3.744      *
+
+ Intercepts
+    CCPT              -1.127       2.487      0.317      -5.953       3.826
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PNAPT              4.434       1.754      0.006       0.963       7.848      *
+    PNAPR              5.026       1.507      0.000       2.105       7.999      *
+    PRNAPT            11.741       1.427      0.000       8.956      14.554      *
+    PRNAPR            11.570       0.822      0.000       9.967      13.196      *
+    DASFU0            -0.503       0.877      0.281      -2.217       1.250
+    DASFU1             0.956       0.767      0.104      -0.567       2.461
+    SCPR              28.523       1.283      0.000      26.001      31.056      *
+    SCPT              30.553       1.182      0.000      28.250      32.887      *
+
+ Thresholds
+    REL$1              0.648       1.247      0.301      -1.824       3.092
+
+ Variances
+    ELPT              15.256       2.222      0.000      11.705      20.382      *
+    ELPR              14.943       2.196      0.000      11.447      20.049      *
+    DASBL1             0.122       0.018      0.000       0.094       0.163      *
+    DASBL0             0.167       0.025      0.000       0.127       0.224      *
+
+ Residual Variances
+    CCPT             303.914     159.624      0.000      12.219     566.656      *
+    CCPR             361.135     228.095      0.000       8.556     773.506      *
+    PNAPT             33.403       5.158      0.000      25.296      45.507      *
+    PNAPR             20.066       3.041      0.000      15.256      27.052      *
+    PRNAPT            30.448       4.626      0.000      23.133      41.232      *
+    PRNAPR            17.237       2.625      0.000      13.097      23.325      *
+    DASFU0             0.233       0.048      0.000       0.162       0.350      *
+    DASFU1             0.359       0.066      0.000       0.260       0.517      *
+    SCPR             158.977      24.150      0.000     120.627     214.700      *
+    SCPT             135.698      20.459      0.000     103.555     183.097      *
+    COREG            765.003     211.482      0.000     418.359    1219.658      *
+
+New/Additional Parameters
+    B1C                0.000       0.011      0.467      -0.020       0.027
+    ZB1C               0.000       0.005      0.467      -0.009       0.012
+    KZCB1              0.000       0.000      0.482       0.000       0.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ COREG    BY
+    CCPT               0.847       0.090      0.000       0.682       0.994      *
+    SCPT               0.058       0.109      0.301      -0.158       0.269
+    SCPR               0.105       0.121      0.205      -0.138       0.331
+    CCPR              -0.874       0.089      0.000      -0.997      -0.694      *
+
+ COREG      ON
+    ELPR               0.022       0.130      0.437      -0.224       0.272
+    ELPT               0.000       0.000      1.000       0.000       0.000
+    PRNAPT            -0.004       0.051      0.471      -0.103       0.091
+    PRNAPR            -0.003       0.038      0.471      -0.077       0.068
+
+ PNAPT      ON
+    COREG             -0.140       0.083      0.045      -0.302       0.021
+
+ PNAPR      ON
+    COREG              0.000       0.000      1.000       0.000       0.000
+
+ PRNAPT     ON
+    ELPT               0.299       0.088      0.001       0.120       0.464      *
+
+ PRNAPR     ON
+    ELPR               0.269       0.089      0.002       0.084       0.434      *
+
+ PNAPT      ON
+    PRNAPT             0.632       0.063      0.000       0.494       0.740      *
+
+ PNAPR      ON
+    PRNAPR             0.552       0.072      0.000       0.397       0.678      *
+
+ DASFU1     ON
+    PNAPT             -0.082       0.112      0.237      -0.298       0.140
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.410       0.095      0.000       0.208       0.577      *
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PNAPT              0.010       0.105      0.462      -0.203       0.211
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.287       0.105      0.005       0.071       0.484      *
+    DASBL0             0.389       0.119      0.002       0.133       0.597      *
+    PRNAPR             0.167       0.095      0.042      -0.023       0.351
+
+ REL        ON
+    PNAPT              0.000       0.000      1.000       0.000       0.000
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.139       0.117      0.124      -0.100       0.359
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PRNAPT   WITH
+    PRNAPR             0.316       0.093      0.001       0.121       0.486      *
+
+ PNAPT    WITH
+    PNAPR              0.259       0.098      0.007       0.056       0.440      *
+
+ ELPR     WITH
+    ELPT               0.271       0.092      0.003       0.081       0.441      *
+
+ DASFU1   WITH
+    DASFU0             0.508       0.103      0.000       0.275       0.679      *
+
+ DASBL1   WITH
+    DASBL0             0.409       0.085      0.000       0.231       0.562      *
+    ELPT              -0.151       0.097      0.066      -0.336       0.045
+    ELPR              -0.175       0.098      0.040      -0.357       0.021
+
+ DASBL0   WITH
+    ELPT              -0.062       0.101      0.272      -0.258       0.138
+    ELPR              -0.182       0.098      0.036      -0.366       0.016
+
+ Means
+    ELPT               2.472       0.202      0.000       2.086       2.878      *
+    ELPR               1.768       0.161      0.000       1.457       2.089      *
+    DASBL1            10.285       0.733      0.000       8.883      11.740      *
+    DASBL0             8.970       0.655      0.000       7.713      10.279      *
+
+ Intercepts
+    CCPT              -0.034       0.076      0.317      -0.182       0.117
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PNAPT              0.578       0.255      0.006       0.113       1.113      *
+    PNAPR              0.931       0.323      0.000       0.353       1.612      *
+    PRNAPT             2.026       0.321      0.000       1.409       2.662      *
+    PRNAPR             2.676       0.309      0.000       2.081       3.295      *
+    DASFU0            -0.823       1.376      0.281      -3.149       2.233
+    DASFU1             1.437       1.187      0.104      -0.759       3.882
+    SCPR               2.234       0.192      0.000       1.864       2.617      *
+    SCPT               2.603       0.214      0.000       2.188       3.027      *
+
+ Thresholds
+    REL$1              0.642       1.201      0.301      -1.816       2.890
+
+ Variances
+    ELPT               1.000       0.000      0.000       1.000       1.000
+    ELPR               1.000       0.000      0.000       1.000       1.000
+    DASBL1             1.000       0.000      0.000       1.000       1.000
+    DASBL0             1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    CCPT               0.283       0.151      0.000       0.011       0.535      *
+    CCPR               0.237       0.153      0.000       0.006       0.519      *
+    PNAPT              0.572       0.075      0.000       0.430       0.725      *
+    PNAPR              0.695       0.077      0.000       0.541       0.842      *
+    PRNAPT             0.910       0.052      0.000       0.785       0.986      *
+    PRNAPR             0.928       0.047      0.000       0.812       0.993      *
+    DASFU0             0.625       0.100      0.000       0.437       0.826      *
+    DASFU1             0.810       0.075      0.000       0.649       0.940      *
+    SCPR               0.986       0.031      0.000       0.890       1.000      *
+    SCPT               0.993       0.020      0.000       0.927       1.000      *
+    COREG              0.990       0.023      0.000       0.916       1.000      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ COREG    BY
+    CCPT               0.847       0.090      0.000       0.682       0.994      *
+    SCPT               0.058       0.109      0.301      -0.158       0.269
+    SCPR               0.105       0.121      0.205      -0.138       0.331
+    CCPR              -0.874       0.089      0.000      -0.997      -0.694      *
+
+ COREG      ON
+    ELPR               0.022       0.130      0.437      -0.224       0.272
+    ELPT               0.000       0.000      1.000       0.000       0.000
+    PRNAPT            -0.004       0.051      0.471      -0.103       0.091
+    PRNAPR            -0.003       0.038      0.471      -0.077       0.068
+
+ PNAPT      ON
+    COREG             -0.140       0.083      0.045      -0.302       0.021
+
+ PNAPR      ON
+    COREG              0.000       0.000      1.000       0.000       0.000
+
+ PRNAPT     ON
+    ELPT               0.299       0.088      0.001       0.120       0.464      *
+
+ PRNAPR     ON
+    ELPR               0.269       0.089      0.002       0.084       0.434      *
+
+ PNAPT      ON
+    PRNAPT             0.632       0.063      0.000       0.494       0.740      *
+
+ PNAPR      ON
+    PRNAPR             0.552       0.072      0.000       0.397       0.678      *
+
+ DASFU1     ON
+    PNAPT             -0.082       0.112      0.237      -0.298       0.140
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.410       0.095      0.000       0.208       0.577      *
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PNAPT              0.010       0.105      0.462      -0.203       0.211
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.287       0.105      0.005       0.071       0.484      *
+    DASBL0             0.389       0.119      0.002       0.133       0.597      *
+    PRNAPR             0.167       0.095      0.042      -0.023       0.351
+
+ REL        ON
+    PNAPT              0.000       0.000      1.000       0.000       0.000
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.139       0.117      0.124      -0.100       0.359
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PRNAPT   WITH
+    PRNAPR             0.316       0.093      0.001       0.121       0.486      *
+
+ PNAPT    WITH
+    PNAPR              0.259       0.098      0.007       0.056       0.440      *
+
+ ELPR     WITH
+    ELPT               0.271       0.092      0.003       0.081       0.441      *
+
+ DASFU1   WITH
+    DASFU0             0.508       0.103      0.000       0.275       0.679      *
+
+ DASBL1   WITH
+    DASBL0             0.409       0.085      0.000       0.231       0.562      *
+    ELPT              -0.151       0.097      0.066      -0.336       0.045
+    ELPR              -0.175       0.098      0.040      -0.357       0.021
+
+ DASBL0   WITH
+    ELPT              -0.062       0.101      0.272      -0.258       0.138
+    ELPR              -0.182       0.098      0.036      -0.366       0.016
+
+ Means
+    ELPT               2.472       0.202      0.000       2.086       2.878      *
+    ELPR               1.768       0.161      0.000       1.457       2.089      *
+    DASBL1            10.285       0.733      0.000       8.883      11.740      *
+    DASBL0             8.970       0.655      0.000       7.713      10.279      *
+
+ Intercepts
+    CCPT              -0.034       0.076      0.317      -0.182       0.117
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PNAPT              0.578       0.255      0.006       0.113       1.113      *
+    PNAPR              0.931       0.323      0.000       0.353       1.612      *
+    PRNAPT             2.026       0.321      0.000       1.409       2.662      *
+    PRNAPR             2.676       0.309      0.000       2.081       3.295      *
+    DASFU0            -0.823       1.376      0.281      -3.149       2.233
+    DASFU1             1.437       1.187      0.104      -0.759       3.882
+    SCPR               2.234       0.192      0.000       1.864       2.617      *
+    SCPT               2.603       0.214      0.000       2.188       3.027      *
+
+ Thresholds
+    REL$1              0.642       1.201      0.301      -1.816       2.890
+
+ Variances
+    ELPT               1.000       0.000      0.000       1.000       1.000
+    ELPR               1.000       0.000      0.000       1.000       1.000
+    DASBL1             1.000       0.000      0.000       1.000       1.000
+    DASBL0             1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    CCPT               0.283       0.151      0.000       0.011       0.535      *
+    CCPR               0.237       0.153      0.000       0.006       0.519      *
+    PNAPT              0.572       0.075      0.000       0.430       0.725      *
+    PNAPR              0.695       0.077      0.000       0.541       0.842      *
+    PRNAPT             0.910       0.052      0.000       0.785       0.986      *
+    PRNAPR             0.928       0.047      0.000       0.812       0.993      *
+    DASFU0             0.625       0.100      0.000       0.437       0.826      *
+    DASFU1             0.810       0.075      0.000       0.649       0.940      *
+    SCPR               0.986       0.031      0.000       0.890       1.000      *
+    SCPT               0.993       0.020      0.000       0.927       1.000      *
+    COREG              0.990       0.023      0.000       0.916       1.000      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ COREG    BY
+    CCPT              27.887       3.891      0.000      20.621      35.460      *
+    SCPT               0.679       1.308      0.301      -1.893       3.255
+    SCPR               1.325       1.582      0.205      -1.791       4.385
+    CCPR             -34.049       4.603      0.000     -42.612     -25.051      *
+
+ COREG      ON
+    ELPR               0.006       0.033      0.437      -0.057       0.069
+    ELPT               0.000       0.000      1.000       0.000       0.000
+    PRNAPT            -0.001       0.009      0.471      -0.018       0.016
+    PRNAPR            -0.001       0.009      0.471      -0.018       0.016
+
+ PNAPT      ON
+    COREG             -1.072       0.645      0.045      -2.362       0.159
+
+ PNAPR      ON
+    COREG              0.000       0.000      1.000       0.000       0.000
+
+ PRNAPT     ON
+    ELPT               0.444       0.136      0.001       0.177       0.712      *
+
+ PRNAPR     ON
+    ELPR               0.299       0.104      0.002       0.093       0.504      *
+
+ PNAPT      ON
+    PRNAPT             0.831       0.103      0.000       0.628       1.034      *
+
+ PNAPR      ON
+    PRNAPR             0.687       0.105      0.000       0.478       0.892      *
+
+ DASFU1     ON
+    PNAPT             -0.007       0.010      0.237      -0.027       0.012
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.782       0.200      0.000       0.388       1.175      *
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ DASFU0     ON
+    PNAPT              0.001       0.008      0.462      -0.016       0.018
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.502       0.190      0.005       0.126       0.877      *
+    DASBL0             0.582       0.198      0.002       0.190       0.965      *
+    PRNAPR             0.024       0.014      0.042      -0.003       0.051
+
+ REL        ON
+    PNAPT              0.000       0.000      1.000       0.000       0.000
+    PNAPR              0.000       0.000      1.000       0.000       0.000
+    DASBL1             0.402       0.350      0.124      -0.287       1.090
+    DASBL0             0.000       0.000      1.000       0.000       0.000
+
+ PRNAPT   WITH
+    PRNAPR             0.316       0.093      0.001       0.121       0.486      *
+
+ PNAPT    WITH
+    PNAPR              0.259       0.098      0.007       0.056       0.440      *
+
+ ELPR     WITH
+    ELPT               0.271       0.092      0.003       0.081       0.441      *
+
+ DASFU1   WITH
+    DASFU0             0.508       0.103      0.000       0.275       0.679      *
+
+ DASBL1   WITH
+    DASBL0             0.409       0.085      0.000       0.231       0.562      *
+    ELPT              -0.151       0.097      0.066      -0.336       0.045
+    ELPR              -0.175       0.098      0.040      -0.357       0.021
+
+ DASBL0   WITH
+    ELPT              -0.062       0.101      0.272      -0.258       0.138
+    ELPR              -0.182       0.098      0.036      -0.366       0.016
+
+ Means
+    ELPT               9.658       0.394      0.000       8.883      10.423      *
+    ELPR               6.838       0.392      0.000       6.067       7.602      *
+    DASBL1             3.589       0.035      0.000       3.519       3.658      *
+    DASBL0             3.662       0.042      0.000       3.580       3.744      *
+
+ Intercepts
+    CCPT              -1.127       2.487      0.317      -5.953       3.826
+    CCPR               0.000       0.000      1.000       0.000       0.000
+    PNAPT              4.434       1.754      0.006       0.963       7.848      *
+    PNAPR              5.026       1.507      0.000       2.105       7.999      *
+    PRNAPT            11.741       1.427      0.000       8.956      14.554      *
+    PRNAPR            11.570       0.822      0.000       9.967      13.196      *
+    DASFU0            -0.503       0.877      0.281      -2.217       1.250
+    DASFU1             0.956       0.767      0.104      -0.567       2.461
+    SCPR              28.523       1.283      0.000      26.001      31.056      *
+    SCPT              30.553       1.182      0.000      28.250      32.887      *
+
+ Thresholds
+    REL$1              0.648       1.247      0.301      -1.824       3.092
+
+ Variances
+    ELPT              15.256       2.222      0.000      11.705      20.382      *
+    ELPR              14.943       2.196      0.000      11.447      20.049      *
+    DASBL1             0.122       0.018      0.000       0.094       0.163      *
+    DASBL0             0.167       0.025      0.000       0.127       0.224      *
+
+ Residual Variances
+    CCPT             303.914     159.624      0.000      12.219     566.656      *
+    CCPR             361.135     228.095      0.000       8.556     773.506      *
+    PNAPT             33.403       5.158      0.000      25.296      45.507      *
+    PNAPR             20.066       3.041      0.000      15.256      27.052      *
+    PRNAPT            30.448       4.626      0.000      23.133      41.232      *
+    PRNAPR            17.237       2.625      0.000      13.097      23.325      *
+    DASFU0             0.233       0.048      0.000       0.162       0.350      *
+    DASFU1             0.359       0.066      0.000       0.260       0.517      *
+    SCPR             158.977      24.150      0.000     120.627     214.700      *
+    SCPT             135.698      20.459      0.000     103.555     183.097      *
+    COREG              0.990       0.023      0.000       0.916       1.000      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    REL                0.020       0.036      0.000       0.000       0.129
+    CCPT               0.717       0.151      0.000       0.465       0.989
+    CCPR               0.763       0.153      0.000       0.481       0.994
+    PNAPT              0.428       0.075      0.000       0.275       0.570
+    PNAPR              0.305       0.077      0.000       0.158       0.459
+    PRNAPT             0.090       0.052      0.000       0.014       0.215
+    PRNAPR             0.072       0.047      0.000       0.007       0.188
+    DASFU0             0.375       0.100      0.000       0.174       0.563
+    DASFU1             0.190       0.075      0.000       0.060       0.351
+    SCPR               0.014       0.031      0.000       0.000       0.110
+    SCPT               0.007       0.020      0.000       0.000       0.073
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    COREG              0.010       0.023      0.000       0.000       0.084
+
+
+     Beginning Time:  11:23:48
+        Ending Time:  11:24:10
+       Elapsed Time:  00:00:22
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

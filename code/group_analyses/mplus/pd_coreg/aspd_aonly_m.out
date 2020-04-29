@@ -1,0 +1,430 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  10:48 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "aspd_aonly_m.dat";
+
+  VARIABLE:
+  NAMES = scpt ccpt scpr ccpr antso_1 antso_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  scpt ON antso_1;
+  scpt ON antso_0@0;
+  ccpt ON antso_1;
+  ccpt ON antso_0@0;
+  scpr ON antso_1@0;
+  scpr ON antso_0;
+  ccpr ON antso_1@0;
+  ccpr ON antso_0;
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  ccpt WITH scpr;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  antso_1 WITH antso_0;
+  scpt WITH scpt;
+  ccpt WITH ccpt;
+  scpr WITH scpr;
+  ccpr WITH ccpr;
+  antso_1 WITH antso_1;
+  antso_0 WITH antso_0;
+  [scpt];
+  [ccpt];
+  [scpr];
+  [ccpr];
+  [antso_1];
+  [antso_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR
+
+Observed independent variables
+   ANTSO_1     ANTSO_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  aspd_aonly_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          ANTSO_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ ANTSO_1        0.990         0.990         0.990         0.990         0.990
+ ANTSO_0        0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              ANTSO_0
+              ________
+ ANTSO_0        0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.051       0.557       7.000    1.01%      19.000     26.000     29.000
+              99.000     130.270      -0.214      58.000    1.01%      31.000     39.000
+     CCPT                 -0.879      -0.261     -81.000    1.01%     -26.000     -7.000      2.000
+              99.000     990.713       0.169      80.000    1.01%       8.000     24.000
+     SCPR                 28.030       0.568       9.000    2.02%      16.000     24.000     27.000
+              99.000     154.575      -0.200      66.000    1.01%      29.000     39.000
+     CCPR                 -0.253      -0.176    -116.000    1.01%     -27.000     -8.000     -2.000
+              99.000    1405.603       0.459      79.000    1.01%       5.000     28.000
+     ANTSO_1               2.000       1.718       0.000   51.02%       0.000      0.000      0.000
+              98.000      10.082       1.976      14.000    1.02%       1.000      4.000
+     ANTSO_0               1.429       2.267       0.000   58.16%       0.000      0.000      0.000
+              98.000       6.735       4.537      12.000    1.02%       1.000      2.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              23
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -22.543            19.751
+
+          Posterior Predictive P-Value              0.559
+
+Information Criteria
+
+          Deviance (DIC)                         4417.423
+          Estimated Number of Parameters (pD)      21.519
+          Bayesian (BIC)                         4479.326
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ SCPT       ON
+    ANTSO_1           -0.366       0.375      0.162      -1.103       0.375
+    ANTSO_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    ANTSO_1           -0.919       0.705      0.095      -2.310       0.451
+    ANTSO_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPR       ON
+    ANTSO_1            0.000       0.000      1.000       0.000       0.000
+    ANTSO_0            0.604       0.502      0.113      -0.378       1.599
+
+ CCPR       ON
+    ANTSO_1            0.000       0.000      1.000       0.000       0.000
+    ANTSO_0           -1.273       1.031      0.108      -3.293       0.763
+
+ SCPT     WITH
+    CCPT               3.009      43.532      0.473     -83.485      89.084
+    SCPR             -22.313      17.331      0.086     -58.865       9.874
+    CCPR             -35.881      52.339      0.234    -143.414      64.137
+
+ CCPT     WITH
+    SCPR               8.997      47.471      0.421     -83.731     104.977
+    CCPR            -972.232     179.016      0.000   -1391.988    -686.888      *
+
+ SCPR     WITH
+    CCPR             -90.513      57.657      0.045    -213.551      14.722
+
+ ANTSO_1  WITH
+    ANTSO_0            2.546       0.975      0.002       0.822       4.642      *
+
+ Means
+    ANTSO_1            2.007       0.332      0.000       1.359       2.658      *
+    ANTSO_0            1.428       0.272      0.000       0.892       1.967      *
+
+ Intercepts
+    SCPT              30.785       1.434      0.000      27.989      33.580      *
+    CCPT               0.985       3.622      0.390      -6.197       8.094
+    SCPR              27.173       1.497      0.000      24.252      30.099      *
+    CCPR               1.543       4.266      0.358      -6.852       9.952
+
+ Variances
+    ANTSO_1           10.678       1.635      0.000       8.109      14.521      *
+    ANTSO_0            7.132       1.082      0.000       5.422       9.652      *
+
+ Residual Variances
+    SCPT             144.290      22.621      0.000     108.827     197.125      *
+    CCPT            1090.424     169.363      0.000     821.007    1480.987      *
+    SCPR             170.905      26.556      0.000     128.708     232.407      *
+    CCPR            1568.810     244.534      0.000    1183.955    2140.369      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    ANTSO_1           -0.099       0.100      0.162      -0.290       0.101
+    ANTSO_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    ANTSO_1           -0.090       0.070      0.095      -0.229       0.045
+    ANTSO_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPR       ON
+    ANTSO_1            0.000       0.000      1.000       0.000       0.000
+    ANTSO_0            0.122       0.099      0.113      -0.075       0.313
+
+ CCPR       ON
+    ANTSO_1            0.000       0.000      1.000       0.000       0.000
+    ANTSO_0           -0.085       0.069      0.108      -0.220       0.051
+
+ SCPT     WITH
+    CCPT               0.008       0.105      0.473      -0.199       0.212
+    SCPR              -0.144       0.103      0.086      -0.340       0.062
+    CCPR              -0.077       0.105      0.234      -0.279       0.131
+
+ CCPT     WITH
+    SCPR               0.021       0.106      0.421      -0.188       0.228
+    CCPR              -0.747       0.048      0.000      -0.826      -0.640      *
+
+ SCPR     WITH
+    CCPR              -0.177       0.102      0.045      -0.374       0.028
+
+ ANTSO_1  WITH
+    ANTSO_0            0.295       0.095      0.002       0.098       0.467      *
+
+ Means
+    ANTSO_1            0.615       0.110      0.000       0.400       0.832      *
+    ANTSO_0            0.535       0.109      0.000       0.324       0.748      *
+
+ Intercepts
+    SCPT               2.538       0.218      0.000       2.108       2.970      *
+    CCPT               0.030       0.108      0.390      -0.185       0.240
+    SCPR               2.055       0.199      0.000       1.669       2.449      *
+    CCPR               0.039       0.106      0.358      -0.170       0.246
+
+ Variances
+    ANTSO_1            1.000       0.000      0.000       1.000       1.000
+    ANTSO_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.989       0.023      0.000       0.916       1.000      *
+    CCPT               0.992       0.015      0.000       0.948       1.000      *
+    SCPR               0.985       0.027      0.000       0.902       1.000      *
+    CCPR               0.993       0.013      0.000       0.952       1.000      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    ANTSO_1           -0.099       0.100      0.162      -0.290       0.101
+    ANTSO_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    ANTSO_1           -0.090       0.070      0.095      -0.229       0.045
+    ANTSO_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPR       ON
+    ANTSO_1            0.000       0.000      1.000       0.000       0.000
+    ANTSO_0            0.122       0.099      0.113      -0.075       0.313
+
+ CCPR       ON
+    ANTSO_1            0.000       0.000      1.000       0.000       0.000
+    ANTSO_0           -0.085       0.069      0.108      -0.220       0.051
+
+ SCPT     WITH
+    CCPT               0.008       0.105      0.473      -0.199       0.212
+    SCPR              -0.144       0.103      0.086      -0.340       0.062
+    CCPR              -0.077       0.105      0.234      -0.279       0.131
+
+ CCPT     WITH
+    SCPR               0.021       0.106      0.421      -0.188       0.228
+    CCPR              -0.747       0.048      0.000      -0.826      -0.640      *
+
+ SCPR     WITH
+    CCPR              -0.177       0.102      0.045      -0.374       0.028
+
+ ANTSO_1  WITH
+    ANTSO_0            0.295       0.095      0.002       0.098       0.467      *
+
+ Means
+    ANTSO_1            0.615       0.110      0.000       0.400       0.832      *
+    ANTSO_0            0.535       0.109      0.000       0.324       0.748      *
+
+ Intercepts
+    SCPT               2.538       0.218      0.000       2.108       2.970      *
+    CCPT               0.030       0.108      0.390      -0.185       0.240
+    SCPR               2.055       0.199      0.000       1.669       2.449      *
+    CCPR               0.039       0.106      0.358      -0.170       0.246
+
+ Variances
+    ANTSO_1            1.000       0.000      0.000       1.000       1.000
+    ANTSO_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.989       0.023      0.000       0.916       1.000      *
+    CCPT               0.992       0.015      0.000       0.948       1.000      *
+    SCPR               0.985       0.027      0.000       0.902       1.000      *
+    CCPR               0.993       0.013      0.000       0.952       1.000      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    ANTSO_1           -0.366       0.375      0.162      -1.103       0.375
+    ANTSO_0            0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    ANTSO_1           -0.919       0.705      0.095      -2.310       0.451
+    ANTSO_0            0.000       0.000      1.000       0.000       0.000
+
+ SCPR       ON
+    ANTSO_1            0.000       0.000      1.000       0.000       0.000
+    ANTSO_0            0.604       0.502      0.113      -0.378       1.599
+
+ CCPR       ON
+    ANTSO_1            0.000       0.000      1.000       0.000       0.000
+    ANTSO_0           -1.273       1.031      0.108      -3.293       0.763
+
+ SCPT     WITH
+    CCPT               0.008       0.105      0.473      -0.199       0.212
+    SCPR              -0.144       0.103      0.086      -0.340       0.062
+    CCPR              -0.077       0.105      0.234      -0.279       0.131
+
+ CCPT     WITH
+    SCPR               0.021       0.106      0.421      -0.188       0.228
+    CCPR              -0.747       0.048      0.000      -0.826      -0.640      *
+
+ SCPR     WITH
+    CCPR              -0.177       0.102      0.045      -0.374       0.028
+
+ ANTSO_1  WITH
+    ANTSO_0            0.295       0.095      0.002       0.098       0.467      *
+
+ Means
+    ANTSO_1            2.007       0.332      0.000       1.359       2.658      *
+    ANTSO_0            1.428       0.272      0.000       0.892       1.967      *
+
+ Intercepts
+    SCPT              30.785       1.434      0.000      27.989      33.580      *
+    CCPT               0.985       3.622      0.390      -6.197       8.094
+    SCPR              27.173       1.497      0.000      24.252      30.099      *
+    CCPR               1.543       4.266      0.358      -6.852       9.952
+
+ Variances
+    ANTSO_1           10.678       1.635      0.000       8.109      14.521      *
+    ANTSO_0            7.132       1.082      0.000       5.422       9.652      *
+
+ Residual Variances
+    SCPT             144.290      22.621      0.000     108.827     197.125      *
+    CCPT            1090.424     169.363      0.000     821.007    1480.987      *
+    SCPR             170.905      26.556      0.000     128.708     232.407      *
+    CCPR            1568.810     244.534      0.000    1183.955    2140.369      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    SCPT               0.011       0.023      0.000       0.000       0.084
+    CCPT               0.008       0.015      0.000       0.000       0.052
+    SCPR               0.015       0.027      0.000       0.000       0.098
+    CCPR               0.007       0.013      0.000       0.000       0.048
+
+
+     Beginning Time:  10:48:54
+        Ending Time:  10:49:05
+       Elapsed Time:  00:00:11
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

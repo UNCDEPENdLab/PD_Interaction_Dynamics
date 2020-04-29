@@ -1,0 +1,319 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  12:00 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "narci_pfixed_m.dat";
+
+  VARIABLE:
+  NAMES = dasbl1 dasbl0 narci_1 narci_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  dasbl1 ON narci_1;
+  dasbl1 ON narci_0* (b);
+  dasbl0 ON narci_1* (b);
+  dasbl0 ON narci_0;
+  dasbl1 WITH dasbl0;
+  narci_1 WITH narci_0;
+  dasbl1 WITH dasbl1;
+  dasbl0 WITH dasbl0;
+  narci_1 WITH narci_1;
+  narci_0 WITH narci_0;
+  [dasbl1];
+  [dasbl0];
+  [narci_1];
+  [narci_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    2
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   DASBL1      DASBL0
+
+Observed independent variables
+   NARCI_1     NARCI_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  narci_pfixed_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             3
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              DASBL1        DASBL0        NARCI_1       NARCI_0
+              ________      ________      ________      ________
+ DASBL1         1.000
+ DASBL0         0.970         0.970
+ NARCI_1        0.990         0.960         0.990
+ NARCI_0        0.990         0.960         0.990         0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     DASBL1                3.101       0.918       2.000    3.03%       3.000      3.000      3.000
+              99.000       0.151       2.687       4.000   13.13%       3.000      3.000
+     DASBL0               11.510      -0.365       2.000    1.04%       9.000     11.000     12.000
+              96.000      12.229       0.022      19.000    1.04%      13.000     14.000
+     NARCI_1               1.663       2.270       0.000   37.76%       0.000      1.000      1.000
+              98.000       4.183       8.342      13.000    1.02%       2.000      3.000
+     NARCI_0               1.531       2.648       0.000   46.94%       0.000      0.000      1.000
+              98.000       6.025       8.251      14.000    1.02%       1.000      2.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              13
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -15.848            15.378
+
+          Posterior Predictive P-Value              0.521
+
+Information Criteria
+
+          Deviance (DIC)                         1483.511
+          Estimated Number of Parameters (pD)      12.454
+          Bayesian (BIC)                         1517.924
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ DASBL1     ON
+    NARCI_1           -0.012       0.018      0.258      -0.048       0.024
+    NARCI_0           -0.018       0.017      0.136      -0.051       0.014
+
+ DASBL0     ON
+    NARCI_1           -0.018       0.017      0.136      -0.051       0.014
+    NARCI_0           -0.301       0.148      0.021      -0.590      -0.012      *
+
+ DASBL1   WITH
+    DASBL0             0.537       0.166      0.000       0.251       0.905      *
+
+ NARCI_1  WITH
+    NARCI_0            0.559       0.574      0.153      -0.526       1.750
+
+ Means
+    NARCI_1            1.667       0.216      0.000       1.238       2.089      *
+    NARCI_0            1.527       0.257      0.000       1.017       2.037      *
+
+ Intercepts
+    DASBL1             3.149       0.056      0.000       3.039       3.260      *
+    DASBL0            12.023       0.433      0.000      11.170      12.872      *
+
+ Variances
+    NARCI_1            4.434       0.677      0.000       3.371       6.011      *
+    NARCI_0            6.391       0.969      0.000       4.859       8.632      *
+
+ Residual Variances
+    DASBL1             0.161       0.025      0.000       0.122       0.218      *
+    DASBL0            12.617       1.950      0.000       9.513      17.143      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    NARCI_1           -0.061       0.094      0.258      -0.245       0.124
+    NARCI_0           -0.113       0.101      0.136      -0.307       0.089
+
+ DASBL0     ON
+    NARCI_1           -0.010       0.010      0.136      -0.030       0.008
+    NARCI_0           -0.208       0.099      0.021      -0.392      -0.009      *
+
+ DASBL1   WITH
+    DASBL0             0.381       0.091      0.000       0.190       0.543      *
+
+ NARCI_1  WITH
+    NARCI_0            0.107       0.102      0.153      -0.098       0.303
+
+ Means
+    NARCI_1            0.792       0.117      0.000       0.561       1.020      *
+    NARCI_0            0.604       0.110      0.000       0.388       0.824      *
+
+ Intercepts
+    DASBL1             7.706       0.575      0.000       6.593       8.852      *
+    DASBL0             3.292       0.256      0.000       2.800       3.806      *
+
+ Variances
+    NARCI_1            1.000       0.000      0.000       1.000       1.000
+    NARCI_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    DASBL1             0.972       0.032      0.000       0.880       0.999      *
+    DASBL0             0.956       0.042      0.000       0.844       0.999      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    NARCI_1           -0.061       0.094      0.258      -0.245       0.124
+    NARCI_0           -0.113       0.101      0.136      -0.307       0.089
+
+ DASBL0     ON
+    NARCI_1           -0.010       0.010      0.136      -0.030       0.008
+    NARCI_0           -0.208       0.099      0.021      -0.392      -0.009      *
+
+ DASBL1   WITH
+    DASBL0             0.381       0.091      0.000       0.190       0.543      *
+
+ NARCI_1  WITH
+    NARCI_0            0.107       0.102      0.153      -0.098       0.303
+
+ Means
+    NARCI_1            0.792       0.117      0.000       0.561       1.020      *
+    NARCI_0            0.604       0.110      0.000       0.388       0.824      *
+
+ Intercepts
+    DASBL1             7.706       0.575      0.000       6.593       8.852      *
+    DASBL0             3.292       0.256      0.000       2.800       3.806      *
+
+ Variances
+    NARCI_1            1.000       0.000      0.000       1.000       1.000
+    NARCI_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    DASBL1             0.972       0.032      0.000       0.880       0.999      *
+    DASBL0             0.956       0.042      0.000       0.844       0.999      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    NARCI_1           -0.012       0.018      0.258      -0.048       0.024
+    NARCI_0           -0.018       0.017      0.136      -0.051       0.014
+
+ DASBL0     ON
+    NARCI_1           -0.018       0.017      0.136      -0.051       0.014
+    NARCI_0           -0.301       0.148      0.021      -0.590      -0.012      *
+
+ DASBL1   WITH
+    DASBL0             0.381       0.091      0.000       0.190       0.543      *
+
+ NARCI_1  WITH
+    NARCI_0            0.107       0.102      0.153      -0.098       0.303
+
+ Means
+    NARCI_1            1.667       0.216      0.000       1.238       2.089      *
+    NARCI_0            1.527       0.257      0.000       1.017       2.037      *
+
+ Intercepts
+    DASBL1             3.149       0.056      0.000       3.039       3.260      *
+    DASBL0            12.023       0.433      0.000      11.170      12.872      *
+
+ Variances
+    NARCI_1            4.434       0.677      0.000       3.371       6.011      *
+    NARCI_0            6.391       0.969      0.000       4.859       8.632      *
+
+ Residual Variances
+    DASBL1             0.161       0.025      0.000       0.122       0.218      *
+    DASBL0            12.617       1.950      0.000       9.513      17.143      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    DASBL1             0.028       0.032      0.000       0.001       0.120
+    DASBL0             0.044       0.042      0.000       0.001       0.156
+
+
+     Beginning Time:  12:00:37
+        Ending Time:  12:00:43
+       Elapsed Time:  00:00:06
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

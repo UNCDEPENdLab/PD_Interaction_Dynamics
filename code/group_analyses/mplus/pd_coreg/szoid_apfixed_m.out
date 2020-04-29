@@ -1,0 +1,430 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  10:50 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "szoid_apfixed_m.dat";
+
+  VARIABLE:
+  NAMES = scpt ccpt scpr ccpr szoid_1 szoid_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  scpt ON szoid_1* (a);
+  scpt ON szoid_0* (c);
+  ccpt ON szoid_1* (b);
+  ccpt ON szoid_0* (d);
+  scpr ON szoid_1* (c);
+  scpr ON szoid_0* (a);
+  ccpr ON szoid_1* (d);
+  ccpr ON szoid_0* (b);
+  scpt WITH ccpt;
+  scpt WITH scpr;
+  scpt WITH ccpr;
+  ccpt WITH scpr;
+  ccpt WITH ccpr;
+  scpr WITH ccpr;
+  szoid_1 WITH szoid_0;
+  scpt WITH scpt;
+  ccpt WITH ccpt;
+  scpr WITH scpr;
+  ccpr WITH ccpr;
+  szoid_1 WITH szoid_1;
+  szoid_0 WITH szoid_0;
+  [scpt];
+  [ccpt];
+  [scpr];
+  [ccpr];
+  [szoid_1];
+  [szoid_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    4
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        SCPR        CCPR
+
+Observed independent variables
+   SZOID_1     SZOID_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  szoid_apfixed_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             2
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          SCPR          CCPR          SZOID_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ SCPR           1.000         1.000         1.000
+ CCPR           1.000         1.000         1.000         1.000
+ SZOID_1        0.990         0.990         0.990         0.990         0.990
+ SZOID_0        0.990         0.990         0.990         0.990         0.990
+
+
+           Covariance Coverage
+              SZOID_0
+              ________
+ SZOID_0        0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.051       0.557       7.000    1.01%      19.000     26.000     29.000
+              99.000     130.270      -0.214      58.000    1.01%      31.000     39.000
+     CCPT                 -0.879      -0.261     -81.000    1.01%     -26.000     -7.000      2.000
+              99.000     990.713       0.169      80.000    1.01%       8.000     24.000
+     SCPR                 28.030       0.568       9.000    2.02%      16.000     24.000     27.000
+              99.000     154.575      -0.200      66.000    1.01%      29.000     39.000
+     CCPR                 -0.253      -0.176    -116.000    1.01%     -27.000     -8.000     -2.000
+              99.000    1405.603       0.459      79.000    1.01%       5.000     28.000
+     SZOID_1               0.990       1.751       0.000   61.22%       0.000      0.000      0.000
+              98.000       2.704       1.968       6.000    3.06%       0.000      2.000
+     SZOID_0               0.735       3.231       0.000   63.27%       0.000      0.000      0.000
+              98.000       2.175      11.647       8.000    2.04%       0.000      1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              23
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -20.890            21.600
+
+          Posterior Predictive P-Value              0.486
+
+Information Criteria
+
+          Deviance (DIC)                         4185.023
+          Estimated Number of Parameters (pD)      21.507
+          Bayesian (BIC)                         4246.952
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ SCPT       ON
+    SZOID_1           -0.319       0.582      0.287      -1.459       0.838
+    SZOID_0            1.015       0.581      0.041      -0.125       2.158
+
+ CCPT       ON
+    SZOID_1           -0.446       1.722      0.400      -3.812       2.972
+    SZOID_0           -1.249       1.742      0.232      -4.684       2.176
+
+ SCPR       ON
+    SZOID_1            1.015       0.581      0.041      -0.125       2.158
+    SZOID_0           -0.319       0.582      0.287      -1.459       0.838
+
+ CCPR       ON
+    SZOID_1           -1.249       1.742      0.232      -4.684       2.176
+    SZOID_0           -0.446       1.722      0.400      -3.812       2.972
+
+ SCPT     WITH
+    CCPT               7.057      44.106      0.434     -79.171      94.813
+    SCPR             -22.553      17.340      0.083     -59.169       9.591
+    CCPR             -34.528      52.070      0.240    -141.408      64.520
+
+ CCPT     WITH
+    SCPR               2.811      48.359      0.477     -92.622     100.236
+    CCPR            -978.738     181.177      0.000   -1402.838    -690.099      *
+
+ SCPR     WITH
+    CCPR             -85.253      57.493      0.055    -206.716      20.624
+
+ SZOID_1  WITH
+    SZOID_0            0.414       0.279      0.058      -0.105       0.996
+
+ Means
+    SZOID_1            0.990       0.172      0.000       0.654       1.328      *
+    SZOID_0            0.734       0.155      0.000       0.429       1.040      *
+
+ Intercepts
+    SCPT              29.630       1.355      0.000      26.963      32.262      *
+    CCPT               0.491       3.533      0.443      -6.524       7.428
+    SCPR              27.267       1.449      0.000      24.456      30.101      *
+    CCPR               1.301       4.111      0.374      -6.825       9.362
+
+ Variances
+    SZOID_1            2.866       0.438      0.000       2.179       3.887      *
+    SZOID_0            2.303       0.350      0.000       1.750       3.117      *
+
+ Residual Variances
+    SCPT             142.591      22.412      0.000     107.294     195.264      *
+    CCPT            1119.865     174.845      0.000     843.594    1525.644      *
+    SCPR             171.459      26.663      0.000     129.084     233.602      *
+    CCPR            1552.188     242.355      0.000    1170.248    2119.414      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    SZOID_1           -0.045       0.081      0.287      -0.205       0.116
+    SZOID_0            0.127       0.073      0.041      -0.015       0.271
+
+ CCPT       ON
+    SZOID_1           -0.022       0.086      0.400      -0.189       0.146
+    SZOID_0           -0.056       0.078      0.232      -0.208       0.097
+
+ SCPR       ON
+    SZOID_1            0.129       0.074      0.041      -0.016       0.275
+    SZOID_0           -0.037       0.066      0.287      -0.165       0.098
+
+ CCPR       ON
+    SZOID_1           -0.053       0.074      0.232      -0.200       0.092
+    SZOID_0           -0.017       0.066      0.400      -0.146       0.113
+
+ SCPT     WITH
+    CCPT               0.018       0.106      0.434      -0.190       0.224
+    SCPR              -0.146       0.103      0.083      -0.343       0.061
+    CCPR              -0.074       0.106      0.240      -0.279       0.134
+
+ CCPT     WITH
+    SCPR               0.006       0.106      0.477      -0.202       0.216
+    CCPR              -0.746       0.048      0.000      -0.826      -0.639      *
+
+ SCPR     WITH
+    CCPR              -0.168       0.103      0.055      -0.365       0.040
+
+ SZOID_1  WITH
+    SZOID_0            0.163       0.101      0.058      -0.041       0.353
+
+ Means
+    SZOID_1            0.586       0.109      0.000       0.373       0.801      *
+    SZOID_0            0.485       0.107      0.000       0.274       0.695      *
+
+ Intercepts
+    SCPT               2.444       0.217      0.000       2.025       2.880      *
+    CCPT               0.015       0.104      0.443      -0.191       0.217
+    SCPR               2.057       0.190      0.000       1.693       2.438      *
+    CCPR               0.033       0.103      0.374      -0.169       0.235
+
+ Variances
+    SZOID_1            1.000       0.000      0.000       1.000       1.000
+    SZOID_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.978       0.022      0.000       0.915       0.999      *
+    CCPT               0.989       0.015      0.000       0.942       0.999      *
+    SCPR               0.979       0.021      0.000       0.920       0.999      *
+    CCPR               0.992       0.012      0.000       0.954       1.000      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    SZOID_1           -0.045       0.081      0.287      -0.205       0.116
+    SZOID_0            0.127       0.073      0.041      -0.015       0.271
+
+ CCPT       ON
+    SZOID_1           -0.022       0.086      0.400      -0.189       0.146
+    SZOID_0           -0.056       0.078      0.232      -0.208       0.097
+
+ SCPR       ON
+    SZOID_1            0.129       0.074      0.041      -0.016       0.275
+    SZOID_0           -0.037       0.066      0.287      -0.165       0.098
+
+ CCPR       ON
+    SZOID_1           -0.053       0.074      0.232      -0.200       0.092
+    SZOID_0           -0.017       0.066      0.400      -0.146       0.113
+
+ SCPT     WITH
+    CCPT               0.018       0.106      0.434      -0.190       0.224
+    SCPR              -0.146       0.103      0.083      -0.343       0.061
+    CCPR              -0.074       0.106      0.240      -0.279       0.134
+
+ CCPT     WITH
+    SCPR               0.006       0.106      0.477      -0.202       0.216
+    CCPR              -0.746       0.048      0.000      -0.826      -0.639      *
+
+ SCPR     WITH
+    CCPR              -0.168       0.103      0.055      -0.365       0.040
+
+ SZOID_1  WITH
+    SZOID_0            0.163       0.101      0.058      -0.041       0.353
+
+ Means
+    SZOID_1            0.586       0.109      0.000       0.373       0.801      *
+    SZOID_0            0.485       0.107      0.000       0.274       0.695      *
+
+ Intercepts
+    SCPT               2.444       0.217      0.000       2.025       2.880      *
+    CCPT               0.015       0.104      0.443      -0.191       0.217
+    SCPR               2.057       0.190      0.000       1.693       2.438      *
+    CCPR               0.033       0.103      0.374      -0.169       0.235
+
+ Variances
+    SZOID_1            1.000       0.000      0.000       1.000       1.000
+    SZOID_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    SCPT               0.978       0.022      0.000       0.915       0.999      *
+    CCPT               0.989       0.015      0.000       0.942       0.999      *
+    SCPR               0.979       0.021      0.000       0.920       0.999      *
+    CCPR               0.992       0.012      0.000       0.954       1.000      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ SCPT       ON
+    SZOID_1           -0.319       0.582      0.287      -1.459       0.838
+    SZOID_0            1.015       0.581      0.041      -0.125       2.158
+
+ CCPT       ON
+    SZOID_1           -0.446       1.722      0.400      -3.812       2.972
+    SZOID_0           -1.249       1.742      0.232      -4.684       2.176
+
+ SCPR       ON
+    SZOID_1            1.015       0.581      0.041      -0.125       2.158
+    SZOID_0           -0.319       0.582      0.287      -1.459       0.838
+
+ CCPR       ON
+    SZOID_1           -1.249       1.742      0.232      -4.684       2.176
+    SZOID_0           -0.446       1.722      0.400      -3.812       2.972
+
+ SCPT     WITH
+    CCPT               0.018       0.106      0.434      -0.190       0.224
+    SCPR              -0.146       0.103      0.083      -0.343       0.061
+    CCPR              -0.074       0.106      0.240      -0.279       0.134
+
+ CCPT     WITH
+    SCPR               0.006       0.106      0.477      -0.202       0.216
+    CCPR              -0.746       0.048      0.000      -0.826      -0.639      *
+
+ SCPR     WITH
+    CCPR              -0.168       0.103      0.055      -0.365       0.040
+
+ SZOID_1  WITH
+    SZOID_0            0.163       0.101      0.058      -0.041       0.353
+
+ Means
+    SZOID_1            0.990       0.172      0.000       0.654       1.328      *
+    SZOID_0            0.734       0.155      0.000       0.429       1.040      *
+
+ Intercepts
+    SCPT              29.630       1.355      0.000      26.963      32.262      *
+    CCPT               0.491       3.533      0.443      -6.524       7.428
+    SCPR              27.267       1.449      0.000      24.456      30.101      *
+    CCPR               1.301       4.111      0.374      -6.825       9.362
+
+ Variances
+    SZOID_1            2.866       0.438      0.000       2.179       3.887      *
+    SZOID_0            2.303       0.350      0.000       1.750       3.117      *
+
+ Residual Variances
+    SCPT             142.591      22.412      0.000     107.294     195.264      *
+    CCPT            1119.865     174.845      0.000     843.594    1525.644      *
+    SCPR             171.459      26.663      0.000     129.084     233.602      *
+    CCPR            1552.188     242.355      0.000    1170.248    2119.414      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    SCPT               0.022       0.022      0.000       0.001       0.085
+    CCPT               0.011       0.015      0.000       0.001       0.058
+    SCPR               0.021       0.021      0.000       0.001       0.080
+    CCPR               0.008       0.012      0.000       0.000       0.046
+
+
+     Beginning Time:  10:50:51
+        Ending Time:  10:50:57
+       Elapsed Time:  00:00:06
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

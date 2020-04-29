@@ -1,0 +1,42 @@
+TITLE:
+Testing
+DATA:
+FILE = "depen_apfixed_m.dat";
+ 
+VARIABLE:
+NAMES = scpt ccpt scpr ccpr depen_1 depen_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+scpt ON depen_1* (a); 
+scpt ON depen_0* (c); 
+ccpt ON depen_1* (b); 
+ccpt ON depen_0* (d); 
+scpr ON depen_1* (c); 
+scpr ON depen_0* (a); 
+ccpr ON depen_1* (d); 
+ccpr ON depen_0* (b); 
+scpt WITH ccpt; 
+scpt WITH scpr; 
+scpt WITH ccpr; 
+ccpt WITH scpr; 
+ccpt WITH ccpr; 
+scpr WITH ccpr; 
+depen_1 WITH depen_0; 
+scpt WITH scpt; 
+ccpt WITH ccpt; 
+scpr WITH scpr; 
+ccpr WITH ccpr; 
+depen_1 WITH depen_1; 
+depen_0 WITH depen_0; 
+[scpt]; 
+[ccpt]; 
+[scpr]; 
+[ccpr]; 
+[depen_1]; 
+[depen_0]; 
+
+OUTPUT:
+STANDARDIZED

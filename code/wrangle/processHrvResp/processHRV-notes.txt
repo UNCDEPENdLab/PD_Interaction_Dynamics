@@ -1,0 +1,19 @@
+processHRV notes
+
+4-Dec-2006 comparison of RSA from AcqKnowledge and processHRV
+
+TRECALL_102_INTERROG_0014.acq
+
+processHRV gives rsa = 5.791 with skipped beat and 5.737 corrected ~827sec of data
+
+http://www.biopac.com/fr_support.htm  Application note AS-129  FFT setup
+
+Display->autoscale horizontal; click selection bar lower right (dropped first ~15 sec)
+
+Do FFT and follow instructions to convert to ms^2/Hz and compute integral 0.15-0.40 Hz
+
+value was 206.009 ms^2 and rsa = ln(206.009) = 5.328
+
+The slight difference may be due to the fact that AcqKnowledge is taking the FFT of a 
+square wave representing the R-R interval whereas processHRV is using a spline fit to the 
+data.

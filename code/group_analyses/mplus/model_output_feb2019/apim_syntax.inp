@@ -1,0 +1,44 @@
+TITLE:
+Testing
+DATA:
+FILE = "apim_syntax.dat";
+ 
+VARIABLE:
+NAMES = scpr scpt ccpr ccpt CTS_Perp_0 CTS_Perp_1; 
+ MISSING=.;
+ 
+ANALYSIS:
+TYPE = GENERAL; ESTIMATOR = MLR;
+MODEL:
+scpr ON CTS_Perp_0; 
+scpt ON CTS_Perp_1; 
+ccpr ON CTS_Perp_0; 
+ccpt ON CTS_Perp_1; 
+scpt ON CTS_Perp_0; 
+scpr ON CTS_Perp_1; 
+ccpt ON CTS_Perp_0; 
+ccpr ON CTS_Perp_1; 
+scpr WITH ccpr; 
+scpr WITH scpt; 
+scpr WITH ccpt; 
+scpt WITH ccpr; 
+ccpr WITH ccpt; 
+scpt WITH ccpt; 
+scpr WITH scpr; 
+scpt WITH scpt; 
+ccpr WITH ccpr; 
+ccpt WITH ccpt; 
+CTS_Perp_0 WITH CTS_Perp_0; 
+CTS_Perp_0 WITH CTS_Perp_1; 
+CTS_Perp_1 WITH CTS_Perp_1; 
+[scpr]; 
+[scpt]; 
+[ccpr]; 
+[ccpt]; 
+[CTS_Perp_0]; 
+[CTS_Perp_1]; 
+
+OUTPUT:
+sampstat standardized tech1;
+SAVEDATA:
+file=cooksdtest.dat; save = COOKS INFLUENCE LOGLIKELIHOOD;

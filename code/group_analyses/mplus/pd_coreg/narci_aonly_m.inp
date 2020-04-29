@@ -1,0 +1,42 @@
+TITLE:
+Testing
+DATA:
+FILE = "narci_aonly_m.dat";
+ 
+VARIABLE:
+NAMES = scpt ccpt scpr ccpr narci_1 narci_0; 
+ MISSING=.;
+ 
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+MODEL:
+scpt ON narci_1; 
+scpt ON narci_0@0;
+ccpt ON narci_1; 
+ccpt ON narci_0@0;
+scpr ON narci_1@0;
+scpr ON narci_0; 
+ccpr ON narci_1@0;
+ccpr ON narci_0; 
+scpt WITH ccpt; 
+scpt WITH scpr; 
+scpt WITH ccpr; 
+ccpt WITH scpr; 
+ccpt WITH ccpr; 
+scpr WITH ccpr; 
+narci_1 WITH narci_0; 
+scpt WITH scpt; 
+ccpt WITH ccpt; 
+scpr WITH scpr; 
+ccpr WITH ccpr; 
+narci_1 WITH narci_1; 
+narci_0 WITH narci_0; 
+[scpt]; 
+[ccpt]; 
+[scpr]; 
+[ccpr]; 
+[narci_1]; 
+[narci_0]; 
+
+OUTPUT:
+STANDARDIZED

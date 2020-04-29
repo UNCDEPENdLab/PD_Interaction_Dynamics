@@ -1,0 +1,288 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+12/13/2018  10:26 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Aff -> Coreg -> Aff -> AVOAND fix non-sig parameters to zero
+  DATA:
+  FILE = "../df67.dat";
+
+  VARIABLE:
+  NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+  elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id;
+   MISSING=.;
+  USEVARIABLES = cmpt scpt ccpt  prafpt  pafpt
+  ECRavo_1;
+  IDVARIABLE IS id;
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2; BITERATIONS = (49000); !ALGORITHM=MH;
+  !ESTIMATOR = MLR;
+  MODEL:
+  prafpt ON cmpt@0;
+  !prafpr ON cmpr@0;
+  ccpt ON cmpt* (x);
+  scpt ON cmpt@0;
+  !ccpr ON cmpr@0;
+  !scpr ON cmpr@0;
+  cmpt WITH cmpt;
+  !cmpr WITH cmpr;
+  !cmpt WITH cmpr;
+  [cmpt];
+  ![cmpr];
+  !prafpt WITH prafpr;
+
+  ECRavo_1 ON pafpt* (k);
+  !ECRavo_0 ON pafpr;
+  !pafpt WITH pafpr;
+  pafpt ON prafpt;
+  pafpt ON scpt* (a1);
+  pafpt ON ccpt* (a3);
+  !pafpt ON scpr* (a5);
+  !pafpt ON ccpr* (a7);
+  !pafpr ON prafpr;
+  !pafpr ON scpr@0;
+  !pafpr ON ccpr@0;
+  !pafpr ON scpt* (a5);
+  !pafpr ON ccpt* (a7);
+  !scpr ON prafpt@0;
+  !scpt ON prafpr@0;
+  !ccpt ON prafpr* (b7);
+  !ccpr ON prafpt* (b7);
+  scpt WITH ccpt;
+  !scpt WITH scpr;
+  !scpt WITH ccpr;
+  !ccpt WITH scpr;
+  !ccpt WITH ccpr;
+  !scpr WITH ccpr;
+  !scpt WITH scpt;
+  !ccpt WITH ccpt;
+  !scpr WITH scpr;
+  !ccpr WITH ccpr;
+  prafpt WITH prafpt;
+  !prafpr WITH prafpr;
+  pafpt WITH pafpt;
+  !pafpr WITH pafpr;
+  [scpt];
+  [ccpt];
+  ![scpr];
+  ![ccpr];
+  [prafpt];
+  ![prafpr];
+  [pafpt];
+  ![pafpr@0];
+  ECRavo_1 WITH ECRavo_1;
+  !ECRavo_0 WITH ECRavo_0;
+  !ECRavo_1 WITH ECRavo_0@0;
+  [ECRavo_1];
+  ![ECRavo_0];
+  !BASED ON MOD INDICES
+  !ECRavo_0 ON prafpr;
+  !ECRAVO_0 ON CMPR;
+  !MODEL CONSTRAINT:
+  !NEW ( a3b7 ka3 xka3); ! a7b7 a4b7 zka3 );
+  !ha3 = h*a3;
+  !xka3 = x*k*a3;
+  !ka3 = k*a3;
+  !a3b7 = a3*b7;
+  !a7b7 = a7*b7;
+  !a4b7 = a4*b7;
+  !zka3 = z*k*a3;
+
+  !OUTPUT:
+  !STANDARDIZED;  MODINDICES(ALL 4);
+  !savedata: file=infludiagnostics.txt; save is
+  !cooks;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Aff -> Coreg -> Aff -> AVOAND fix non-sig parameters to zero
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    5
+Number of independent variables                                  1
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   SCPT        CCPT        PRAFPT      PAFPT       ECRAVO_1
+
+Observed independent variables
+   CMPT
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  ../df67.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             3
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCPT          CCPT          PRAFPT        PAFPT         ECRAVO_1
+              ________      ________      ________      ________      ________
+ SCPT           1.000
+ CCPT           1.000         1.000
+ PRAFPT         0.990         0.990         0.990
+ PAFPT          0.970         0.970         0.970         0.970
+ ECRAVO_1       1.000         1.000         0.990         0.970         1.000
+ CMPT           1.000         1.000         0.990         0.970         1.000
+
+
+           Covariance Coverage
+              CMPT
+              ________
+ CMPT           1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCPT                 30.559       0.551       7.450    1.01%      19.197     26.648     29.841
+              99.000     129.762      -0.204      58.807    1.01%      31.821     39.920
+     CCPT                 -0.890      -0.259     -81.685    1.01%     -26.415     -7.559      2.881
+              99.000    1013.048       0.128      80.417    1.01%       8.529     24.280
+     PRAFPT                3.078      -0.410      -2.061    1.02%       1.207      2.634      3.186
+              98.000       3.791      -0.719       6.358    1.02%       3.944      4.944
+     PAFPT                 2.306      -0.499      -3.134    1.04%       0.177      1.707      2.722
+              96.000       5.174      -0.502       6.108    2.08%       3.341      4.444
+     ECRAVO_1              2.738       0.317       1.000    1.01%       1.944      2.333      2.722
+              99.000       0.849      -0.476       5.444    1.01%       3.000      3.611
+     CMPT                  1.140       0.179      -6.169    1.01%      -1.444      0.366      0.866
+              99.000       9.104      -0.160       8.225    1.01%       1.884      3.207
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              18
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                 -4.474            33.930
+
+          Posterior Predictive P-Value              0.065
+
+Information Criteria
+
+          Deviance (DIC)                         3293.535
+          Estimated Number of Parameters (pD)      17.525
+          Bayesian (BIC)                         3340.695
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ PRAFPT     ON
+    CMPT               0.000       0.000      1.000       0.000       0.000
+
+ CCPT       ON
+    CMPT              -3.042       1.053      0.002      -5.098      -0.965      *
+
+ SCPT       ON
+    CMPT               0.000       0.000      1.000       0.000       0.000
+
+ ECRAVO_1   ON
+    PAFPT             -0.108       0.040      0.004      -0.187      -0.029      *
+
+ PAFPT      ON
+    PRAFPT             0.756       0.092      0.000       0.577       0.936      *
+    SCPT               0.026       0.016      0.046      -0.005       0.057
+    CCPT               0.015       0.006      0.007       0.003       0.026      *
+
+ SCPT     WITH
+    CCPT              13.033      39.513      0.363     -64.115      92.729
+
+ Means
+    CMPT               1.141       0.312      0.000       0.525       1.755      *
+
+ Intercepts
+    SCPT              30.554       1.185      0.000      28.239      32.904      *
+    CCPT               2.610       3.423      0.225      -4.172       9.279
+    PRAFPT             3.077       0.202      0.000       2.681       3.473      *
+    PAFPT             -0.776       0.604      0.098      -1.955       0.416
+    ECRAVO_1           2.990       0.131      0.000       2.733       3.246      *
+
+ Variances
+    CMPT               9.446       1.412      0.000       7.212      12.709      *
+
+ Residual Variances
+    SCPT             137.645      20.799      0.000     104.593     185.673      *
+    CCPT             997.284     152.140      0.000     755.919    1352.775      *
+    PRAFPT             3.938       0.591      0.000       2.995       5.309      *
+    PAFPT              3.007       0.466      0.000       2.274       4.094      *
+    ECRAVO_1           0.826       0.124      0.000       0.629       1.115      *
+
+
+     Beginning Time:  10:26:36
+        Ending Time:  10:26:45
+       Elapsed Time:  00:00:09
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

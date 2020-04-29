@@ -1,0 +1,319 @@
+Mplus VERSION 8 (Mac)
+MUTHEN & MUTHEN
+02/25/2020  11:57 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Testing
+  DATA:
+  FILE = "depen_ponly_m.dat";
+
+  VARIABLE:
+  NAMES = dasbl1 dasbl0 depen_1 depen_0;
+   MISSING=.;
+
+  ANALYSIS:
+  ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+  MODEL:
+  dasbl1 ON depen_1@0;
+  dasbl1 ON depen_0;
+  dasbl0 ON depen_1;
+  dasbl0 ON depen_0@0;
+  dasbl1 WITH dasbl0;
+  depen_1 WITH depen_0;
+  dasbl1 WITH dasbl1;
+  dasbl0 WITH dasbl0;
+  depen_1 WITH depen_1;
+  depen_0 WITH depen_0;
+  [dasbl1];
+  [dasbl0];
+  [depen_1];
+  [depen_0];
+
+  OUTPUT:
+  STANDARDIZED
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+Testing
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                          99
+
+Number of dependent variables                                    2
+Number of independent variables                                  2
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   DASBL1      DASBL0
+
+Observed independent variables
+   DEPEN_1     DEPEN_0
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  depen_ponly_m.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns             3
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              DASBL1        DASBL0        DEPEN_1       DEPEN_0
+              ________      ________      ________      ________
+ DASBL1         1.000
+ DASBL0         0.970         0.970
+ DEPEN_1        0.990         0.960         0.990
+ DEPEN_0        0.990         0.960         0.990         0.990
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     DASBL1                3.101       0.918       2.000    3.03%       3.000      3.000      3.000
+              99.000       0.151       2.687       4.000   13.13%       3.000      3.000
+     DASBL0               11.510      -0.365       2.000    1.04%       9.000     11.000     12.000
+              96.000      12.229       0.022      19.000    1.04%      13.000     14.000
+     DEPEN_1               1.959       1.831       0.000   44.90%       0.000      0.000      1.000
+              98.000       6.692       4.211      14.000    1.02%       2.000      3.000
+     DEPEN_0               0.694       2.373       0.000   65.31%       0.000      0.000      0.000
+              98.000       1.478       7.016       7.000    1.02%       0.000      1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              12
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -15.462            13.323
+
+          Posterior Predictive P-Value              0.540
+
+Information Criteria
+
+          Deviance (DIC)                         1394.077
+          Estimated Number of Parameters (pD)      11.528
+          Bayesian (BIC)                         1425.787
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ DASBL1     ON
+    DEPEN_1            0.000       0.000      1.000       0.000       0.000
+    DEPEN_0            0.004       0.031      0.451      -0.057       0.065
+
+ DASBL0     ON
+    DEPEN_1           -0.145       0.130      0.132      -0.399       0.113
+    DEPEN_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL1   WITH
+    DASBL0             0.565       0.170      0.000       0.277       0.946      *
+
+ DEPEN_1  WITH
+    DEPEN_0           -0.262       0.356      0.220      -0.984       0.424
+
+ Means
+    DEPEN_1            1.959       0.273      0.000       1.418       2.493      *
+    DEPEN_0            0.693       0.127      0.000       0.444       0.945      *
+
+ Intercepts
+    DASBL1             3.099       0.046      0.000       3.007       3.189      *
+    DASBL0            11.823       0.447      0.000      10.941      12.700      *
+
+ Variances
+    DEPEN_1            7.113       1.077      0.000       5.402       9.590      *
+    DEPEN_0            1.568       0.238      0.000       1.191       2.115      *
+
+ Residual Variances
+    DASBL1             0.162       0.025      0.000       0.123       0.219      *
+    DASBL0            12.989       2.018      0.000       9.775      17.703      *
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    DEPEN_1            0.000       0.000      1.000       0.000       0.000
+    DEPEN_0            0.012       0.095      0.451      -0.175       0.196
+
+ DASBL0     ON
+    DEPEN_1           -0.107       0.094      0.132      -0.289       0.083
+    DEPEN_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL1   WITH
+    DASBL0             0.394       0.090      0.000       0.206       0.555      *
+
+ DEPEN_1  WITH
+    DEPEN_0           -0.080       0.102      0.220      -0.277       0.124
+
+ Means
+    DEPEN_1            0.734       0.115      0.000       0.510       0.961      *
+    DEPEN_0            0.554       0.109      0.000       0.340       0.770      *
+
+ Intercepts
+    DASBL1             7.658       0.579      0.000       6.564       8.830      *
+    DASBL0             3.247       0.264      0.000       2.730       3.771      *
+
+ Variances
+    DEPEN_1            1.000       0.000      0.000       1.000       1.000
+    DEPEN_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    DASBL1             0.996       0.013      0.000       0.954       1.000      *
+    DASBL0             0.988       0.023      0.000       0.917       1.000      *
+
+
+STDY Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    DEPEN_1            0.000       0.000      1.000       0.000       0.000
+    DEPEN_0            0.012       0.095      0.451      -0.175       0.196
+
+ DASBL0     ON
+    DEPEN_1           -0.107       0.094      0.132      -0.289       0.083
+    DEPEN_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL1   WITH
+    DASBL0             0.394       0.090      0.000       0.206       0.555      *
+
+ DEPEN_1  WITH
+    DEPEN_0           -0.080       0.102      0.220      -0.277       0.124
+
+ Means
+    DEPEN_1            0.734       0.115      0.000       0.510       0.961      *
+    DEPEN_0            0.554       0.109      0.000       0.340       0.770      *
+
+ Intercepts
+    DASBL1             7.658       0.579      0.000       6.564       8.830      *
+    DASBL0             3.247       0.264      0.000       2.730       3.771      *
+
+ Variances
+    DEPEN_1            1.000       0.000      0.000       1.000       1.000
+    DEPEN_0            1.000       0.000      0.000       1.000       1.000
+
+ Residual Variances
+    DASBL1             0.996       0.013      0.000       0.954       1.000      *
+    DASBL0             0.988       0.023      0.000       0.917       1.000      *
+
+
+STD Standardization
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+ DASBL1     ON
+    DEPEN_1            0.000       0.000      1.000       0.000       0.000
+    DEPEN_0            0.004       0.031      0.451      -0.057       0.065
+
+ DASBL0     ON
+    DEPEN_1           -0.145       0.130      0.132      -0.399       0.113
+    DEPEN_0            0.000       0.000      1.000       0.000       0.000
+
+ DASBL1   WITH
+    DASBL0             0.394       0.090      0.000       0.206       0.555      *
+
+ DEPEN_1  WITH
+    DEPEN_0           -0.080       0.102      0.220      -0.277       0.124
+
+ Means
+    DEPEN_1            1.959       0.273      0.000       1.418       2.493      *
+    DEPEN_0            0.693       0.127      0.000       0.444       0.945      *
+
+ Intercepts
+    DASBL1             3.099       0.046      0.000       3.007       3.189      *
+    DASBL0            11.823       0.447      0.000      10.941      12.700      *
+
+ Variances
+    DEPEN_1            7.113       1.077      0.000       5.402       9.590      *
+    DEPEN_0            1.568       0.238      0.000       1.191       2.115      *
+
+ Residual Variances
+    DASBL1             0.162       0.025      0.000       0.123       0.219      *
+    DASBL0            12.989       2.018      0.000       9.775      17.703      *
+
+
+R-SQUARE
+
+                                Posterior  One-Tailed         95% C.I.
+    Variable        Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%
+
+    DASBL1             0.004       0.013      0.000       0.000       0.046
+    DASBL0             0.012       0.023      0.000       0.000       0.083
+
+
+     Beginning Time:  11:57:09
+        Ending Time:  11:57:13
+       Elapsed Time:  00:00:04
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2017 Muthen & Muthen

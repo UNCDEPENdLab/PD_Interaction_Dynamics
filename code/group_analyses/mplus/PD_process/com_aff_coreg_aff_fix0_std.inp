@@ -1,0 +1,75 @@
+TITLE:
+Aff -> Coreg -> Aff AND fix non-sig parameters to zero
+DATA:
+FILE = "../df67.dat";
+
+VARIABLE:
+NAMES = PTNUM scpt ccpt scpr ccpr ECRanx_1 ECRanx_0 prnapt prnapr pnapt pnapr
+elpt elpr cmpt cmpr prafpt prafpr pafpt pafpr ECRavo_0 ECRavo_1 whichdf_num id;
+ MISSING=.;
+USEVARIABLES = scpt ccpt scpr ccpr prafpt prafpr pafpt pafpr cmpt cmpr;
+ANALYSIS:
+ESTIMATOR=BAYES; PROCESSORS = 2;BITERATIONS = (30000);
+!ESTIMATOR = MLR;
+MODEL:
+prafpt ON cmpt;
+prafpr ON cmpr;
+ccpt ON cmpt* (x);
+scpt ON cmpt;
+ccpr ON cmpr;
+scpr ON cmpr;
+pafpt WITH pafpr;
+pafpt ON prafpt;
+pafpt ON scpt* (a1);
+pafpt ON ccpt* (a3);
+pafpt ON scpr* (a5);
+pafpt ON ccpr* (a7);
+pafpr ON prafpr;
+pafpr ON scpr@0;
+pafpr ON ccpr@0;
+pafpr ON scpt* (a5);
+pafpr ON ccpt* (a7);
+scpr ON prafpt@0;
+scpt ON prafpr@0;
+ccpt ON prafpr* (b7);
+ccpr ON prafpt* (b7);
+scpt WITH ccpt;
+scpt WITH scpr;
+scpt WITH ccpr;
+ccpt WITH scpr;
+ccpt WITH ccpr;
+scpr WITH ccpr;
+scpt WITH scpt;
+ccpt WITH ccpt;
+scpr WITH scpr;
+ccpr WITH ccpr;
+prafpt WITH prafpt;
+prafpr WITH prafpr;
+pafpt WITH pafpt;
+pafpr WITH pafpr;
+cmpt WITH cmpt;
+cmpr WITH cmpr;
+cmpt WITH cmpr;
+[scpt];
+[ccpt];
+[scpr];
+[ccpr];
+[prafpt];
+[prafpr];
+[pafpt];
+[pafpr@0];
+[cmpt];
+[cmpr];
+
+!MODEL CONSTRAINT:
+!NEW ( a3b7 xa3); ! a7b7 a4b7 zka3 );
+!ha3 = h*a3;
+!ka3 = k*a3;
+!a3b7 = a3*b7;
+!xa3 = x*a3;
+!a7b7 = a7*b7;
+!a4b7 = a4*b7;
+!zka3 = z*k*a3;
+
+OUTPUT:
+STANDARDIZED;!  MODINDICES(ALL 5);
